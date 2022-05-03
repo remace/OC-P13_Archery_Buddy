@@ -1,5 +1,4 @@
-Adam Lemille
-------------
+# Adam Lemille
 
 _22 ans, statisticien_
 
@@ -13,8 +12,10 @@ dans son idéal, il voudrait pouvoir tirer toutes ses flèches au hasard pendant
 pour les flèches, il sera intéressant de les saisir par lot (faire 20 fois la même saisie est fastidieux et pas vraiment intéressant). parmi les infos utiles:
 
 - encoche
-- empennagetype: plumes/spin wings/flu-flu
+- empennage:
+  * type: vanes/spin wings/flu-flu
   * marque
+  * taille
   * angle de collage
   * distance à l'encoche
 - pointe
@@ -26,4 +27,5 @@ pour les flèches, il sera intéressant de les saisir par lot (faire 20 fois la 
   * matériau (enum alu/carbone/bois)
   * longueur
   * spine
-- identification et différents lots
+- identification et différents lots (à générer par l'application)
+- en état de tirer (booleen)
