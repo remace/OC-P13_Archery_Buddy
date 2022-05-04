@@ -1,4 +1,4 @@
-# Bernard Cher
+## Bernard Cher
 
 _35 ans, archiviste_
 

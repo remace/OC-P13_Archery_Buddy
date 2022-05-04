@@ -1,4 +1,4 @@
-# Cécilia Fonlaforme
+## Cécilia Fonlaforme
 
 _26 ans, athlète semi-professionnelle_
 

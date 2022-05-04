@@ -1,4 +1,4 @@
-# Adam Lemille
+## Adam Lemille
 
 _22 ans, statisticien_
 
