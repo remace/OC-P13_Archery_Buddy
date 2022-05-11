@@ -26,6 +26,18 @@ package quiver{
     usecase "save arrow shots" as save_composition_shots
 }
 
+package authentification{
+    top to bottom direction
+    usecase "register" as register
+    usecase "log in" as login
+    usecase "delete account" as unsubscribe
+}
+
+
+
+u -left-> register
+u -left-> login
+u -left-> unsubscribe
 u -up-> bow
 u -up-> arrows
 u -up-> declare_broken
@@ -40,6 +52,8 @@ u -down-> save_composition_shots
 
 declare_broken ..> arrows : use
 declare_broken ..> compose_quiver : use
-
+practice ..> login : use
+quiver ..> login : use
+material ..> login : use
 
 @enduml
