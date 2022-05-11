@@ -1,0 +1,45 @@
+@startuml usecases
+
+left to right direction
+
+actor user as u
+left to right direction
+package material {
+    top to bottom direction
+    usecase "CRUD bow" as bow
+    usecase "CRUD arrows" as arrows
+    usecase "declare arrow broken" as declare_broken
+}
+package practice {
+    top to bottom direction
+    usecase "create practice session" as create_session
+    usecase "update session" as update_session
+    usecase "read practice session" as read_session
+    usecase "delete practice session" as delete_session
+    usecase "add shots" as add_shots
+}
+
+package quiver{
+    top to bottom direction
+    usecase "compose quiver" as compose_quiver
+    usecase "create composition session" as compose_session
+    usecase "save arrow shots" as save_composition_shots
+}
+
+u -up-> bow
+u -up-> arrows
+u -up-> declare_broken
+u -right-> create_session
+u -right-> update_session
+u -right-> read_session
+u -right-> delete_session
+u -right-> add_shots
+u -down-> compose_quiver
+u -down-> compose_session
+u -down-> save_composition_shots
+
+declare_broken ..> arrows : use
+declare_broken ..> compose_quiver : use
+
+
+@enduml
