@@ -30,6 +30,7 @@ package authentification{
     top to bottom direction
     usecase "register" as register
     usecase "log in" as login
+    usecase "log out" as logout
     usecase "delete account" as unsubscribe
 }
 
@@ -37,6 +38,7 @@ package authentification{
 
 u -left-> register
 u -left-> login
+u -left-> logout
 u -left-> unsubscribe
 u -up-> bow
 u -up-> arrows
