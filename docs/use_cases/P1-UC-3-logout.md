@@ -1,5 +1,5 @@
 ## Package Authentification
-### UC-1 - créer un compte
+### UC-3 - Se Déconnecter
 
 <table>
     <tbody>
@@ -8,7 +8,7 @@
                 Acteurs Concernés
             </td>
             <td>
-                Tout Utilisateur
+                tout utilisateur 
             </td>
         </tr>
         <tr>
@@ -16,7 +16,7 @@
                 Description
             </td>
             <td>
-                permet à n'importe quel user de se créer un compte
+                permet à un utilisateur de se déconnecter
             </td>
         </tr>
         <tr>
@@ -24,12 +24,12 @@
                 Date
             </td>
             <td>
-                11/05/2022
+                12/05/2022
             </td>
         </tr>
         <tr>
             <td>
-                auteur
+                Auteur
             </td>
             <td>
                 Rémi TAUVEL
@@ -40,7 +40,7 @@
                 Pré-conditions
             </td>
             <td>
-                Aucune
+                utilisateur connecté
             </td>
         </tr>
         <tr>
@@ -48,73 +48,63 @@
                 Démarrage
             </td>
             <td>
-                <strong>l'utilisateur</strong> est non-connecté, sur la homepage
+                l'utilisateur est sur la homepage
             </td>
         </tr>
         <tr>
             <td colspan="2">
-                <strong>dialogue</strong>
+                <strong>Dialogue</strong>
             </td>
         </tr>
         <tr>
             <td>
-                scénario nominal
+                Scénario nominal
             </td>
             <td>
               <ol>
                   <li>
-                    <strong>l'utilisateur</strong> clique sur un bouton "sign up" in dans la barre de titre
+                    <strong>L'utilisateur</strong> demande à se déconnecter
                   </li>
                   <li>
-                    <em>le système</em> lui sert un formulaire
-                  </li>
-                  <li>
-                    <strong>l'utilisateur</strong> le remplit et le soumet
-                  </li>
-                  <li>
-                    <em>le système</em> crée le compte selon les données soumises.
+                    <em>Le système</em> le déconnecte
                   </li>
               </ol>
             </td>
         </tr>
         <tr>
             <td>
-                scénario alternatif
+                Scénario alternatif
             </td>
             <td>
               <ul style="list-style: none" >
-                  <li>
-                      <strong>4.a</strong> les données du formulaire ne respectent pas les standards (identifiant déjà utilisé, mot de passe trop court, ou mot de passe confirmé différent): le système l'indique à l'utilisateur grâce à un petit encart rouge, et reste sur le formulaire
-                  </li>
+                    RAS
               </ul>
             </td>
         </tr>
         <tr>
             <td colspan="2">
-                <strong>fin et post-conditions</strong>
+                <strong>Fin et Post-Conditions</strong>
             </td>
         </tr>
         <tr>
             <td>
-                fin
+                Fin
             </td>
             <td>
-                <strong>l'utilisateur</strong> est redirigé vers la home page
+                <strong>L'utilisateur<strong> est sur la homepage
             </td>
         </tr>
         <tr>
             <td>
-                post-conditions
+                Post-Conditions
             </td>
             <td>
-                utilisateur créé en base de données.
+                <strong>L'utilisateur est déconnecté</strong>
             </td>
         </tr>
         <tr>
             <td colspan="2">
-                <strong>compléments</strong>
-            </td>
-            <td>
+                <strong>Compléments</strong>
             </td>
         </tr>
         <tr>
@@ -122,7 +112,7 @@
                 Ergonomie
             </td>
             <td>
-                ne pas attendre que le formulaire soit posté pour en afficher les contraintes non-respectées sur le mot de passe
+                le bouton de logout ne doit être affiché que si l'utilisateur est connecté
             </td>
         </tr>
         <tr>
@@ -135,7 +125,7 @@
         </tr>
         <tr>
             <td>
-                problème non-résolu
+                Problème non-résolu
             </td>
             <td>
                 RAS

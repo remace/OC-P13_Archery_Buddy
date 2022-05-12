@@ -1,5 +1,5 @@
 ## Package Authentification
-### UC-1 - créer un compte
+### UC-4 - Supprimer son compte
 
 <table>
     <tbody>
@@ -8,6 +8,7 @@
                 Acteurs Concernés
             </td>
             <td>
+                Utilisateurs ayant un compte
             </td>
         </tr>
         <tr>
@@ -15,6 +16,7 @@
                 Description
             </td>
             <td>
+                permet à un utilisateur de supprimer son compte
             </td>
         </tr>
         <tr>
@@ -22,6 +24,7 @@
                 Date
             </td>
             <td>
+                12/05/2022
             </td>
         </tr>
         <tr>
@@ -29,6 +32,7 @@
                 Auteur
             </td>
             <td>
+                Rémi TAUVEL
             </td>
         </tr>
         <tr>
@@ -36,6 +40,7 @@
                 Pré-conditions
             </td>
             <td>
+                <strong>L'utilisateur</strong> est connecté 
             </td>
         </tr>
         <tr>
@@ -43,6 +48,7 @@
                 Démarrage
             </td>
             <td>
+                <strong>L'utilisateur</strong> est sur sa page de profil
             </td>
         </tr>
         <tr>
@@ -52,11 +58,21 @@
         </tr>
         <tr>
             <td>
-                Scénario nominal
+                Sénario nominal
             </td>
             <td>
               <ol>
                   <li>
+                    <strong>L'utilisateur</strong> demande à supprimer son compte
+                  </li>
+                  <li>
+                    <em>Le système</em> demande confirmation
+                  </li>
+                  <li>
+                    <strong>L'utilisateur</strong> confirme
+                  </li>
+                  <li>
+                    <em>Le système</em> supprime toutes les données de l'utilisateur puis le supprime et enfin le déconnecte
                   </li>
               </ol>
             </td>
@@ -68,7 +84,11 @@
             <td>
               <ul style="list-style: none" >
                   <li>
-                      <strong>1.1</strong>
+                        <strong>3.a</strong> l'utilisateur annule la suppression -> retour à la page de profil
+                  </li>
+                  <li>
+                        <strong>Le système</strong> ne parvient pas à supprimer toutes les données de l'utilisateur
+                        -> il devra ne pas supprimer le compte, et prévenir l'utilisateur qu'il y a un problème, qu'il faut contacter le service d'administration.
                   </li>
               </ul>
             </td>
@@ -83,6 +103,7 @@
                 Fin
             </td>
             <td>
+            <strong>L'utilisateur</strong> est sur la homepage
             </td>
         </tr>
         <tr>
@@ -90,6 +111,7 @@
                 Post-Conditions
             </td>
             <td>
+                toutes les données de l'utilisateur sont supprimées, et il est déconnecté
             </td>
         </tr>
         <tr>
@@ -104,6 +126,7 @@
                 Ergonomie
             </td>
             <td>
+                RAS
             </td>
         </tr>
         <tr>
@@ -111,6 +134,7 @@
                 Performances attendues
             </td>
             <td>
+                RAS
             </td>
         </tr>
         <tr>
@@ -118,6 +142,7 @@
                 Problème non-résolu
             </td>
             <td>
+                RAS
             </td>
         </tr>
     </tbody>

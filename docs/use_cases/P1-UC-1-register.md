@@ -1,5 +1,5 @@
 ## Package Authentification
-### UC-1 - se connecter à son compte
+### UC-1 - créer un compte
 
 <table>
     <tbody>
@@ -8,7 +8,7 @@
                 Acteurs Concernés
             </td>
             <td>
-                tout Utilisateur
+                Tout Utilisateur
             </td>
         </tr>
         <tr>
@@ -16,7 +16,7 @@
                 Description
             </td>
             <td>
-                permet à un utilisateur non-connecté de se connecter
+                permet à n'importe quel user de se créer un compte
             </td>
         </tr>
         <tr>
@@ -29,7 +29,7 @@
         </tr>
         <tr>
             <td>
-                Auteur
+                auteur
             </td>
             <td>
                 Rémi TAUVEL
@@ -40,7 +40,7 @@
                 Pré-conditions
             </td>
             <td>
-                Utilisateur non-connecté
+                Aucune
             </td>
         </tr>
         <tr>
@@ -48,71 +48,71 @@
                 Démarrage
             </td>
             <td>
-                <strong>l'utilisateur<strong> sur trouve sur la homepage
+                <strong>l'utilisateur</strong> est non-connecté, sur la homepage
             </td>
         </tr>
         <tr>
             <td colspan="2">
-                <strong>dialogue</strong>
+                <strong>Dialogue</strong>
             </td>
         </tr>
         <tr>
             <td>
-                scénario nominal
+                Scénario nominal
             </td>
             <td>
               <ol>
                   <li>
-                    <strong>L'utilisateur</strong> demande à se connecter à son compte
+                    <strong>l'utilisateur</strong> clique sur un bouton "sign up" in dans la barre de titre
                   </li>
                   <li>
-                    <em>Le système</em> sert un formulaire pour lui demander identifiant et mot de passe
+                    <em>le système</em> lui sert un formulaire
                   </li>
                   <li>
-                    <strong>L'utilisateur</strong> entre les données nécessaires
+                    <strong>l'utilisateur</strong> le remplit et le soumet
                   </li>
                   <li>
-                    <em>le système</em> vérifie ses identifiant, et le renvoie vers la homepage
+                    <em>le système</em> crée le compte selon les données soumises.
                   </li>
               </ol>
             </td>
         </tr>
         <tr>
             <td>
-                scénario alternatif
+                Scénario alternatif
             </td>
             <td>
               <ul style="list-style: none" >
                   <li>
-                      <strong>4.a</strong> l'utilisateur a donné de mauvais identifiants -> le système redirige sur le formulaire de l'étape 2, avec une popup expliquant que les identifiants sont peut-être erronés
+                      <strong>4.a</strong> les données du formulaire ne respectent pas les standards (identifiant déjà utilisé, mot de passe trop court, ou mot de passe confirmé différent): le système l'indique à l'utilisateur grâce à un petit encart rouge, et reste sur le formulaire
                   </li>
               </ul>
             </td>
         </tr>
         <tr>
             <td colspan="2">
-                <strong>fin et post-conditions</strong>
+                <strong>Fin et Post-Conditions</strong>
             </td>
         </tr>
         <tr>
             <td>
-                fin
+                Fin
             </td>
             <td>
-                <strong>L'utilisateur</strong> est sur la homepage
+                <strong>l'utilisateur</strong> est redirigé vers la home page
             </td>
         </tr>
         <tr>
             <td>
-                post-conditions
+                Post-Conditions
             </td>
             <td>
-              <strong>L'utilisateur</strong>, si existant, est connecté
+                utilisateur créé en base de données.
             </td>
         </tr>
         <tr>
             <td colspan="2">
-                <strong>compléments</strong>
+                <strong>Compléments</strong>
             </td>
             <td>
             </td>
@@ -122,7 +122,7 @@
                 Ergonomie
             </td>
             <td>
-              RAS
+                ne pas attendre que le formulaire soit posté pour en afficher les contraintes non-respectées sur le mot de passe
             </td>
         </tr>
         <tr>
@@ -135,7 +135,7 @@
         </tr>
         <tr>
             <td>
-                problème non-résolu
+                Problème non-résolu
             </td>
             <td>
                 RAS
