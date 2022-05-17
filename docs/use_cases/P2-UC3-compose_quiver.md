@@ -1,5 +1,5 @@
 ## Package Quiver
-### UC-1 - composer un carquois
+### UC-3 - composer un carquois
 
 <table>
     <tbody>

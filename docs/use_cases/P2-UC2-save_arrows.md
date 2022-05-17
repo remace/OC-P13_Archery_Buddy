@@ -1,5 +1,5 @@
 ## Package Quiver
-### UC-1 - créer une session de composition de carquois
+### UC-2 - saisir les données des flèches
 
 <table>
     <tbody>
