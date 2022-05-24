@@ -1,8 +1,8 @@
 ## Package Authentification
-### UC-1 - créer un arc
+### UC-2 - consulter un arc
 
 <table>
-    <tbody>//
+    <tbody>
         <tr>
             <td>
                 Acteurs Concernés
@@ -16,7 +16,7 @@
                 Description
             </td>
             <td>
-                Permet à l'utilisateur de renseigner les données de son arc (matériel)
+                Permet à l'utilisateur de modifier les données de son arc
             </td>
         </tr>
         <tr>
@@ -24,7 +24,7 @@
                 Date
             </td>
             <td>
-                19/05/2022
+                24/05/2022
             </td>
         </tr>
         <tr>
@@ -63,16 +63,16 @@
             <td>
               <ol>
                   <li>
-                    <strong>L'utilisateur</strong> demande à créer un arc
+                    <strong>L'utilisateur</strong> demande à modifier un arc
                   </li>
                   <li>
-                    <em>Le système</em> lui propose un formulaire
+                    <em>Le système</em> redirige vers la un formulaire pré-rempli avec les valeurs actuelles
                   </li>
                   <li>
-                    <strong>L'utilisateur</strong> le remplit et le soumet
+                    <strong>L'utilisateur</strong> remplit et valide le formulaire
                   </li>
                   <li>
-                    le système enregistre les données et redirige vers la page de listing du matériel
+                    le système impacte les changements demandés sur la base de données et redirige vers la page qui liste le matériel
                   </li>
               </ol>
             </td>
@@ -102,7 +102,7 @@
                 Post-Conditions
             </td>
             <td>
-                nouvel arc enregistré en base de données
+                RAS
             </td>
         </tr>
         <tr>
@@ -115,7 +115,14 @@
                 Ergonomie
             </td>
             <td>
-                RAS
+                <ul>
+                    <li>
+                        un bouton "modifier" par ligne dans la liste des matériels
+                    </li>
+                    <li> 
+                        popup qui liste les changements lors de la soumission du formulaire
+                    </li>
+                </ul>
             </td>
         </tr>
         <tr>

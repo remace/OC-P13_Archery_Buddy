@@ -1,5 +1,5 @@
 ## Package Authentification
-### UC-1 - créer un arc
+### UC-1 - supprimer un arc
 
 <table>
     <tbody>//
@@ -16,7 +16,7 @@
                 Description
             </td>
             <td>
-                Permet à l'utilisateur de renseigner les données de son arc (matériel)
+                Permet à l'utilisateur de supprimer les données de son arc (matériel)
             </td>
         </tr>
         <tr>
@@ -63,16 +63,10 @@
             <td>
               <ol>
                   <li>
-                    <strong>L'utilisateur</strong> demande à créer un arc
+                    <strong>L'utilisateur</strong> demande à supprimer un arc
                   </li>
                   <li>
-                    <em>Le système</em> lui propose un formulaire
-                  </li>
-                  <li>
-                    <strong>L'utilisateur</strong> le remplit et le soumet
-                  </li>
-                  <li>
-                    le système enregistre les données et redirige vers la page de listing du matériel
+                    le système supprime les données de l'arc et redirige vers la page de listing du matériel
                   </li>
               </ol>
             </td>
@@ -102,7 +96,7 @@
                 Post-Conditions
             </td>
             <td>
-                nouvel arc enregistré en base de données
+                l'arc est supprimé en base de données
             </td>
         </tr>
         <tr>
@@ -115,7 +109,7 @@
                 Ergonomie
             </td>
             <td>
-                RAS
+                popup de confirmation
             </td>
         </tr>
         <tr>
