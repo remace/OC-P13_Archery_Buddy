@@ -1,0 +1,32 @@
+@startuml
+
+hide circle
+
+entity "user" as User{
+
+}
+
+entity "arrow" as Arrow {
+
+}
+
+entity "quiver" as Quiver{
+
+}
+
+entity "bow" as Bow{
+
+}
+
+entity "practicesession" as PracticeSession{
+
+}
+
+User ||--o{ Arrow
+User ||--o{ Bow
+User ||--o{ PracticeSession
+User ||--o{ Quiver
+
+Arrow }|--|{Quiver
+
+@enduml
