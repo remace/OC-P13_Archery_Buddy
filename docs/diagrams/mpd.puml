@@ -3,7 +3,7 @@
 hide circle
 
 entity "user" as User{
-
+    
 }
 
 entity "arrow" as Arrow {
@@ -18,15 +18,21 @@ entity "bow" as Bow{
 
 }
 
-entity "practicesession" as PracticeSession{
+entity "practice session" as PracticeSession{
+
+}
+
+entity "stats session" as StatsSession{
 
 }
 
 User ||--o{ Arrow
 User ||--o{ Bow
 User ||--o{ PracticeSession
+User ||--o{ StatsSession
 User ||--o{ Quiver
 
 Arrow }|--|{Quiver
-
+Arrow }|--{ PracticeSession
+Arrow }|--{ StatsSession
 @enduml
