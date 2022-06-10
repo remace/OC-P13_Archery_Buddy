@@ -35,4 +35,7 @@ User ||--o{ Quiver
 Arrow }|--|{Quiver
 Arrow }|--{ PracticeSession
 Arrow }|--{ StatsSession
+
+Bow ||--{ PracticeSession
+Bow ||--{ StatsSession
 @enduml
