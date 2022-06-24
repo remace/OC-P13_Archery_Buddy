@@ -1,0 +1,38 @@
+@startuml mpd
+
+hide circle
+
+entity "user" as User{
+    
+}
+
+entity "arrow" as Arrow {
+
+}
+
+entity "quiver" as Quiver{
+
+}
+
+entity "bow" as Bow{
+
+}
+
+entity "practice session" as PracticeSession{
+
+}
+
+entity "stats session" as StatsSession{
+
+}
+
+User ||--o{ Arrow : shoots with >
+User ||--o{ Bow : shoots with >
+User ||--o{ PracticeSession : practices in >
+User ||--o{ StatsSession : gives data >
+User ||--o{ Quiver : selects arrows for <
+
+Arrow }|--|{ Quiver : belongs in >
+Arrow }|--o{ PracticeSession : saves data <
+Arrow }|--o{ StatsSession : saves data <
+@enduml

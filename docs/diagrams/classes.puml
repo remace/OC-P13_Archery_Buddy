@@ -1,0 +1,208 @@
+@startuml mpd
+
+left to right direction
+
+entity "user" as User{
+    pseudo
+    password
+    FirstName
+    LastName
+}
+
+entity "arrow" as Arrow {
+    id
+    user_id
+    encoche
+    ' pour l'empennace
+        empennage_type 
+        empennage_marque
+        empennage_couleur
+        empennage_couleur_coq
+        empennage_taille
+        empennage_glue_angle
+        empennage_nock_distance
+    ' pointe
+        pointe_marque
+        pointe_forme
+        pointe_poids
+    'tube
+        marque
+        materiau
+        longueur
+        spine
+    not_broken
+    calculate_barycentre(stats_session_id)
+}   
+
+/'
+note left of Arrow::empennage_type
+    Enum: spin wings / vanes / flu-flu
+end note
+'/
+
+entity "lot" as Lot{
+    quiver_id
+    arrow_id
+}
+
+entity "quiver" as Quiver{
+    id
+    user_id
+    length of field
+    quiver_size
+    quiver_default_arrow_number
+}
+/'
+note bottom of Quiver::quiver_size
+    size is the amount of arrow in a volley
+end note
+
+note bottom of Quiver::quiver_default_arrow_number
+    amount of arrow in the quiver dedicated to replace broken arrows
+end note
+'/
+
+Arrow - Quiver
+(Arrow, Quiver) .. Lot
+
+entity "practice session" as PracticeSession{
+    id
+    user_id
+    date and time
+    bow_id
+    enum interior or exterior
+    field_length
+    comment
+}
+
+
+entity "practice_shots" as PracticeShots{
+    arrow_id
+    Practice_session_id
+    volley_index
+    value
+}
+
+PracticeSession - Bow
+Arrow -- PracticeSession
+(Arrow, PracticeSession) .. PracticeShots
+
+
+entity "stats session" as StatsSession{
+    id
+    user_id
+    date and time
+    enum interior or exterior
+    bow_id
+    field_length
+    quiver_id
+    comment
+    calculate_best_quiver()
+}
+
+entity "stats_shots" as StatsShots{
+    arrow_id
+    stats_session_id
+    float pos_x
+    float pos_y
+}
+
+StatsSession -- Bow
+Arrow - StatsSession
+(Arrow, StatsSession) .. StatsShots
+
+
+abstract "bow" as Bow{
+    id
+    user_id
+    power
+    size
+}
+
+entity "classical bow" as ClassicalBow{
+    ' riser
+        riser_brand
+        riser_size
+        riser_laterality
+    ' limbs
+        limbs_brand
+        limbs_strength
+        limbs_size
+    ' string
+        string_brand
+        string_material
+        string_strand_number
+        string_turn_number
+        band
+        tiller
+        nockset offset
+    scope /' later: save x and y data on scope for distances'/
+    ' arrow stand
+        RF_marque
+        RF_type
+    ' clicker
+        clicker
+    ' berger button
+        BB_Brand
+        BB_spring
+    ' stabilization
+        stabilizer
+        dampeners
+}
+
+entity "barebow" as BareBow{
+    ' riser
+        riser_brand
+        riser_size
+        riser_laterality
+    ' limbs
+        limbs_brand
+        limbs_strength
+        limbs_size
+    ' string
+        string_brand
+        string_material
+        string_strand_number
+        string_turn_number
+        band
+        tiller
+        nockset offset
+}
+
+entity "compoundBow" as CompoundBow{
+    id
+    brand
+    size
+    drop_power
+    reach
+    'RF
+        RF_brand
+        RF_type
+        RF_x
+        RF_y
+        RF_z
+        RF_strength
+    'scope
+        scope_brand
+        scope_x
+        scope_y
+        scope_z
+        scope_zoom
+    ' stabilization
+        stabilizer
+        dampeners
+}
+
+/'
+enum "bow type" as BowType{
+    classical
+    Compound
+    barebow
+}
+'/
+
+Bow <|-- CompoundBow
+Bow <|-- ClassicalBow
+Bow <|-- BareBow
+
+@enduml
