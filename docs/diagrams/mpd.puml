@@ -26,13 +26,13 @@ entity "stats session" as StatsSession{
 
 }
 
-User ||--o{ Arrow
-User ||--o{ Bow
-User ||--o{ PracticeSession
-User ||--o{ StatsSession
-User ||--o{ Quiver
+User ||--o{ Arrow  shoots with >
+User ||--o{ Bow : shoots with >
+User ||--o{ PracticeSession : practices in >
+User ||--o{ StatsSession : gives data >
+User ||--o{ Quiver : selects arrows for <
 
-Arrow }|--|{Quiver
-Arrow }|--{ PracticeSession
-Arrow }|--{ StatsSession
+Arrow }|--|{ Quiver : belongs in >
+Arrow }|--o{ PracticeSession : saves data <
+Arrow }|--o{ StatsSession : saves data <
 @enduml
