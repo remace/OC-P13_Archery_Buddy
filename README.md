@@ -15,13 +15,16 @@ this is a studies final project on helping archers on 3 manners:
 
 ## dependancies
 
-WIP
+[poetry dependancies](/pyproject.toml)
 
 ## setup and configuration 
 
 ### for a local development installation
 
-WIP
+```bash
+pipx install poetry
+
+```
 
 ### for deployment
 
