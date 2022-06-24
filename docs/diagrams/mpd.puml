@@ -1,4 +1,4 @@
-@startuml
+@startuml mpd
 
 hide circle
 
@@ -26,7 +26,7 @@ entity "stats session" as StatsSession{
 
 }
 
-User ||--o{ Arrow  shoots with >
+User ||--o{ Arrow : shoots with >
 User ||--o{ Bow : shoots with >
 User ||--o{ PracticeSession : practices in >
 User ||--o{ StatsSession : gives data >
