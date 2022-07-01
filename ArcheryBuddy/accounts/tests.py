@@ -10,6 +10,7 @@ class UsersManagersTests(TestCase):
         self.assertTrue(user.is_active)
         self.assertFalse(user.is_staff)
         self.assertFalse(user.is_superuser)
+        self.assertEquals(f'{user}',user.pseudo)
         try:
             self.assertIsNone(user.email)
         except AttributeError:
@@ -18,6 +19,7 @@ class UsersManagersTests(TestCase):
             User.objects.create_user(pseudo='')
         with self.assertRaises(ValueError):
             User.objects.create_user(pseudo='', password="foo")
+        
 
     def test_create_superuser(self):
         User = get_user_model()

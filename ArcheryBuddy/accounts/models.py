@@ -95,3 +95,8 @@ class User(AbstractBaseUser):
     def has_module_perms(self, app_label):
         """ returns whether the User has module permission or not """
         return True
+
+    class Meta:
+        verbose_name: "user"
+        verbose_name_plural: "users"
+        
