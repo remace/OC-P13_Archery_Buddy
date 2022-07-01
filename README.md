@@ -15,13 +15,21 @@ this is a studies final project on helping archers on 3 manners:
 
 ## dependancies
 
-WIP
+[poetry dependancies](/pyproject.toml)
 
 ## setup and configuration 
 
 ### for a local development installation
 
-WIP
+```bash
+git clone this project
+install pipx with your packer manager
+pipx install poetry
+cd <this project depository>/ArcheryBuddy
+poetry install
+poetry shell
+./manage.py migrate
+```
 
 ### for deployment
 
@@ -29,4 +37,7 @@ WIP
 
 ## test procedure
 
-WIP
+same procedure than for development installation, then end with:
+```bash
+./manage.py/migrate
+```
