@@ -6,35 +6,47 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 class UserManager(BaseUserManager):
     """ User and superuser factory class
     """
-    def create_user(self, pseudo, password=None, is_active=True, is_staff=False, is_admin=False):
+    def create_user(self, pseudo, password=None, **extra_fields):
         """ create user """
+        extra_fields.setdefault('is_staff',False)
+        extra_fields.setdefault('is_admin',False)
+        extra_fields.setdefault('is_superuser',False)  
         # authentification keys verification
         if not pseudo:
-            raise ValueError('Users must have email Address')
+            raise ValueError('Users must have Pseudo')
         if not password:
             raise ValueError('User must have Password')
 
         user_obj = self.model(
             pseudo=pseudo,
+            **extra_fields
         )
 
         user_obj.set_password(password)
-        user_obj.is_active = is_active
-        user_obj.is_staff = is_staff
-        user_obj.is_admin = is_admin
+        user_obj.is_active = True
+        user_obj.is_staff = extra_fields['is_staff']
+        user_obj.is_admin = extra_fields['is_admin']
+        user_obj.is_superuser = extra_fields['is_superuser']
         user_obj.save(using=self._db)
         return user_obj
 
 
-    def create_superuser(self, email, password=None):
+    def create_superuser(self, pseudo, password=None, **extra_fields):
         """ create super user """
-        user = self.create_user(
-            email,
+        extra_fields.setdefault('is_staff',True)
+        extra_fields.setdefault('is_admin',True)
+        extra_fields.setdefault('is_superuser',True)        
+        
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Superuser must have is_staff=True.')
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('Superuser must have is_superuser=True.')
+        
+        return self.create_user(
+            pseudo,
             password=password,
-            is_staff=True,
-            is_admin=True
+            **extra_fields
         )
-        return user
 
 
 class User(AbstractBaseUser):
@@ -43,7 +55,7 @@ class User(AbstractBaseUser):
     """
     first_name = models.CharField(max_length=32, blank=True, null=True)
     last_name = models.CharField(max_length=32, blank=True, null=True)
-    email= models.EmailField()
+    email= models.EmailField(blank=True, null=True)
     pseudo = models.CharField(unique=True, max_length=32, blank=True, null=True)
 
     # registration create and update fields
@@ -56,6 +68,7 @@ class User(AbstractBaseUser):
     # permissions
     is_staff = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
 
     objects = UserManager()
 
@@ -64,7 +77,7 @@ class User(AbstractBaseUser):
 
 
     def __str__(self):
-        return f"{self.email}"
+        return f"{self.pseudo}"
 
 
     def get_full_name(self) -> str:
