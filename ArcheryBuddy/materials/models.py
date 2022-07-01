@@ -20,6 +20,12 @@ class Arrow(models.Model):
         ('FLUFLU', 'flu-flu'),
     ]
 
+    TUBE_MATERIAL_CHOICES=[
+        ("CARBON", "carbone"),
+        ("ALU", "aluminium"),
+        ("WOOD", "bois"),
+    ]
+
 
     user = models.ForeignKey("accounts.User", verbose_name=_("user"), on_delete=models.CASCADE)
     # encoche
@@ -44,9 +50,13 @@ class Arrow(models.Model):
     tip_weight = models.CharField(max_length=60) # in grains
     # tube
     tube_brand = models.CharField(max_length=60)
-    tube_material = "carbon" # carbon, alu, wood...
+    tube_material = models.CharField(
+        max_length=10,
+        choices=TUBE_MATERIAL_CHOICES,
+        default=TUBE_MATERIAL_CHOICES[0]
+        )
     tube_length = models.FloatField()
     tube_spine = models.FloatField()
     tube_diameter = models.FloatField()
     # general attributes
-    not_broken = models.BooleanField()
+    not_broken = models.BooleanField(default=True)
