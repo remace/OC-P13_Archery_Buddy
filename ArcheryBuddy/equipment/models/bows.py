@@ -2,7 +2,7 @@ from django.db import models
 
 class Bow(models.Model):
     
-    LATERALITY_CHOICE = [
+    LATERALITY_CHOICES = [
         ('R', 'droitier'),
         ('L', 'gaucher')
     ]
@@ -24,8 +24,8 @@ class Bow(models.Model):
     user = user = models.ForeignKey("accounts.User", on_delete=models.CASCADE)
     power = models.IntegerField()
     laterality = models.CharField(max_length=10,
-        choices = LATERALITY_CHOICE,
-        default = LATERALITY_CHOICE[0]
+        choices = LATERALITY_CHOICES,
+        default = LATERALITY_CHOICES[0]
         )
     
     class Meta:

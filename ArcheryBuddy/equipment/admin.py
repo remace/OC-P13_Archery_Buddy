@@ -1,6 +1,6 @@
 from django.contrib import admin
-from materials.models.arrows import Arrow
-from materials.models.bows import HuntingBow, Barebow, CompoundBow, OlympicBow
+from equipment.models.arrows import Arrow
+from equipment.models.bows import HuntingBow, Barebow, CompoundBow, OlympicBow
 
 @admin.register(Arrow)
 class ArrowAdmin(admin.ModelAdmin):
