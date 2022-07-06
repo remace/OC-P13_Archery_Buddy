@@ -1,5 +1,7 @@
 from django.db import models
 from alternativeequipment.models.arrows import Arrow
+from django.core.validators import MinValueValidator, MaxValueValidator
+from .validators import validate_volley_id
 
 from datetime import datetime
 
@@ -17,8 +19,8 @@ class RecordSession(models.Model):
         choices= CONDITIONS_CHOICE,
         default= CONDITIONS_CHOICE[0]
     )
-    distance = models.IntegerField("distance", null=True)
-    comment = models.CharField("commentaires", max_length=255)
+    distance = models.IntegerField("distance")
+    comment = models.CharField("commentaires", max_length=255, null=True)
     
     def __str__(self):
         return f'{self.datetime} - {self.conditions} - {self.distance}'
@@ -31,6 +33,7 @@ class RecordSession(models.Model):
 class PracticeRecordSession(RecordSession):
     
     arrows = models.ManyToManyField("alternativeequipment.Arrow", through='PracticeRecord')
+    number_of_volleys = models.IntegerField("nombre de volées")
 
     def __str__(self):
         datetime_as_string = self.datetime.strftime("%d/%m/%Y - %H:%M")
@@ -43,11 +46,11 @@ class PracticeRecordSession(RecordSession):
 class PracticeRecord(models.Model):
     arrow = models.ForeignKey("alternativeequipment.Arrow", on_delete=models.CASCADE)
     practice_session = models.ForeignKey("records.PracticeRecordSession", on_delete=models.CASCADE)
-    
+    score = models.IntegerField("score", validators=[MinValueValidator(0), MaxValueValidator(10)])
+    volley = models.IntegerField("volée", validators=[MinValueValidator(0), MaxValueValidator(20)]) # TODO validate_volley_id(self, practice_session) # don't know how to link to session's volley_number...
 
+    def __str__(self):
+        return f'arrow {self.arrow.id}@volée {self.volley} --> {self.score}'
 
-# class StatsRecordSession(RecordSession):
-
-#     class Meta:
-#         verbose_name = "Session de statistiques"
-#         verbose_name_plural = "Sessions de statistiques"
+    class Meta:
+        unique_together=('arrow','volley','practice_session')
