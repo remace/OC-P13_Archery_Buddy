@@ -1,7 +1,10 @@
 from django.db import models
 from accounts.models import User
 
+
 class Nock(models.Model):
+
+    user = models.ForeignKey("accounts.User", related_name="alternative_nocks", on_delete=models.CASCADE)
     brand = models.CharField("encoche", max_length=60)
     color = models.CharField("couleur", max_length=60)
     size = models.CharField("couleur", max_length=10)
@@ -9,7 +12,7 @@ class Nock(models.Model):
 
     def __str__(self):
         return f"{self.brand} - {self.size} - {self.color}"
-    
+
     class Meta:
         verbose_name="Encoche"
         verbose_name_plural="Encoches"
@@ -40,6 +43,7 @@ class Feathering(models.Model):
         default=FEATHERING_TYPE_CHOICES[0]
         )
 
+    user = models.ForeignKey("accounts.User", related_name="alternative_featherings", on_delete=models.CASCADE)
     
     brand = models.CharField("marque de plumes", max_length=60)
     color = models.CharField("couleur d'empennage", max_length=60)
@@ -57,6 +61,7 @@ class Feathering(models.Model):
         verbose_name_plural = "Empennages"
 
 class Tip(models.Model):
+    user = models.ForeignKey("accounts.User", related_name="alternative_tips", on_delete=models.CASCADE)
     brand = models.CharField("marque", max_length=60)
     profile = models.CharField("profil", max_length=60)
     weight = models.CharField("masse (grains)", max_length=60)
@@ -69,6 +74,7 @@ class Tip(models.Model):
         verbose_name_plural = "Pointes"
 
 class Tube(models.Model):
+    user = models.ForeignKey("accounts.User", related_name="alternative_tubes", on_delete=models.CASCADE)
     TUBE_MATERIAL_CHOICES=[
         ("CARBON", "carbone"),
         ("ALU", "aluminium"),
@@ -93,7 +99,7 @@ class Tube(models.Model):
         verbose_name_plural = "Tubes"
 
 class Arrow(models.Model):
-    # user = models.ForeignKey("accounts.User", on_delete=models.CASCADE)
+    user = models.ForeignKey("accounts.User", related_name="alternative_arrows", on_delete=models.CASCADE)
     nock = models.ForeignKey("alternativeequipment.Nock", on_delete=models.CASCADE)
     feathering = models.ForeignKey("alternativeequipment.Feathering", on_delete=models.CASCADE)
     tip = models.ForeignKey("alternativeequipment.Tip", on_delete=models.CASCADE)
