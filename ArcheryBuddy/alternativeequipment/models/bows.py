@@ -1,4 +1,5 @@
 from django.db import models
+from accounts.models import User
 
 class Bow(models.Model):
     
@@ -21,38 +22,45 @@ class Bow(models.Model):
         ("P", "plastic"),
     ]
 
-    user = models.ForeignKey("accounts.User", on_delete=models.CASCADE)
-    power = models.IntegerField()
-    laterality = models.CharField(max_length=10,
+    power = models.IntegerField("Puissance de l'arc")
+    laterality = models.CharField("latéralité", max_length=10,
         choices = LATERALITY_CHOICES,
         default = LATERALITY_CHOICES[0]
         )
     
+    
     class Meta:
         abstract = True
 
-
 class Riser(models.Model):
+    user = models.ForeignKey("accounts.User", related_name="alternativeRiser", on_delete=models.CASCADE)
     brand = models.CharField("Marque", max_length=30)
-    size = models.IntegerField("Taille")
+    size = models.IntegerField("Taille (in.)")
     color = models.CharField("Couleur", max_length=30)
     grip = models.CharField("grip", max_length=30)
 
     def __str__(self):
         return f'{self.brand} - {self.color}'
-    
 
+    class Meta:
+        verbose_name="poignée"
+        verbose_name_plural="poignées"    
 
 class Limbs(models.Model):
+    user = models.ForeignKey("accounts.User", related_name="alternativeLimbs", on_delete=models.CASCADE)
     brand = models.CharField("Marque", max_length=30)
-    power = models.Integer_Field("Puissance")
-    size = models.IntegerField('taille (")')
+    power = models.IntegerField("Puissance")
+    size = models.IntegerField('taille (in.)')
 
     def __str__(self):
-        return f'{brand}'
+        return f'{self.brand}'
 
+    class Meta:
+        verbose_name="Branche"
+        verbose_name_plural="Branches" 
 
 class EquipmentString(models.Model):
+    user = models.ForeignKey("accounts.User", related_name="alternativeString", on_delete=models.CASCADE)
     brand = models.CharField(max_length=30)
     material = models.CharField(max_length=10,
         choices = Bow.STRING_MATERIAL_CHOICE,
@@ -61,43 +69,165 @@ class EquipmentString(models.Model):
     number_of_strands = models.IntegerField("Nombre de brins")
 
     def __str__(self):
-        return f'{self.id}: {self.brand} - {self.number_of_strands}'
+        return f'{self.brand} - {self.number_of_strands} brins'
 
+    class Meta:
+        verbose_name="Corde"
+        verbose_name_plural="Cordes" 
+
+class ArrowRest(models.Model):
+    user = models.ForeignKey("accounts.User", related_name="alternativeArrowRest", on_delete=models.CASCADE)
+    brand = models.CharField(max_length=30)
+    rest_type = models.CharField(
+        max_length=2,
+        choices = Bow.ARROW_REST_TYPE_CHOICE,
+        default = Bow.ARROW_REST_TYPE_CHOICE[0])
+    
+    def __str__(self):
+        return f'{self.brand}: {self.rest_type}'
+    
+    class Meta:
+        verbose_name="Repose-Flèche"
+        verbose_name_plural="Repose-Flèche" 
+
+class BergerButton(models.Model):
+    ser = models.ForeignKey("accounts.User", related_name="alternativeBergerButton", on_delete=models.CASCADE)
+    brand = models.CharField(max_length=30)
+    color = models.CharField(max_length=30)
+    spring = models.CharField(max_length=30) # should be on the bow model? one tuning per bow with a single Berger Button
+    
+
+
+    def __str__(self):
+        return f'{self.brand} - {self.color}'
+
+    class Meta:
+        verbose_name="Berger"
+        verbose_name_plural="Bergers" 
+
+class Scope(models.Model):
+    user = models.ForeignKey("accounts.User", related_name="alternativeScope", on_delete=models.CASCADE)
+    brand = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.brand
+
+    class Meta:
+        verbose_name="Viseur"
+        verbose_name_plural="Viseurs" 
+    
+class Clicker(models.Model):
+    user = models.ForeignKey("accounts.User", related_name="alternativeClicker", on_delete=models.CASCADE)
+    brand = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.brand
+
+    class Meta:
+        verbose_name="Clicker"
+        verbose_name_plural="Clickers" 
+
+class Stabilisation(models.Model):
+    user = models.ForeignKey("accounts.User", related_name="alternativeStabilisation", on_delete=models.CASCADE)
+    brand =  models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.brand
+
+    class Meta:
+        verbose_name="Stabilisation"
+        verbose_name_plural="Stabilisations" 
+
+class Dampeners(models.Model):
+    user = models.ForeignKey("accounts.User", related_name="alternativeDampeners", on_delete=models.CASCADE)
+    front_brand = models.CharField(max_length=30)
+    rears_brand = models.CharField(max_length=30)
+
+    def __str__(self):
+        return f"avant: {self.front_brand} arrières: {self.rears_brand}"
+
+    class Meta:
+        verbose_name="Amortisseur"
+        verbose_name_plural="Amortisseurs" 
 
 class Barebow(Bow):
+    user = models.ForeignKey("accounts.User", related_name="alternativeBarebow", on_delete=models.CASCADE)
     riser = models.ForeignKey("alternativeequipment.Riser", on_delete=models.CASCADE)
     limbs = models.ForeignKey("alternativeequipment.Limbs", on_delete=models.CASCADE)
-    string = models.ForeignKey("alternativeequipment.EquipmentString", on_delete=models.CASCADE)
-    
-    # settings done on the bow or the string...
+    string = models.ForeignKey("alternativeequipment.EquipmentString", verbose_name="corde", on_delete=models.CASCADE)
+    arrow_rest = models.ForeignKey("alternativeequipment.ArrowRest", verbose_name="repose_flèche", on_delete=models.CASCADE)
+    berger_button = models.ForeignKey("alternativeequipment.BergerButton", verbose_name="Berger", on_delete=models.CASCADE)
+    # tuning parameters... maybe should be in an association table
     number_of_turns = models.IntegerField()
     nockset_offset = models.FloatField()
     band = models.FloatField()
     high_tiller = models.FloatField()
     low_tiller = models.FloatField()
 
+    class Meta:
+        verbose_name="Barebow"
+        verbose_name_plural="Barebows" 
 
-class OlympicBow(Bow):
+    def __str__(self):
+        return f'{self.riser.brand} - {self.limbs.brand} {self.power}'
     
-    barebow = ForeignKey("alternativeequipment.Barebow", on_delete=models.CASCADE)
+class OlympicBow(Bow):
+    user = models.ForeignKey("accounts.User", related_name="alternativeOlympicBow", on_delete=models.CASCADE)
+    barebow = models.ForeignKey("alternativeequipment.Barebow", on_delete=models.CASCADE)
+    scope = models.ForeignKey("alternativeequipment.Scope", on_delete=models.CASCADE)
+    clicker = models.ForeignKey("alternativeequipment.Clicker", on_delete=models.CASCADE)
+    stabilisation = models.ForeignKey("alternativeequipment.stabilisation", on_delete=models.CASCADE)
+    dampeners = models.ForeignKey("alternativeequipment.Dampeners", on_delete=models.CASCADE)
 
-    # viseur
-        # plus tard: réglages du viseur selon distance
-    scope_brand = models.CharField(max_length=30)
+    def __str__(self):
+        return f'{self.barebow.riser} - {self.barebow.limbs} - {self.power}'
 
-    # clicker
-    clicker_brand = models.CharField(max_length=30)
+    class Meta:
+        verbose_name="Arc Olympique"
+        verbose_name_plural="Arcs Olympiques"
 
-    # repose_flèches
-    arrow_rest_brand = models.CharField(max_length=30)
-    arrow_rest_type = models.CharField(
-        max_length=2,
-        choices = Bow.ARROW_REST_TYPE_CHOICE,
-        default = Bow.ARROW_REST_TYPE_CHOICE[0])
-    # berger_button
-    berger_button_brand = models.CharField(max_length=30)
-    berger_button_spring = models.CharField(max_length=30)
-    # stabilisation
-    stabilisation_brand = models.CharField(max_length=30)
-    # amortisseurs de stabilisation
-    dampeners = models.CharField(max_length=30)
+class CompoundArrowRest(ArrowRest):
+    ARROW_REST_TYPE_CHOICE=[
+        ("B","blade"),
+        ("MB","mobile blade" ),
+        ("A","aiguille"),
+        ("D","Donuts"),
+    ]
+
+    def __str__(self):
+        return f'{self.brand}: {self.rest_type}'
+
+    class Meta:
+        verbose_name="Repose-Flèche (Compound)"
+        verbose_name_plural="Repose-Flèche (Compound)" 
+
+class CompoundScope(Scope):
+    magnitude = models.FloatField(verbose_name="grossissement")
+    
+    def __str__(self):
+        return f'{super.__str__()} - {self.magnitude}X'
+
+    class Meta:
+        verbose_name="Viseur (Compound)"
+        verbose_name_plural="Viseurs (Compound)" 
+
+class CompoundBow(Bow):
+    user = models.ForeignKey("accounts.User", related_name="alternativeCompoundBow", on_delete=models.CASCADE)
+     #general stuff
+    bow_brand = models.CharField(max_length=30)
+    bow_axle_to_axle = models.IntegerField()
+    draw_weight = models.IntegerField()
+    draw_weight_dropped = models.IntegerField()
+    brace_height = models.FloatField() #simili-band
+    draw_length = models.FloatField() #allonge
+
+    arrow_rest = models.ForeignKey("alternativeequipment.CompoundArrowRest", verbose_name="repose_flèche", on_delete=models.CASCADE)
+    stabilisation = models.ForeignKey("alternativeequipment.Stabilisation", verbose_name="stabilisation", on_delete=models.CASCADE)
+    dampeners = models.ForeignKey("alternativeequipment.Dampeners", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.brand}'
+
+    class Meta:
+        verbose_name = "Arc à poulies"
+        verbose_name_plural = "Arcs à poulies"
