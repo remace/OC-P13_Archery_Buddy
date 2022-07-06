@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'accounts',
     'equipment',
     'alternativeequipment',
+    'records',
     ]
 
 MIDDLEWARE = [

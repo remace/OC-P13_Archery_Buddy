@@ -7,7 +7,7 @@ class Nock(models.Model):
     user = models.ForeignKey("accounts.User", related_name="alternative_nocks", on_delete=models.CASCADE)
     brand = models.CharField("encoche", max_length=60)
     color = models.CharField("couleur", max_length=60)
-    size = models.CharField("couleur", max_length=10)
+    size = models.CharField("taille", max_length=10)
     uses_nock_pin = models.BooleanField("monté sur nock pin", default=False)
 
     def __str__(self):
