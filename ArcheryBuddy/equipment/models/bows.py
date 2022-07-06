@@ -21,7 +21,7 @@ class Bow(models.Model):
         ("P", "plastic"),
     ]
 
-    user = user = models.ForeignKey("accounts.User", on_delete=models.CASCADE)
+    
     power = models.IntegerField()
     laterality = models.CharField(max_length=10,
         choices = LATERALITY_CHOICES,
@@ -33,6 +33,7 @@ class Bow(models.Model):
 
 
 class Barebow(Bow):
+    user = models.ForeignKey("accounts.User", related_name="Barebow", on_delete=models.CASCADE)
     # Poignée
     riser_brand = models.CharField(max_length=30)
     riser_size = models.IntegerField()
@@ -55,7 +56,7 @@ class Barebow(Bow):
 
 
 class OlympicBow(Bow):
-    
+    user = models.ForeignKey("accounts.User", related_name="Olympicbow", on_delete=models.CASCADE)
     # Poignée
     riser_brand = models.CharField(max_length=30)
     riser_size = models.IntegerField()
@@ -131,16 +132,3 @@ class CompoundBow(Bow):
     stabilisation_brand = models.CharField(max_length=30)
     # amortisseurs de stabilisation
     dampeners = models.CharField(max_length=30)
-
-class HuntingBow(Bow):
-    bow_brand = models.CharField(max_length=30)
-    string_brand = models.CharField(max_length=30)
-    string_material = models.CharField(max_length=10,
-        choices = Bow.STRING_MATERIAL_CHOICE,
-        default = Bow.STRING_MATERIAL_CHOICE[0]
-        )
-    string_number_of_strands = models.IntegerField()
-    string_number_of_turns = models.IntegerField()
-    nockset_offset = models.FloatField()
-    band = models.FloatField()
-    string_dampeners = models.CharField(max_length=30)

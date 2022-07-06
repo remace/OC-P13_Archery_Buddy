@@ -1,6 +1,6 @@
 from django.contrib import admin
 from equipment.models.arrows import Arrow
-from equipment.models.bows import HuntingBow, Barebow, CompoundBow, OlympicBow
+from equipment.models.bows import Barebow, CompoundBow, OlympicBow
 
 @admin.register(Arrow)
 class ArrowAdmin(admin.ModelAdmin):
@@ -51,8 +51,4 @@ class CompoundBowAdmin(admin.ModelAdmin):
 
 @admin.register(Barebow)
 class BarebowAdmin(admin.ModelAdmin):
-    pass
-
-@admin.register(HuntingBow)
-class HuntingBowAdmin(admin.ModelAdmin):
     pass
