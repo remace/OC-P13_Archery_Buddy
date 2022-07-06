@@ -10,6 +10,9 @@ class Nock(models.Model):
     def __str__(self):
         return f"{self.brand} - {self.size} - {self.color}"
     
+    class Meta:
+        verbose_name="Encoche"
+        verbose_name_plural="Encoches"
 
 class Feathering(models.Model):
 
@@ -49,6 +52,9 @@ class Feathering(models.Model):
     def __str__(self):
         return f"{self.brand} - {self.cock_color} - {self.color}"
 
+    class Meta:
+        verbose_name = "Empennage"
+        verbose_name_plural = "Empennages"
 
 class Tip(models.Model):
     brand = models.CharField("marque", max_length=60)
@@ -58,6 +64,9 @@ class Tip(models.Model):
     def __str__(self):
         return f"{self.brand} - {self.profile} - {self.weight}"
 
+    class Meta:
+        verbose_name = "Pointe"
+        verbose_name_plural = "Pointes"
 
 class Tube(models.Model):
     TUBE_MATERIAL_CHOICES=[
@@ -79,6 +88,9 @@ class Tube(models.Model):
     def __str__(self):
         return f"{self.brand} - {self.material} - {self.spine} - {self.tube_length}"
 
+    class Meta:
+        verbose_name = "Tube"
+        verbose_name_plural = "Tubes"
 
 class Arrow(models.Model):
     # user = models.ForeignKey("accounts.User", on_delete=models.CASCADE)
@@ -90,4 +102,8 @@ class Arrow(models.Model):
 
     def __str__(self):
         return f"{self.tube.brand} - {self.feathering.cock_color}/{self.feathering.color} - {self.tube.tube_length}"
+
+    class Meta:
+        verbose_name = "Flèche"
+        verbose_name_plural = "Flèches"
     
