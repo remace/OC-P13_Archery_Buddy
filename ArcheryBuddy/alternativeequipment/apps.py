@@ -2,5 +2,5 @@ from django.apps import AppConfig
 
 
 class AlternativeEquipmentConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = 'alternativeequipment'
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "alternativeequipment"

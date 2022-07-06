@@ -8,49 +8,67 @@ from datetime import datetime
 
 class RecordSession(models.Model):
 
-    CONDITIONS_CHOICE = [
-        ("INT", "Intérieur"),
-        ("EXT", "Extérieur")
-    ]
+    CONDITIONS_CHOICE = [("INT", "Intérieur"), ("EXT", "Extérieur")]
 
     user = models.ForeignKey("accounts.User", on_delete=models.CASCADE)
     datetime = models.DateTimeField("date et heure", auto_now=True, auto_now_add=False)
-    conditions = models.CharField(max_length=3,
-        choices= CONDITIONS_CHOICE,
-        default= CONDITIONS_CHOICE[0]
+    conditions = models.CharField(
+        max_length=3, choices=CONDITIONS_CHOICE, default=CONDITIONS_CHOICE[0]
     )
     distance = models.IntegerField("distance")
     comment = models.CharField("commentaires", max_length=255, null=True)
-    
+
     def __str__(self):
-        return f'{self.datetime} - {self.conditions} - {self.distance}'
-    
+        return f"{self.datetime} - {self.conditions} - {self.distance}"
 
     class Meta:
         abstract = True
 
 
 class PracticeRecordSession(RecordSession):
-    
-    arrows = models.ManyToManyField("alternativeequipment.Arrow", through='PracticeRecord')
+
+    arrows = models.ManyToManyField(
+        "alternativeequipment.Arrow", through="PracticeRecord"
+    )
     number_of_volleys = models.IntegerField("nombre de volées")
+
+    def get_total_score(self) -> int:
+        """gets the total score of a training practice
+
+        Returns:
+            int: total score of this training practice
+        """
+        arrows = self.arrows.through.objects.all()
+        sum = 0
+        for arrow in arrows:
+            sum += arrow.score
+        return sum
 
     def __str__(self):
         datetime_as_string = self.datetime.strftime("%d/%m/%Y - %H:%M")
-        return f'entrainement: {datetime_as_string} - {self.conditions} - {self.distance}m'
+        return (
+            f"entrainement: {datetime_as_string} - {self.conditions} - {self.distance}m"
+        )
 
     class Meta:
         verbose_name = "Session d'entrainement"
         verbose_name_plural = "Sessions d'entrainement"
 
+
 class PracticeRecord(models.Model):
     arrow = models.ForeignKey("alternativeequipment.Arrow", on_delete=models.CASCADE)
-    practice_session = models.ForeignKey("records.PracticeRecordSession", on_delete=models.CASCADE)
-    score = models.IntegerField("score", validators=[MinValueValidator(0), MaxValueValidator(10)])
-    volley = models.IntegerField("volée", validators=[MinValueValidator(0), MaxValueValidator(20)]) # TODO validate_volley_id(self, practice_session) # don't know how to link to session's volley_number...
+    practice_session = models.ForeignKey(
+        "records.PracticeRecordSession", on_delete=models.CASCADE
+    )
+    score = models.IntegerField(
+        "score", validators=[MinValueValidator(0), MaxValueValidator(10)]
+    )
+    volley = models.IntegerField(
+        "volée", validators=[MinValueValidator(0), MaxValueValidator(20)]
+    )  # TODO validate_volley_id(self, practice_session) # don't know how to link to session's volley_number...
 
     def __str__(self):
-        return f'arrow {self.arrow.id}@volée {self.volley} --> {self.score}'
+        return f"arrow {self.arrow.id}@volée {self.volley} --> {self.score}"
 
     class Meta:
-        unique_together=('arrow','volley','practice_session')
+        unique_together = ("arrow", "volley", "practice_session")
