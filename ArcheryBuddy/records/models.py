@@ -72,7 +72,7 @@ class PracticeRecord(models.Model):
 
 class StatsRecordSession(RecordSession):
 
-    arrows = models.ManyToManyField("alternativeequipment.Arrow", through="StatsRecord")
+    arrows = models.ManyToManyField("equipment.Arrow", through="StatsRecord")
 
     def __str__(self):
         datetime_as_string = self.session_datetime.strftime("%d/%m/%Y - %H:%M")
@@ -87,7 +87,7 @@ class StatsRecordSession(RecordSession):
 
 class StatsRecord(models.Model):
 
-    arrow = models.ForeignKey("alternativeequipment.Arrow", on_delete=models.CASCADE)
+    arrow = models.ForeignKey("equipment.Arrow", on_delete=models.CASCADE)
     practice_session = models.ForeignKey(
         "records.StatsRecordSession", on_delete=models.CASCADE
     )
