@@ -1,0 +1,12 @@
+{
+    "python.linting.pylintArgs": [
+        "--load-plugins",
+        "pylint_django",
+        "--django-settings-module",
+        "DjangoConf.settings",
+        "--disable",
+        "missing-class-docstring",
+        "--disable",
+        "missing-module-docstring"
+    ]
+}
