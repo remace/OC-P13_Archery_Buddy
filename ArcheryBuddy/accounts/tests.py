@@ -3,7 +3,10 @@ from django.test import TestCase
 
 
 class UsersManagersTests(TestCase):
+    """test class on User creation"""
+
     def test_create_user(self):
+        """test on create_user function"""
         User = get_user_model()
         user = User.objects.create_user(
             pseudo="pseudo_de_test", password="password_de_test"
@@ -12,7 +15,7 @@ class UsersManagersTests(TestCase):
         self.assertTrue(user.is_active)
         self.assertFalse(user.is_staff)
         self.assertFalse(user.is_superuser)
-        self.assertEquals(f"{user}", user.pseudo)
+        self.assertEqual(f"{user}", user.pseudo)
         try:
             self.assertIsNone(user.email)
         except AttributeError:

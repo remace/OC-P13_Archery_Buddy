@@ -24,9 +24,7 @@ class RecordSession(models.Model):
 
 class PracticeRecordSession(RecordSession):
 
-    arrows = models.ManyToManyField(
-        "alternativeequipment.Arrow", through="PracticeRecord"
-    )
+    arrows = models.ManyToManyField("equipment.Arrow", through="PracticeRecord")
     number_of_volleys = models.IntegerField("nombre de volées")
 
     def get_total_score(self) -> int:
@@ -53,7 +51,7 @@ class PracticeRecordSession(RecordSession):
 
 
 class PracticeRecord(models.Model):
-    arrow = models.ForeignKey("alternativeequipment.Arrow", on_delete=models.CASCADE)
+    arrow = models.ForeignKey("equipment.Arrow", on_delete=models.CASCADE)
     practice_session = models.ForeignKey(
         "records.PracticeRecordSession", on_delete=models.CASCADE
     )

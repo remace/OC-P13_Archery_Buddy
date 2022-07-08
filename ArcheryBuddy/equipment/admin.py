@@ -1,73 +1,99 @@
 from django.contrib import admin
-from equipment.models.arrows import Arrow
-from equipment.models.bows import Barebow, CompoundBow, OlympicBow
+from .models.arrows import *
+from .models.bows import *
 
-
+# Arrows
 @admin.register(Arrow)
 class ArrowAdmin(admin.ModelAdmin):
-    search_fields = [
-        "tube brand",
-        "feathering_color",
-        "feathering_color_cock",
-        "tip_brand",
-    ]
-    list_display = [field.name for field in Arrow._meta.get_fields()]
-    list_filter = [
-        "tube_brand",
-        "feathering_color",
-        "feathering_cock_color",
-    ]
-
-    fieldsets = (
-        ("proprietaire", {"fields": ("user", "not_broken")}),
-        ("encoche", {"fields": ("nock",)}),
-        (
-            "empennage",
-            {
-                "fields": (
-                    "feathering_brand",
-                    "feathering_color",
-                    "feathering_cock_color",
-                    "feathering_size",
-                    "feathering_angle",
-                    "feathering_nock_distance",
-                )
-            },
-        ),
-        (
-            "pointe",
-            {
-                "fields": (
-                    "tip_brand",
-                    "tip_weight",
-                    "tip_profile",
-                )
-            },
-        ),
-        (
-            "tube",
-            {
-                "fields": (
-                    "tube_length",
-                    "tube_spine",
-                    "tube_diameter",
-                )
-            },
-        ),
-    )
-
-
-@admin.register(OlympicBow)
-class BarebowAdmin(admin.ModelAdmin):
-
     pass
 
 
-@admin.register(CompoundBow)
-class CompoundBowAdmin(admin.ModelAdmin):
+@admin.register(Nock)
+class NockAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Feathering)
+class FeatheringAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Tip)
+class TipAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Tube)
+class TubeAdmin(admin.ModelAdmin):
+    pass
+
+
+# Bows
+@admin.register(Riser)
+class RiserAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Limbs)
+class LimbsAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(EquipmentString)
+class StringAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(ArrowRest)
+class ArrowRestAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(BergerButton)
+class BererButtonAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Scope)
+class ScopeAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Clicker)
+class ClickerAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Stabilisation)
+class StabilisationAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Dampeners)
+class DampenersAdmin(admin.ModelAdmin):
     pass
 
 
 @admin.register(Barebow)
 class BarebowAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(OlympicBow)
+class OlympicBowAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(CompoundArrowRest)
+class CompoundArrowRestAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(CompoundScope)
+class CompoundScopeAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(CompoundBow)
+class CompoundBow(admin.ModelAdmin):
     pass
