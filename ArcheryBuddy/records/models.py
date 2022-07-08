@@ -73,3 +73,28 @@ class PracticeRecord(models.Model):
 
     class Meta:
         unique_together = ("arrow", "volley", "practice_session")
+
+
+class StatsRecordSession(RecordSession):
+
+    arrows = models.ManyToManyField("alternativeequipment.Arrow", through="StatsRecord")
+
+    def __str__(self):
+        datetime_as_string = self.session_datetime.strftime("%d/%m/%Y - %H:%M")
+        return (
+            f"statistiques: {datetime_as_string} - {self.conditions} - {self.distance}m"
+        )
+
+    class Meta:
+        verbose_name = "Session d'enregistrement de statistiques de flèches"
+        verbose_name_plural = "Sessions d'enregistrement de statistiques de flèches"
+
+
+class StatsRecord(models.Model):
+
+    arrow = models.ForeignKey("alternativeequipment.Arrow", on_delete=models.CASCADE)
+    practice_session = models.ForeignKey(
+        "records.StatsRecordSession", on_delete=models.CASCADE
+    )
+    pos_x = models.FloatField("coordonnée horizontale")
+    pos_y = models.FloatField("coordonnée verticale")
