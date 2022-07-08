@@ -10,3 +10,13 @@ class PracticeRecordSessionAdmin(admin.ModelAdmin):
 @admin.register(PracticeRecord)
 class PracticeRecordAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(StatsRecordSession)
+class StatsRecordSessionAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(StatsRecord)
+class StatsRecordAdmin(admin.ModelAdmin):
+    pass
