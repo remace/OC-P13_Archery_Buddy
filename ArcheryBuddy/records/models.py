@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
-from .validators import validate_volley_id
+# from .validators import validate_volley_id
 
 
 class RecordSession(models.Model):
@@ -17,9 +17,6 @@ class RecordSession(models.Model):
     )
     distance = models.IntegerField("distance")
     comment = models.CharField("commentaires", max_length=255, null=True)
-
-    def __str__(self):
-        return f"{self.session_datetime} - {self.conditions} - {self.distance}"
 
     class Meta:
         abstract = True
