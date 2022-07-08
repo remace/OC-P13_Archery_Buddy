@@ -1,9 +1,7 @@
 from django.db import models
-from alternativeequipment.models.arrows import Arrow
 from django.core.validators import MinValueValidator, MaxValueValidator
-from .validators import validate_volley_id
 
-from datetime import datetime
+from .validators import validate_volley_id
 
 
 class RecordSession(models.Model):
@@ -11,7 +9,9 @@ class RecordSession(models.Model):
     CONDITIONS_CHOICE = [("INT", "Intérieur"), ("EXT", "Extérieur")]
 
     user = models.ForeignKey("accounts.User", on_delete=models.CASCADE)
-    datetime = models.DateTimeField("date et heure", auto_now=True, auto_now_add=False)
+    session_datetime = models.DateTimeField(
+        "date et heure", auto_now=True, auto_now_add=False
+    )
     conditions = models.CharField(
         max_length=3, choices=CONDITIONS_CHOICE, default=CONDITIONS_CHOICE[0]
     )
@@ -19,7 +19,7 @@ class RecordSession(models.Model):
     comment = models.CharField("commentaires", max_length=255, null=True)
 
     def __str__(self):
-        return f"{self.datetime} - {self.conditions} - {self.distance}"
+        return f"{self.session_datetime} - {self.conditions} - {self.distance}"
 
     class Meta:
         abstract = True
@@ -39,13 +39,13 @@ class PracticeRecordSession(RecordSession):
             int: total score of this training practice
         """
         arrows = self.arrows.through.objects.all()
-        sum = 0
+        score_sum = 0
         for arrow in arrows:
-            sum += arrow.score
-        return sum
+            score_sum += arrow.score
+        return score_sum
 
     def __str__(self):
-        datetime_as_string = self.datetime.strftime("%d/%m/%Y - %H:%M")
+        datetime_as_string = self.session_datetime.strftime("%d/%m/%Y - %H:%M")
         return (
             f"entrainement: {datetime_as_string} - {self.conditions} - {self.distance}m"
         )
@@ -65,7 +65,8 @@ class PracticeRecord(models.Model):
     )
     volley = models.IntegerField(
         "volée", validators=[MinValueValidator(0), MaxValueValidator(20)]
-    )  # TODO validate_volley_id(self, practice_session) # don't know how to link to session's volley_number...
+    )  # validate_volley_id(self, practice_session)
+    # don't know how to link to session's volley_number...
 
     def __str__(self):
         return f"arrow {self.arrow.id}@volée {self.volley} --> {self.score}"
