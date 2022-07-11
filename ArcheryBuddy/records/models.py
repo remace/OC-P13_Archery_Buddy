@@ -1,7 +1,5 @@
 from django.db import models
-from django.core.validators import MinValueValidator, MaxValueValidator
-
-# from .validators import validate_volley_id
+from django.core.exceptions import ValidationError
 
 
 class RecordSession(models.Model):
@@ -42,7 +40,7 @@ class PracticeRecordSession(RecordSession):
     def __str__(self):
         datetime_as_string = self.session_datetime.strftime("%d/%m/%Y - %H:%M")
         return (
-            f"entrainement: {datetime_as_string} - {self.conditions} - {self.distance}m"
+            f"Entrainement: {datetime_as_string} - {self.conditions} - {self.distance}m"
         )
 
     class Meta:
