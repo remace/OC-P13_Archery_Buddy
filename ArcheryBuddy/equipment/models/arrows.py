@@ -1,5 +1,4 @@
 from django.db import models
-from accounts.models import User
 
 
 class Nock(models.Model):
@@ -122,7 +121,10 @@ class Arrow(models.Model):
     not_broken = models.BooleanField("en état d'utilisation", default=True)
 
     def __str__(self):
-        return f"{self.id}: {self.tube.brand} - {self.feathering.cock_color}/{self.feathering.color} - {self.tube.tube_length}"
+        return (
+            f"{self.id}: {self.tube.brand} - "
+            f"{self.feathering.cock_color}/{self.feathering.color} - {self.tube.tube_length}"
+        )
 
     class Meta:
         verbose_name = "Flèche"
