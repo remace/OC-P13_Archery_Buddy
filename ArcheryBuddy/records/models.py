@@ -54,12 +54,28 @@ class PracticeRecord(models.Model):
         "records.PracticeRecordSession", on_delete=models.CASCADE
     )
     score = models.IntegerField(
-        "score", validators=[MinValueValidator(0), MaxValueValidator(10)]
+        "score",
     )
-    volley = models.IntegerField(
-        "volée", validators=[MinValueValidator(0), MaxValueValidator(20)]
-    )  # validate_volley_id(self, practice_session)
-    # don't know how to link to session's volley_number...
+    volley = models.IntegerField("volée")
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+
+    def clean(self):
+        """validation for volley and score attributes."""
+        super().clean()
+        max_volley = self.practice_session.number_of_volleys
+
+        # score
+        if self.score < 0 or self.score > 10:
+            raise ValidationError("score may be an integer value between 0 and 10")
+
+        # volley
+        if self.volley > max_volley or self.volley < 1:
+            raise ValidationError(
+                "volley may be an integer value between 1 and session's volley number"
+            )
 
     def __str__(self):
         return f"arrow {self.arrow.id}@volée {self.volley} --> {self.score}"
