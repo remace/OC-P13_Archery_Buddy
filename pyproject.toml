@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "oc-p13_archery_buddy"
+version = "0.1.0"
+description = "studies project about helping archers"
+authors = ["Rémi TAUVEL <tauvel.remi@gmail.com>"]
+license = "WTFPL"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Django = "^4.0.5"
+
+[tool.poetry.dev-dependencies]
+pylint = "^2.14.4"
+pylint-django = "^2.5.3"
+black = {version = "^22.3.0", allow-prereleases = true}
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
