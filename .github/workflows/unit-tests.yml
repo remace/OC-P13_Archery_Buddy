@@ -30,4 +30,6 @@ jobs:
       - name: install dependencies
         run: poetry install
       - name: Run Tests
-        run: poetry run python ArcheryBuddy/manage.py test
+        run: |
+        cd ArcheryBuddy
+        poetry run python ArcheryBuddy/manage.py test
