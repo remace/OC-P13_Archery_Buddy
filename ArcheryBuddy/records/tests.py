@@ -134,12 +134,12 @@ class PracticeRecordSessionTests(TestCase):
             arrow=self.arrow2, score=10, practice_session=self.prs, volley=2
         )
         PracticeRecord.objects.create(
-            arrow=self.arrow3, score=9, practice_session=self.prs, volley=2
+            arrow=self.arrow3, score=8, practice_session=self.prs, volley=2
         )
 
         total = self.prs.get_total_score()
 
-        self.assertEqual(total, 59)
+        self.assertEqual(total, 58)
 
 
 class PracticeRecordTest(TestCase):
