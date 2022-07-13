@@ -32,4 +32,4 @@ jobs:
       - name: Run Tests
         run: |
           cd ArcheryBuddy
-          poetry run python ArcheryBuddy/manage.py test
+          poetry run python manage.py test
