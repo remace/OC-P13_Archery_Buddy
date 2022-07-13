@@ -246,7 +246,6 @@ class PracticeRecordTest(TestCase):
             PracticeRecord.objects.create(
                 arrow=self.arrow1, score=10, practice_session=self.prs, volley=3
             )
-            print("volée 3 faite")
 
 
 class StatsRecordSessionTests(TestCase):
