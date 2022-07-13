@@ -4,9 +4,8 @@
         "pylint_django",
         "--django-settings-module",
         "DjangoConf.settings",
-        "--disable",
-        "missing-class-docstring",
-        "--disable",
-        "missing-module-docstring"
+        "--disable=missing-class-docstring",
+        "--disable=missing-function-docstring",
+        "--disable=missing-module-docstring",
     ]
 }
