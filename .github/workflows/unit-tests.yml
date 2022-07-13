@@ -28,6 +28,8 @@ jobs:
         with:
           poetry-version: ${{ matrix.poetry-version }}
       - name: install dependencies
-        run: poetry install | poetry
+        run: poetry install
+      - name: activate environment
+        run: poetry shell
       - name: Run Tests
         run: python ArcheryBuddy/manage.py test
