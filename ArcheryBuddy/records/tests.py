@@ -1,5 +1,4 @@
 from django.test import TestCase
-from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 
 
@@ -10,6 +9,7 @@ from records.models import (
     # StatsRecordSession,
 )
 
+from accounts.models import User
 from equipment.models.arrows import Arrow, Feathering, Tube, Nock, Tip
 
 
@@ -17,8 +17,6 @@ class PracticeRecordSessionTests(TestCase):
     """model tests for PracticeRecordSessions"""
 
     def setUp(self):
-        # user
-        User = get_user_model()
         self.user = User.objects.create_user(
             pseudo="pseudo_de_test", password="password_de_test"
         )
@@ -86,8 +84,6 @@ class PracticeRecordSessionTests(TestCase):
 
 class PracticeRecordTest(TestCase):
     def setUp(self):
-        # user
-        User = get_user_model()
         self.user = User.objects.create_user(
             pseudo="pseudo_de_test", password="password_de_test"
         )

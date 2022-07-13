@@ -1,5 +1,5 @@
-from django.contrib.auth import get_user_model
 from django.test import TestCase
+from accounts.models import User
 
 
 class UsersManagersTests(TestCase):
@@ -7,7 +7,6 @@ class UsersManagersTests(TestCase):
 
     def test_create_user(self):
         """test on create_user function"""
-        User = get_user_model()
         user = User.objects.create_user(
             pseudo="pseudo_de_test", password="password_de_test"
         )
@@ -26,7 +25,7 @@ class UsersManagersTests(TestCase):
             User.objects.create_user(pseudo="", password="foo")
 
     def test_create_superuser(self):
-        User = get_user_model()
+        """test on createsuperuser ./manage.py command"""
         admin_user = User.objects.create_superuser(
             pseudo="superuser_de_test", password="password_de_test", is_superuser=True
         )
