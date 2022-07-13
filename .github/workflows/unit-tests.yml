@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "wip-models", "main"]
   pull_request:
-    branches: [ "wip-models", "main" ]
+    branches: [ "wip-models", "testing", "main" ]
 
 env:
   DJANGO_SETTINGS_MODULE: DjangoConf.settings
