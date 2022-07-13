@@ -31,5 +31,5 @@ jobs:
         run: poetry install
       - name: Run Tests
         run: |
-        cd ArcheryBuddy
-        poetry run python ArcheryBuddy/manage.py test
+          cd ArcheryBuddy
+          poetry run python ArcheryBuddy/manage.py test
