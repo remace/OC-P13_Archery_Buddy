@@ -29,6 +29,42 @@ class PracticeRecordSessionTests(TestCase):
         )
         self.datetime = self.prs.session_datetime
 
+        nock = Nock.objects.create(
+            user=self.user, brand="beiter", color="red", size="S", uses_nock_pin=True
+        )
+        feathers = Feathering.objects.create(
+            user=self.user,
+            angle=0,
+            brand="XS - wings",
+            color="blue",
+            cock_color="blue",
+            size="S",
+            laterality="R",
+            feathering_type="SPINWINGS",
+            nock_distance=8,
+        )
+        tube = Tube.objects.create(
+            user=self.user,
+            brand="easton",
+            material="CARBON",
+            spine=1000,
+            tube_diameter=4,
+            tube_length=73,
+        )
+        tip = Tip.objects.create(
+            user=self.user, brand="easton", profile="ogive", weight=120
+        )
+
+        self.arrow1 = Arrow.objects.create(
+            user=self.user, nock=nock, feathering=feathers, tip=tip, tube=tube
+        )
+        self.arrow2 = Arrow.objects.create(
+            user=self.user, nock=nock, feathering=feathers, tip=tip, tube=tube
+        )
+        self.arrow3 = Arrow.objects.create(
+            user=self.user, nock=nock, feathering=feathers, tip=tip, tube=tube
+        )
+
     def tearDown(self):
         PracticeRecordSession.objects.filter(session_datetime=self.datetime).delete()
         self.prs = None
@@ -80,6 +116,30 @@ class PracticeRecordSessionTests(TestCase):
         prs.save()
         prs = PracticeRecordSession.objects.get(conditions="INT")
         self.assertEqual(prs.distance, 20)
+
+    def test_total_score(self):
+        PracticeRecord.objects.create(
+            arrow=self.arrow1, score=10, practice_session=self.prs, volley=1
+        )
+        PracticeRecord.objects.create(
+            arrow=self.arrow2, score=10, practice_session=self.prs, volley=1
+        )
+        PracticeRecord.objects.create(
+            arrow=self.arrow3, score=10, practice_session=self.prs, volley=1
+        )
+        PracticeRecord.objects.create(
+            arrow=self.arrow1, score=10, practice_session=self.prs, volley=2
+        )
+        PracticeRecord.objects.create(
+            arrow=self.arrow2, score=10, practice_session=self.prs, volley=2
+        )
+        PracticeRecord.objects.create(
+            arrow=self.arrow3, score=9, practice_session=self.prs, volley=2
+        )
+
+        total = self.prs.get_total_score()
+
+        self.assertEqual(total, 59)
 
 
 class PracticeRecordTest(TestCase):
