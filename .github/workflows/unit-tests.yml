@@ -2,9 +2,9 @@ name: unit testing this app
 
 on:
   push:
-    branches: [ "wip-models", "main"]
+    branches: [ "main"]
   pull_request:
-    branches: [ "wip-models", "testing", "main" ]
+    branches: [ "testing", "main" ]
 
 env:
   DJANGO_SETTINGS_MODULE: DjangoConf.settings
