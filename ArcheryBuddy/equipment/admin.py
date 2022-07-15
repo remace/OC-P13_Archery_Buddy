@@ -1,6 +1,21 @@
 from django.contrib import admin
-from .models.arrows import *
-from .models.bows import *
+from .models.arrows import Arrow, Nock, Feathering, Tube, Tip
+from .models.bows import (
+    Riser,
+    Limbs,
+    EquipmentString,
+    ArrowRest,
+    BergerButton,
+    Scope,
+    Clicker,
+    Stabilisation,
+    Dampeners,
+    Barebow,
+    OlympicBow,
+    CompoundBow,
+    CompoundArrowRest,
+    CompoundScope,
+)
 
 # Arrows
 @admin.register(Arrow)
@@ -84,6 +99,11 @@ class OlympicBowAdmin(admin.ModelAdmin):
     pass
 
 
+@admin.register(CompoundBow)
+class CompoundBowAdmin(admin.ModelAdmin):
+    pass
+
+
 @admin.register(CompoundArrowRest)
 class CompoundArrowRestAdmin(admin.ModelAdmin):
     pass
@@ -91,9 +111,4 @@ class CompoundArrowRestAdmin(admin.ModelAdmin):
 
 @admin.register(CompoundScope)
 class CompoundScopeAdmin(admin.ModelAdmin):
-    pass
-
-
-@admin.register(CompoundBow)
-class CompoundBow(admin.ModelAdmin):
     pass
