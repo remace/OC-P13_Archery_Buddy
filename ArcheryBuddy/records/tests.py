@@ -5,8 +5,8 @@ from django.core.exceptions import ValidationError
 from records.models import (
     PracticeRecord,
     PracticeRecordSession,
-    # StatsRecord,
-    # StatsRecordSession,
+    StatsRecord,
+    StatsRecordSession,
 )
 
 from accounts.models import User
@@ -249,8 +249,177 @@ class PracticeRecordTest(TestCase):
 
 
 class StatsRecordSessionTests(TestCase):
-    pass
+    """model tests for PracticeRecordSessions"""
+
+    def setUp(self):
+        self.user = User.objects.create_user(
+            pseudo="pseudo_de_test", password="password_de_test"
+        )
+        self.srs = StatsRecordSession.objects.create(
+            user=self.user,
+            conditions="INT",
+            distance=18,
+            comment="RAS",
+        )
+        self.datetime = self.srs.session_datetime
+
+        nock = Nock.objects.create(
+            user=self.user, brand="beiter", color="red", size="S", uses_nock_pin=True
+        )
+        feathers = Feathering.objects.create(
+            user=self.user,
+            angle=0,
+            brand="XS - wings",
+            color="blue",
+            cock_color="blue",
+            size="S",
+            laterality="R",
+            feathering_type="SPINWINGS",
+            nock_distance=8,
+        )
+        tube = Tube.objects.create(
+            user=self.user,
+            brand="easton",
+            material="CARBON",
+            spine=1000,
+            tube_diameter=4,
+            tube_length=73,
+        )
+        tip = Tip.objects.create(
+            user=self.user, brand="easton", profile="ogive", weight=120
+        )
+
+        self.arrow1 = Arrow.objects.create(
+            user=self.user, nock=nock, feathering=feathers, tip=tip, tube=tube
+        )
+        self.arrow2 = Arrow.objects.create(
+            user=self.user, nock=nock, feathering=feathers, tip=tip, tube=tube
+        )
+        self.arrow3 = Arrow.objects.create(
+            user=self.user, nock=nock, feathering=feathers, tip=tip, tube=tube
+        )
+
+    def tearDown(self):
+        StatsRecordSession.objects.filter(session_datetime=self.datetime).delete()
+        self.srs = None
+        self.user = None
+        self.datetime = None
+
+    def test_str(self):
+        datetime_as_string = self.datetime.strftime("%d/%m/%Y - %H:%M")
+        self.assertEqual(
+            f"{self.srs}",
+            f"statistiques: {datetime_as_string} - {self.srs.conditions} - {self.srs.distance}m",
+        )
+
+    def test_stats_record_session_creation(self):
+        self.assertEqual(self.srs.user.pseudo, self.user.pseudo)
+        self.assertEqual(self.srs.conditions, "INT")
+        self.assertEqual(self.srs.distance, 18)
+        self.assertEqual(self.srs.comment, "RAS")
+        self.assertEqual(self.srs.session_datetime, self.datetime)
+
+    def test_stats_record_session_save_and_delete(self):
+        """
+        test that stats record session save on database
+        only saves one session and deleting one only deletes one
+        """
+        count = len(StatsRecordSession.objects.all())
+        srs2 = StatsRecordSession.objects.create(
+            user=self.user,
+            conditions="EXT",
+            distance=70,
+            comment="RAS",
+        )
+        count2 = len(StatsRecordSession.objects.all())
+        self.assertEqual(count2, count + 1)
+
+        StatsRecordSession.objects.filter(conditions=srs2.conditions).delete()
+        count3 = len(StatsRecordSession.objects.all())
+        self.assertEqual(count3, count)
+
+    def test_stats_record_session_update_in_database(self):
+        """test updating a field in database"""
+        srs = StatsRecordSession.objects.get(conditions="INT")
+        self.assertEqual(srs.distance, 18)
+        srs.distance = 20
+        srs.save()
+        srs = StatsRecordSession.objects.get(conditions="INT")
+        self.assertEqual(srs.distance, 20)
 
 
 class StatsRecordTest(TestCase):
-    pass
+    def setUp(self):
+        self.user = User.objects.create_user(
+            pseudo="pseudo_de_test", password="password_de_test"
+        )
+        self.srs = StatsRecordSession.objects.create(
+            user=self.user,
+            conditions="INT",
+            distance=18,
+            comment="RAS",
+        )
+
+        nock = Nock.objects.create(
+            user=self.user, brand="beiter", color="red", size="S", uses_nock_pin=True
+        )
+        feathers = Feathering.objects.create(
+            user=self.user,
+            angle=0,
+            brand="XS - wings",
+            color="blue",
+            cock_color="blue",
+            size="S",
+            laterality="R",
+            feathering_type="SPINWINGS",
+            nock_distance=8,
+        )
+        tube = Tube.objects.create(
+            user=self.user,
+            brand="easton",
+            material="CARBON",
+            spine=1000,
+            tube_diameter=4,
+            tube_length=73,
+        )
+        tip = Tip.objects.create(
+            user=self.user, brand="easton", profile="ogive", weight=120
+        )
+
+        self.arrow1 = Arrow.objects.create(
+            user=self.user, nock=nock, feathering=feathers, tip=tip, tube=tube
+        )
+        self.arrow2 = Arrow.objects.create(
+            user=self.user, nock=nock, feathering=feathers, tip=tip, tube=tube
+        )
+        self.arrow3 = Arrow.objects.create(
+            user=self.user, nock=nock, feathering=feathers, tip=tip, tube=tube
+        )
+
+    def tearDown(self):
+        self.arrow1 = None
+        self.arrow2 = None
+        self.arrow3 = None
+        self.srs = None
+        self.user = None
+
+    def test_stats_record_creation_update_and_delete(self):
+        count0 = len(StatsRecord.objects.all())
+        stats_record = StatsRecord.objects.create(
+            arrow=self.arrow1, pos_x=0.0, pos_y=0.0, stats_session=self.srs
+        )
+        count1 = len(StatsRecord.objects.all())
+        self.assertEqual(count1, count0 + 1)
+
+        stats_record.pos_x = 0.5
+        stats_record.pos_y = -0.5
+        stats_record.save()
+
+        stats_record2 = StatsRecord.objects.all()[0]
+
+        self.assertEqual(stats_record2.pos_x, 0.5)
+        self.assertEqual(stats_record2.pos_y, -0.5)
+
+        PracticeRecordSession.objects.filter(id=stats_record.id).delete()
+        count2 = len(PracticeRecordSession.objects.all())
+        self.assertEqual(count2, count0)
