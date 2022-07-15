@@ -102,7 +102,7 @@ class StatsRecordSession(RecordSession):
 class StatsRecord(models.Model):
 
     arrow = models.ForeignKey("equipment.Arrow", on_delete=models.CASCADE)
-    practice_session = models.ForeignKey(
+    stats_session = models.ForeignKey(
         "records.StatsRecordSession", on_delete=models.CASCADE
     )
     pos_x = models.FloatField("coordonnée horizontale")
