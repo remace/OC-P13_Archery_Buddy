@@ -1,0 +1,19 @@
+<h1>Login Form</h1>
+{% if user %}
+<p>{{user.pseudo}}</p>
+
+{% endif%}
+
+
+{% if errors %}
+<h2>erreurs</h2>
+    <p>erreurs: 
+        {{errors}}
+    </p>
+{% endif %}
+
+<form action="{% url 'login' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit">
+</form>
