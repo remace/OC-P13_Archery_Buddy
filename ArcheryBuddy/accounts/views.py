@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from django.contrib.auth import authenticate, login
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 from .forms import LoginForm, RegisterForm
@@ -12,13 +12,11 @@ def login_view(request):
     if request.method == "POST":
         pseudo = request.POST["pseudo"]
         password = request.POST["password"]
-        print(f"{pseudo}@{password}")
         user = authenticate(request, pseudo=pseudo, password=password)
-        print(f"{user}")
         if user is not None:
             login(request, user)
             ctx["errors"] = []
-            return render(request, "accounts/login.html", context=ctx)
+            return render(request, "accounts/login_done.html", context=ctx)
         ctx["errors"].append("identifiants erronés")
         return render(request, "accounts/login.html", context=ctx)
 
@@ -40,7 +38,8 @@ def register_view(request):
 
 @login_required()
 def logout_view(request):
-    pass
+    logout(request)
+    return redirect("login")
 
 
 @login_required()

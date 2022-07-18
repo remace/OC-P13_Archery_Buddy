@@ -1,9 +1,7 @@
 <h1>Login Form</h1>
-{% if user %}
-<p>{{user.pseudo}}</p>
-
+{% if user.id is not None %}
+<p>user connecté: {{user}}</p>
 {% endif%}
-
 
 {% if errors %}
 <h2>erreurs</h2>
@@ -15,5 +13,9 @@
 <form action="{% url 'login' %}" method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Submit">
+    <input type="submit" value="Connecter">
+</form>
+<form action="{% url 'logout' %}" method="get">
+    {% csrf_token %}
+    <input type="submit" value="déconnecter">
 </form>
