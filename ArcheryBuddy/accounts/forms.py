@@ -12,3 +12,4 @@ class RegisterForm(forms.Form):
     password2 = forms.CharField(label="password", widget=forms.PasswordInput())
     first_name = forms.CharField(label="prénom", max_length=32)
     last_name = forms.CharField(label="nom", max_length=32)
+    email = forms.EmailField(label="email")
