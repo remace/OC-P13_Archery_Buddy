@@ -2,9 +2,7 @@ name: unit testing this app
 
 on:
   push:
-    branches: [ "main"]
-  pull_request:
-    branches: [ "testing", "main" ]
+    branches: "*"
 
 env:
   DJANGO_SETTINGS_MODULE: DjangoConf.settings
