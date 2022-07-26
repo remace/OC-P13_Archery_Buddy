@@ -11,7 +11,11 @@ def arrows_list(request):
     user = request.user
     arrows = Arrow.objects.filter(user=user)
     ctx["arrows"] = arrows
-    return render(request, "equipment/list_arrows.html", context=ctx)
+    return render(
+        request,
+        "equipment/list_arrows.html",
+        context=ctx,
+    )
 
 
 @login_required(login_url="/user/login/")
@@ -26,7 +30,10 @@ def create(request):
         form = ArrowForm(request.POST)
         if not form.is_valid():
             return render(
-                request, "equipment/create_arrows.html", context={"form": form}
+                request,
+                "equipment/create_arrows.html",
+                context={"form": form},
+                status=302,
             )
 
         user = request.user
@@ -75,7 +82,6 @@ def create(request):
                 tube=tube,
                 not_broken=form.cleaned_data.get("not_broken"),
             )
-
         return redirect(arrows_list)
 
 
