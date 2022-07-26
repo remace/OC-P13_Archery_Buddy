@@ -29,6 +29,7 @@ pipx install poetry
 cd OC-P13_ArcheryBuddy/ArcheryBuddy
 poetry install
 poetry shell
+./manage.py makemigrations accounts equipment records
 ./manage.py migrate
 ```
 
