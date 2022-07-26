@@ -21,4 +21,5 @@ from accounts import urls
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("user/", include("accounts.urls")),
+    path("arrows/", include("equipment.urls.arrows")),
 ]
