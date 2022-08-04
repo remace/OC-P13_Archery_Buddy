@@ -1,0 +1,27 @@
+<h1>Liste des flèches</h1>
+
+{% if arrows %}
+<table>
+    <tr>
+        <th>identifiant</th>
+        <th>marque de tube</th>
+        <th>couleurs d'empennage</th>
+        <th>poids de pointe</th>
+        <th>lien</th>
+        <th>cassé?</th>
+        <th>supprimer?</th>
+    </tr>
+    {% for arrow in arrows%}
+    <tr>
+        <td>{{arrow.id}}</td>
+        <td>{{arrow.tube.brand}}</td>
+        <td>{{arrow.feathering.cock_color}}/{{arrow.feathering.color}}</td>
+        <td>{{arrow.tip.weight}}</td>
+        <td><a href={% url 'arrows_detail' arrow.id %}>détails</a></td>
+        <td><a href={% url 'arrows_update' arrow.id %}>déclarer cassée</a></td>
+        <td><a href={% url 'arrows_delete' arrow.id %}>supprimer</a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+<a href={% url 'arrows_create'%}>créer des flèches</a>

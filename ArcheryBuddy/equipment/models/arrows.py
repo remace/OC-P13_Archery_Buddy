@@ -71,7 +71,7 @@ class Tip(models.Model):
     )
     brand = models.CharField("marque", max_length=60)
     profile = models.CharField("profil", max_length=60)
-    weight = models.CharField("masse (grains)", max_length=60)
+    weight = models.IntegerField("masse (grains)")
 
     def __str__(self):
         return f"{self.brand} - {self.profile} - {self.weight}"
@@ -99,7 +99,7 @@ class Tube(models.Model):
         default=TUBE_MATERIAL_CHOICES[0],
     )
     tube_length = models.FloatField("longueur")
-    spine = models.FloatField("flèche/spine")
+    spine = models.IntegerField("flèche/spine")
     tube_diameter = models.FloatField("diametre exterieur")
 
     def __str__(self):
