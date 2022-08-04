@@ -1,0 +1,33 @@
+{% extends 'core/base.html' %}
+
+{% load static %}
+{% block content %}
+
+    <div>
+    {{volley_range}} - {{arrow_range}}
+    </div>
+    
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>volée</th>
+                    <th colspan={{prs.max_arrows_in_volley}}>feuille de marque</th>
+                    <th>total volée</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for volley in volley_range %}
+                    <tr>
+                        <td>{{volley}}</td>
+                        {% for arrow in arrow_range %}
+                            <td><input type="text" class="text-field" id="{{volley}}-{{arrow}}" name="input-{{volley}}-{{arrow}}"
+                            minlength="1" maxlength="2" size="10" placeholder="score"></td>
+                        {% endfor %}
+                        <td class='volley-total'></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endblock content %}

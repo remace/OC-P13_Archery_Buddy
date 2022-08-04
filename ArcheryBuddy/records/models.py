@@ -24,6 +24,9 @@ class PracticeRecordSession(RecordSession):
 
     arrows = models.ManyToManyField("equipment.Arrow", through="PracticeRecord")
     number_of_volleys = models.IntegerField("nombre de volées")
+    max_arrows_in_volley = models.IntegerField(
+        "nombre maximum de flèches par volée", default=3
+    )
 
     def get_total_score(self) -> int:
         """gets the total score of a training practice
