@@ -4,7 +4,7 @@
 {% block content %}
 
     <div>
-    {{volley_range}} - {{arrow_range}}
+    {{prs}}
     </div>
     
     <div class="table-wrapper">
@@ -24,10 +24,14 @@
                             <td><input type="text" class="text-field" id="{{volley}}-{{arrow}}" name="input-{{volley}}-{{arrow}}"
                             minlength="1" maxlength="2" size="10" placeholder="score"></td>
                         {% endfor %}
-                        <td class='volley-total'></td>
+                        <td id="volley-total-{{volley}}" class="volley-total"></td>
                     </tr>
                 {% endfor %}
+                <tr >
+                    <td colspan='{{prs.max_arrows_in_volley|add:2}}' id="total"></td>
+                </tr>
             </tbody>
         </table>
     </div>
+    <script src={% static 'records/js/practiceRecords/automateVolleyTotal.js' %}></script>
     {% endblock content %}
