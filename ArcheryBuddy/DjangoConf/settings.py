@@ -147,3 +147,7 @@ def show_toolbar(request):
 DEBUG_TOOLBAR_CONFIG = {
     "SHOW_TOOLBAR_CALLBACK": show_toolbar,
 }
+
+# login_required decorator stuff
+LOGIN_URL = "/user/login"
+LOGOUT_REDIRECT_URL = "/user/login"
