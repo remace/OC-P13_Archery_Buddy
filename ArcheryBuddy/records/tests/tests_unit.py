@@ -1,3 +1,9 @@
+from django import setup
+import os
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "DjangoConf.settings")
+setup()
+
 from django.test import TestCase
 from django.core.exceptions import ValidationError
 
@@ -104,20 +110,24 @@ class PracticeRecordSessionTests(TestCase):
         count2 = len(PracticeRecordSession.objects.all())
         self.assertEqual(count2, count + 1)
 
-        PracticeRecordSession.objects.filter(conditions=prs2.conditions).delete()
+        PracticeRecordSession.objects.filter(
+            conditions=prs2.conditions
+        ).first().delete()
         count3 = len(PracticeRecordSession.objects.all())
         self.assertEqual(count3, count)
 
     def test_update_in_database(self):
         """test updating a field in database"""
-        prs = PracticeRecordSession.objects.get(conditions="INT")
+        prs = PracticeRecordSession.objects.filter(conditions="INT", distance=18)[0]
         self.assertEqual(prs.distance, 18)
         prs.distance = 20
+        id = prs.id
         prs.save()
-        prs = PracticeRecordSession.objects.get(conditions="INT")
+        prs = PracticeRecordSession.objects.get(id=id)
         self.assertEqual(prs.distance, 20)
 
     def test_total_score(self):
+
         PracticeRecord.objects.create(
             arrow=self.arrow1, score=10, practice_session=self.prs, volley=1
         )
@@ -201,7 +211,6 @@ class PracticeRecordTest(TestCase):
     def test_create_practice_record_nominal_case(self):
         """test recording an arrow, nominal case"""
         length = len(PracticeRecord.objects.all())
-        self.assertEqual(length, 0)
         practice_record = PracticeRecord.objects.create(
             arrow=self.arrow1, score=10, practice_session=self.prs, volley=1
         )
@@ -209,8 +218,8 @@ class PracticeRecordTest(TestCase):
         self.assertEqual(practice_record.score, 10)
         self.assertEqual(practice_record.practice_session, self.prs)
         self.assertEqual(practice_record.volley, 1)
-        length = len(PracticeRecord.objects.all())
-        self.assertEqual(length, 1)
+        length2 = len(PracticeRecord.objects.all())
+        self.assertEqual(length + 1, length2)
 
     def test_create_practice_record_score_out_of_bounds(self):
         """test creating a practice record with score out of bounds (0,10)"""
@@ -415,11 +424,11 @@ class StatsRecordTest(TestCase):
         stats_record.pos_y = -0.5
         stats_record.save()
 
-        stats_record2 = StatsRecord.objects.all()[0]
+        stats_record2 = StatsRecord.objects.get(id=stats_record.id)
 
         self.assertEqual(stats_record2.pos_x, 0.5)
         self.assertEqual(stats_record2.pos_y, -0.5)
 
-        PracticeRecordSession.objects.filter(id=stats_record.id).delete()
-        count2 = len(PracticeRecordSession.objects.all())
+        StatsRecord.objects.filter(id=stats_record.id).delete()
+        count2 = len(StatsRecord.objects.all())
         self.assertEqual(count2, count0)

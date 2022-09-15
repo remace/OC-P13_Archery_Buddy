@@ -1,6 +1,12 @@
 from django.test import TestCase
 from accounts.models import User
 
+from django import setup
+import os
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "DjangoConf.settings")
+setup()
+
 
 class UsersManagersTests(TestCase):
     """test class on User creation"""

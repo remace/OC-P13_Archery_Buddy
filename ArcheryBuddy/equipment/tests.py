@@ -1,9 +1,16 @@
+from django import setup
+import os
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "DjangoConf.settings")
+setup()
+
 from http import HTTPStatus
 
 from django.test import TestCase
-from accounts.models import User
 
+from accounts.models import User
 from equipment.models.arrows import Arrow
+
 
 # Create your tests here.
 class AddArrowsViewTest(TestCase):
