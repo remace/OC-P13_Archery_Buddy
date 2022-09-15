@@ -34,7 +34,7 @@ class PracticeRecordSession(RecordSession):
         Returns:
             int: total score of this training practice
         """
-        arrows = self.arrows.through.objects.all()
+        arrows = self.arrows.through.objects.filter(practice_session=self)
         score_sum = 0
         for arrow in arrows:
             score_sum += arrow.score

@@ -7,31 +7,41 @@
     {{prs}}
     </div>
     
-    <div class="table-wrapper">
-        <table>
-            <thead>
-                <tr>
-                    <th>volée</th>
-                    <th colspan={{prs.max_arrows_in_volley}}>feuille de marque</th>
-                    <th>total volée</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for volley in volley_range %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>volée</th>
+                        
+                        <th colspan={{prs.max_arrows_in_volley}}>feuille de marque</th>
+                        <th>total volée</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for volley in volley_range %}
                     <tr>
                         <td>{{volley}}</td>
                         {% for arrow in arrow_range %}
-                            <td><input type="text" class="text-field" id="{{volley}}-{{arrow}}" name="input-{{volley}}-{{arrow}}"
-                            minlength="1" maxlength="2" size="10" placeholder="score"></td>
+                            <td>
+                                <input type="text" class="text-field" id="input-score-{{volley}}-{{arrow}}" name="input-score-{{volley}}-{{arrow}}"
+                                minlength="1" maxlength="2" size="10" placeholder="score">
+                                <input type="hidden" class="arrow-field" id="volley-arrow-{{volley}}-{{arrow}}" name="input-arrow-{{volley}}-{{arrow}}"
+                                minlength="1" maxlength="2" size="10" placeholder="arrow" value={% cycle 6 7 8 %}>
+                            </td>
                         {% endfor %}
                         <td id="volley-total-{{volley}}" class="volley-total"></td>
                     </tr>
-                {% endfor %}
-                <tr >
-                    <td colspan='{{prs.max_arrows_in_volley|add:2}}' id="total"></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+                    {% endfor %}
+                    <tr >
+                        <td colspan='{{prs.max_arrows_in_volley|add:2}}' id="total"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="submit">submit</button>
+        </div>
+    </form>
+    
     <script src={% static 'records/js/practiceRecords/automateVolleyTotal.js' %}></script>
     {% endblock content %}

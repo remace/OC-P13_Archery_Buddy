@@ -1,6 +1,7 @@
 import re
 
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ValidationError
 from django.shortcuts import render, redirect
 from django.utils.decorators import method_decorator
 from django.views import View
@@ -80,32 +81,44 @@ class DetailPracticeSession(View):
         arrow_pattern = re.compile(r"input-arrow-[0-9]+-[0-9]+")
         prs = PracticeRecordSession.objects.get(id=prs_id)
         post = request.POST
+        print(f"post: {post}")
         for key, value in post.items():
+            print(f"key/value: -{key}:{value}-")
             if re.fullmatch(score_pattern, key):
+                print("score pattern found")
                 if value != "":
                     key_splitted = key.split("-")
-                    volley = key_splitted[2]
-                    shot = key_splitted[3]
+                    volley = int(key_splitted[2])
+                    shot = int(key_splitted[3])
                     score = int(value)
+                    print(f"chaine: input-arrow-{volley}-{shot+5}")  # n° de flèche!
+
                     arrow_id = int(post.get(f"input-arrow-{volley}-{shot}"))
+
+                    print(
+                        f"volley:{volley} score:{score} arrow_id:{arrow_id} shot:{key_splitted[3]}"
+                    )
 
                     try:
                         arrow = Arrow.objects.get(id=arrow_id)
                         try:
-                            practice_record = PracticeRecord.objects.filter(
-                                arrow=arrow,
-                                practice_session=prs,
-                                volley=volley,
-                            )
-
-                        except PracticeRecord.DoesNotExist as exception:
-                            print(f"DoesNotExist: {exception}")
                             PracticeRecord.objects.create(
                                 arrow=arrow,
                                 practice_session=prs,
                                 volley=volley,
                                 score=score,
                             )
+
+                        except ValidationError as exception:
+                            print(f"validationError:{exception}")
+                            practice_record = PracticeRecord.objects.get(
+                                arrow=arrow,
+                                practice_session=prs,
+                                volley=volley,
+                            )
+                            practice_record.score = score
+                            practice_record.save()
+
                     except Arrow.DoesNotExist as exception:
                         print(f"{exception} arrow {arrow_id} does not exist")
 
