@@ -78,7 +78,7 @@ class DetailPracticeSession(View):
     def post(self, request, prs_id):
 
         score_pattern = re.compile(r"input-score-[0-9]+-[0-9]+")
-        arrow_pattern = re.compile(r"input-arrow-[0-9]+-[0-9]+")
+        # arrow_pattern = re.compile(r"input-arrow-[0-9]+-[0-9]+")
         prs = PracticeRecordSession.objects.get(id=prs_id)
         post = request.POST
         print(f"post: {post}")

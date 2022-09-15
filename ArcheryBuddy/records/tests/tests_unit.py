@@ -121,9 +121,9 @@ class PracticeRecordSessionTests(TestCase):
         prs = PracticeRecordSession.objects.filter(conditions="INT", distance=18)[0]
         self.assertEqual(prs.distance, 18)
         prs.distance = 20
-        id = prs.id
+        prs_id = prs.id
         prs.save()
-        prs = PracticeRecordSession.objects.get(id=id)
+        prs = PracticeRecordSession.objects.get(id=prs_id)
         self.assertEqual(prs.distance, 20)
 
     def test_total_score(self):
