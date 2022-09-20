@@ -1,12 +1,6 @@
 {
     "python.linting.pylintArgs": [
-        "--load-plugins",
-        "pylint_django",
-        "--django-settings-module",
-        "DjangoConf.settings.testing",
-        "--disable=missing-class-docstring",
-        "--disable=missing-function-docstring",
-        "--disable=missing-module-docstring",
+        "--rcfile=.pylintrc"
     ],
     "python.testing.unittestArgs": [
         "-v",
