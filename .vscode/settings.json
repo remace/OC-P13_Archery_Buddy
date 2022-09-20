@@ -3,7 +3,7 @@
         "--load-plugins",
         "pylint_django",
         "--django-settings-module",
-        "DjangoConf.settings",
+        "DjangoConf.settings.testing",
         "--disable=missing-class-docstring",
         "--disable=missing-function-docstring",
         "--disable=missing-module-docstring",
@@ -11,9 +11,9 @@
     "python.testing.unittestArgs": [
         "-v",
         "-s",
-        ".",
+        "./ArcheryBuddy",
         "-p",
-        "test_*.py"
+        "tests*.py"
     ],
     "python.testing.pytestEnabled": false,
     "python.testing.unittestEnabled": true,
