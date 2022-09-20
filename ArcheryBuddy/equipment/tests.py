@@ -1,15 +1,15 @@
-from django import setup
 import os
-
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "DjangoConf.settings")
-setup()
-
 from http import HTTPStatus
-
-from django.test import TestCase
 
 from accounts.models import User
 from equipment.models.arrows import Arrow
+
+
+from django.test import TestCase
+from django import setup
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "DjangoConf.settings.testing")
+setup()
 
 
 # Create your tests here.
