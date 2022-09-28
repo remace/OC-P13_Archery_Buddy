@@ -19,6 +19,7 @@ this is a studies final project on helping archers on 3 manners:
 
 ## setup and configuration 
 
+
 ### for a local development installation
 
 ```bash
@@ -40,4 +41,20 @@ WIP
 same procedure than for development installation, then end with:
 ```bash
 ./manage.py test
+```
+
+### linting and formatting options
+
+I use mainly pylint to lint this project, and black.
+
+command to execute pylint at the root of the project:
+```bash
+pylint --rcfile=.pylintrc
+```
+it mainly disables "missing docstring" warnings.
+
+To format my code, I use black with default parameters:
+
+```bash
+black ArcheryBuddy
 ```
