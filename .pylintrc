@@ -102,7 +102,7 @@ unsafe-load-any-extension=no
 [MASTER]
 disable=C0114,
         C0115,
-        C0116,
+        C0116
 
 
 
