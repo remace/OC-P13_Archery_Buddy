@@ -21,5 +21,6 @@ urlpatterns = [
     path("user/", include("accounts.urls")),
     path("arrows/", include("equipment.urls.arrows")),
     path("practice/", include("records.urls")),
+    path("__reload__/", include("django_browser_reload.urls")),
     path("__debug__/", include("debug_toolbar.urls")),
 ]
