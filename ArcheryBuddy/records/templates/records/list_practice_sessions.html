@@ -1,0 +1,9 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+    <ul>
+        {% for practice_session in practice_sessions %}
+            <li>{{practice_session.id}} - {{practice_session.session_datetime | date:'Y-m-d H:i'}} - {{practice_session.get_conditions_display}} - {{practice_session.distance}}m <a href={% url 'practice_detail' practice_session.id %}>détails</a> <a href={% url 'practice_delete' practice_session.id %}>supprimer</a></li> 
+        {% endfor %}
+    </ul>
+{% endblock content %}

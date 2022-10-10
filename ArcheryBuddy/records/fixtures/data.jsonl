@@ -1,0 +1,169 @@
+{"model": "auth.permission","pk": 1,"fields": {"name": "Can add log entry","content_type": 1,"codename": "add_logentry"}}
+{"model": "auth.permission","pk": 2,"fields": {"name": "Can change log entry","content_type": 1,"codename": "change_logentry"}}
+{"model": "auth.permission","pk": 3,"fields": {"name": "Can delete log entry","content_type": 1,"codename": "delete_logentry"}}
+{"model": "auth.permission","pk": 4,"fields": {"name": "Can view log entry","content_type": 1,"codename": "view_logentry"}}
+{"model": "auth.permission","pk": 5,"fields": {"name": "Can add permission","content_type": 2,"codename": "add_permission"}}
+{"model": "auth.permission","pk": 6,"fields": {"name": "Can change permission","content_type": 2,"codename": "change_permission"}}
+{"model": "auth.permission","pk": 7,"fields": {"name": "Can delete permission","content_type": 2,"codename": "delete_permission"}}
+{"model": "auth.permission","pk": 8,"fields": {"name": "Can view permission","content_type": 2,"codename": "view_permission"}}
+{"model": "auth.permission","pk": 9,"fields": {"name": "Can add group","content_type": 3,"codename": "add_group"}}
+{"model": "auth.permission","pk": 10,"fields": {"name": "Can change group","content_type": 3,"codename": "change_group"}}
+{"model": "auth.permission","pk": 11,"fields": {"name": "Can delete group","content_type": 3,"codename": "delete_group"}}
+{"model": "auth.permission","pk": 12,"fields": {"name": "Can view group","content_type": 3,"codename": "view_group"}}
+{"model": "auth.permission","pk": 13,"fields": {"name": "Can add content type","content_type": 4,"codename": "add_contenttype"}}
+{"model": "auth.permission","pk": 14,"fields": {"name": "Can change content type","content_type": 4,"codename": "change_contenttype"}}
+{"model": "auth.permission","pk": 15,"fields": {"name": "Can delete content type","content_type": 4,"codename": "delete_contenttype"}}
+{"model": "auth.permission","pk": 16,"fields": {"name": "Can view content type","content_type": 4,"codename": "view_contenttype"}}
+{"model": "auth.permission","pk": 17,"fields": {"name": "Can add session","content_type": 5,"codename": "add_session"}}
+{"model": "auth.permission","pk": 18,"fields": {"name": "Can change session","content_type": 5,"codename": "change_session"}}
+{"model": "auth.permission","pk": 19,"fields": {"name": "Can delete session","content_type": 5,"codename": "delete_session"}}
+{"model": "auth.permission","pk": 20,"fields": {"name": "Can view session","content_type": 5,"codename": "view_session"}}
+{"model": "auth.permission","pk": 21,"fields": {"name": "Can add user","content_type": 6,"codename": "add_user"}}
+{"model": "auth.permission","pk": 22,"fields": {"name": "Can change user","content_type": 6,"codename": "change_user"}}
+{"model": "auth.permission","pk": 23,"fields": {"name": "Can delete user","content_type": 6,"codename": "delete_user"}}
+{"model": "auth.permission","pk": 24,"fields": {"name": "Can view user","content_type": 6,"codename": "view_user"}}
+{"model": "auth.permission","pk": 25,"fields": {"name": "Can add Repose-Flèche","content_type": 7,"codename": "add_arrowrest"}}
+{"model": "auth.permission","pk": 26,"fields": {"name": "Can change Repose-Flèche","content_type": 7,"codename": "change_arrowrest"}}
+{"model": "auth.permission","pk": 27,"fields": {"name": "Can delete Repose-Flèche","content_type": 7,"codename": "delete_arrowrest"}}
+{"model": "auth.permission","pk": 28,"fields": {"name": "Can view Repose-Flèche","content_type": 7,"codename": "view_arrowrest"}}
+{"model": "auth.permission","pk": 29,"fields": {"name": "Can add Barebow","content_type": 8,"codename": "add_barebow"}}
+{"model": "auth.permission","pk": 30,"fields": {"name": "Can change Barebow","content_type": 8,"codename": "change_barebow"}}
+{"model": "auth.permission","pk": 31,"fields": {"name": "Can delete Barebow","content_type": 8,"codename": "delete_barebow"}}
+{"model": "auth.permission","pk": 32,"fields": {"name": "Can view Barebow","content_type": 8,"codename": "view_barebow"}}
+{"model": "auth.permission","pk": 33,"fields": {"name": "Can add Clicker","content_type": 9,"codename": "add_clicker"}}
+{"model": "auth.permission","pk": 34,"fields": {"name": "Can change Clicker","content_type": 9,"codename": "change_clicker"}}
+{"model": "auth.permission","pk": 35,"fields": {"name": "Can delete Clicker","content_type": 9,"codename": "delete_clicker"}}
+{"model": "auth.permission","pk": 36,"fields": {"name": "Can view Clicker","content_type": 9,"codename": "view_clicker"}}
+{"model": "auth.permission","pk": 37,"fields": {"name": "Can add Amortisseur","content_type": 10,"codename": "add_dampeners"}}
+{"model": "auth.permission","pk": 38,"fields": {"name": "Can change Amortisseur","content_type": 10,"codename": "change_dampeners"}}
+{"model": "auth.permission","pk": 39,"fields": {"name": "Can delete Amortisseur","content_type": 10,"codename": "delete_dampeners"}}
+{"model": "auth.permission","pk": 40,"fields": {"name": "Can view Amortisseur","content_type": 10,"codename": "view_dampeners"}}
+{"model": "auth.permission","pk": 41,"fields": {"name": "Can add Viseur","content_type": 11,"codename": "add_scope"}}
+{"model": "auth.permission","pk": 42,"fields": {"name": "Can change Viseur","content_type": 11,"codename": "change_scope"}}
+{"model": "auth.permission","pk": 43,"fields": {"name": "Can delete Viseur","content_type": 11,"codename": "delete_scope"}}
+{"model": "auth.permission","pk": 44,"fields": {"name": "Can view Viseur","content_type": 11,"codename": "view_scope"}}
+{"model": "auth.permission","pk": 45,"fields": {"name": "Can add Repose-Flèche (Compound)","content_type": 12,"codename": "add_compoundarrowrest"}}
+{"model": "auth.permission","pk": 46,"fields": {"name": "Can change Repose-Flèche (Compound)","content_type": 12,"codename": "change_compoundarrowrest"}}
+{"model": "auth.permission","pk": 47,"fields": {"name": "Can delete Repose-Flèche (Compound)","content_type": 12,"codename": "delete_compoundarrowrest"}}
+{"model": "auth.permission","pk": 48,"fields": {"name": "Can view Repose-Flèche (Compound)","content_type": 12,"codename": "view_compoundarrowrest"}}
+{"model": "auth.permission","pk": 49,"fields": {"name": "Can add Viseur (Compound)","content_type": 13,"codename": "add_compoundscope"}}
+{"model": "auth.permission","pk": 50,"fields": {"name": "Can change Viseur (Compound)","content_type": 13,"codename": "change_compoundscope"}}
+{"model": "auth.permission","pk": 51,"fields": {"name": "Can delete Viseur (Compound)","content_type": 13,"codename": "delete_compoundscope"}}
+{"model": "auth.permission","pk": 52,"fields": {"name": "Can view Viseur (Compound)","content_type": 13,"codename": "view_compoundscope"}}
+{"model": "auth.permission","pk": 53,"fields": {"name": "Can add Tube","content_type": 14,"codename": "add_tube"}}
+{"model": "auth.permission","pk": 54,"fields": {"name": "Can change Tube","content_type": 14,"codename": "change_tube"}}
+{"model": "auth.permission","pk": 55,"fields": {"name": "Can delete Tube","content_type": 14,"codename": "delete_tube"}}
+{"model": "auth.permission","pk": 56,"fields": {"name": "Can view Tube","content_type": 14,"codename": "view_tube"}}
+{"model": "auth.permission","pk": 57,"fields": {"name": "Can add Pointe","content_type": 15,"codename": "add_tip"}}
+{"model": "auth.permission","pk": 58,"fields": {"name": "Can change Pointe","content_type": 15,"codename": "change_tip"}}
+{"model": "auth.permission","pk": 59,"fields": {"name": "Can delete Pointe","content_type": 15,"codename": "delete_tip"}}
+{"model": "auth.permission","pk": 60,"fields": {"name": "Can view Pointe","content_type": 15,"codename": "view_tip"}}
+{"model": "auth.permission","pk": 61,"fields": {"name": "Can add Stabilisation","content_type": 16,"codename": "add_stabilisation"}}
+{"model": "auth.permission","pk": 62,"fields": {"name": "Can change Stabilisation","content_type": 16,"codename": "change_stabilisation"}}
+{"model": "auth.permission","pk": 63,"fields": {"name": "Can delete Stabilisation","content_type": 16,"codename": "delete_stabilisation"}}
+{"model": "auth.permission","pk": 64,"fields": {"name": "Can view Stabilisation","content_type": 16,"codename": "view_stabilisation"}}
+{"model": "auth.permission","pk": 65,"fields": {"name": "Can add poignée","content_type": 17,"codename": "add_riser"}}
+{"model": "auth.permission","pk": 66,"fields": {"name": "Can change poignée","content_type": 17,"codename": "change_riser"}}
+{"model": "auth.permission","pk": 67,"fields": {"name": "Can delete poignée","content_type": 17,"codename": "delete_riser"}}
+{"model": "auth.permission","pk": 68,"fields": {"name": "Can view poignée","content_type": 17,"codename": "view_riser"}}
+{"model": "auth.permission","pk": 69,"fields": {"name": "Can add Arc Olympique","content_type": 18,"codename": "add_olympicbow"}}
+{"model": "auth.permission","pk": 70,"fields": {"name": "Can change Arc Olympique","content_type": 18,"codename": "change_olympicbow"}}
+{"model": "auth.permission","pk": 71,"fields": {"name": "Can delete Arc Olympique","content_type": 18,"codename": "delete_olympicbow"}}
+{"model": "auth.permission","pk": 72,"fields": {"name": "Can view Arc Olympique","content_type": 18,"codename": "view_olympicbow"}}
+{"model": "auth.permission","pk": 73,"fields": {"name": "Can add Encoche","content_type": 19,"codename": "add_nock"}}
+{"model": "auth.permission","pk": 74,"fields": {"name": "Can change Encoche","content_type": 19,"codename": "change_nock"}}
+{"model": "auth.permission","pk": 75,"fields": {"name": "Can delete Encoche","content_type": 19,"codename": "delete_nock"}}
+{"model": "auth.permission","pk": 76,"fields": {"name": "Can view Encoche","content_type": 19,"codename": "view_nock"}}
+{"model": "auth.permission","pk": 77,"fields": {"name": "Can add Branche","content_type": 20,"codename": "add_limbs"}}
+{"model": "auth.permission","pk": 78,"fields": {"name": "Can change Branche","content_type": 20,"codename": "change_limbs"}}
+{"model": "auth.permission","pk": 79,"fields": {"name": "Can delete Branche","content_type": 20,"codename": "delete_limbs"}}
+{"model": "auth.permission","pk": 80,"fields": {"name": "Can view Branche","content_type": 20,"codename": "view_limbs"}}
+{"model": "auth.permission","pk": 81,"fields": {"name": "Can add Empennage","content_type": 21,"codename": "add_feathering"}}
+{"model": "auth.permission","pk": 82,"fields": {"name": "Can change Empennage","content_type": 21,"codename": "change_feathering"}}
+{"model": "auth.permission","pk": 83,"fields": {"name": "Can delete Empennage","content_type": 21,"codename": "delete_feathering"}}
+{"model": "auth.permission","pk": 84,"fields": {"name": "Can view Empennage","content_type": 21,"codename": "view_feathering"}}
+{"model": "auth.permission","pk": 85,"fields": {"name": "Can add Corde","content_type": 22,"codename": "add_equipmentstring"}}
+{"model": "auth.permission","pk": 86,"fields": {"name": "Can change Corde","content_type": 22,"codename": "change_equipmentstring"}}
+{"model": "auth.permission","pk": 87,"fields": {"name": "Can delete Corde","content_type": 22,"codename": "delete_equipmentstring"}}
+{"model": "auth.permission","pk": 88,"fields": {"name": "Can view Corde","content_type": 22,"codename": "view_equipmentstring"}}
+{"model": "auth.permission","pk": 89,"fields": {"name": "Can add Berger","content_type": 23,"codename": "add_bergerbutton"}}
+{"model": "auth.permission","pk": 90,"fields": {"name": "Can change Berger","content_type": 23,"codename": "change_bergerbutton"}}
+{"model": "auth.permission","pk": 91,"fields": {"name": "Can delete Berger","content_type": 23,"codename": "delete_bergerbutton"}}
+{"model": "auth.permission","pk": 92,"fields": {"name": "Can view Berger","content_type": 23,"codename": "view_bergerbutton"}}
+{"model": "auth.permission","pk": 93,"fields": {"name": "Can add Flèche","content_type": 24,"codename": "add_arrow"}}
+{"model": "auth.permission","pk": 94,"fields": {"name": "Can change Flèche","content_type": 24,"codename": "change_arrow"}}
+{"model": "auth.permission","pk": 95,"fields": {"name": "Can delete Flèche","content_type": 24,"codename": "delete_arrow"}}
+{"model": "auth.permission","pk": 96,"fields": {"name": "Can view Flèche","content_type": 24,"codename": "view_arrow"}}
+{"model": "auth.permission","pk": 97,"fields": {"name": "Can add Arc à poulies","content_type": 25,"codename": "add_compoundbow"}}
+{"model": "auth.permission","pk": 98,"fields": {"name": "Can change Arc à poulies","content_type": 25,"codename": "change_compoundbow"}}
+{"model": "auth.permission","pk": 99,"fields": {"name": "Can delete Arc à poulies","content_type": 25,"codename": "delete_compoundbow"}}
+{"model": "auth.permission","pk": 100,"fields": {"name": "Can view Arc à poulies","content_type": 25,"codename": "view_compoundbow"}}
+{"model": "auth.permission","pk": 101,"fields": {"name": "Can add practice record","content_type": 26,"codename": "add_practicerecord"}}
+{"model": "auth.permission","pk": 102,"fields": {"name": "Can change practice record","content_type": 26,"codename": "change_practicerecord"}}
+{"model": "auth.permission","pk": 103,"fields": {"name": "Can delete practice record","content_type": 26,"codename": "delete_practicerecord"}}
+{"model": "auth.permission","pk": 104,"fields": {"name": "Can view practice record","content_type": 26,"codename": "view_practicerecord"}}
+{"model": "auth.permission","pk": 105,"fields": {"name": "Can add stats record","content_type": 27,"codename": "add_statsrecord"}}
+{"model": "auth.permission","pk": 106,"fields": {"name": "Can change stats record","content_type": 27,"codename": "change_statsrecord"}}
+{"model": "auth.permission","pk": 107,"fields": {"name": "Can delete stats record","content_type": 27,"codename": "delete_statsrecord"}}
+{"model": "auth.permission","pk": 108,"fields": {"name": "Can view stats record","content_type": 27,"codename": "view_statsrecord"}}
+{"model": "auth.permission","pk": 109,"fields": {"name": "Can add Session d'enregistrement de statistiques de flèches","content_type": 28,"codename": "add_statsrecordsession"}}
+{"model": "auth.permission","pk": 110,"fields": {"name": "Can change Session d'enregistrement de statistiques de flèches","content_type": 28,"codename": "change_statsrecordsession"}}
+{"model": "auth.permission","pk": 111,"fields": {"name": "Can delete Session d'enregistrement de statistiques de flèches","content_type": 28,"codename": "delete_statsrecordsession"}}
+{"model": "auth.permission","pk": 112,"fields": {"name": "Can view Session d'enregistrement de statistiques de flèches","content_type": 28,"codename": "view_statsrecordsession"}}
+{"model": "auth.permission","pk": 113,"fields": {"name": "Can add Session d'entrainement","content_type": 29,"codename": "add_practicerecordsession"}}
+{"model": "auth.permission","pk": 114,"fields": {"name": "Can change Session d'entrainement","content_type": 29,"codename": "change_practicerecordsession"}}
+{"model": "auth.permission","pk": 115,"fields": {"name": "Can delete Session d'entrainement","content_type": 29,"codename": "delete_practicerecordsession"}}
+{"model": "auth.permission","pk": 116,"fields": {"name": "Can view Session d'entrainement","content_type": 29,"codename": "view_practicerecordsession"}}
+{"model": "contenttypes.contenttype","pk": 1,"fields": {"app_label": "admin","model": "logentry"}}
+{"model": "contenttypes.contenttype","pk": 2,"fields": {"app_label": "auth","model": "permission"}}
+{"model": "contenttypes.contenttype","pk": 3,"fields": {"app_label": "auth","model": "group"}}
+{"model": "contenttypes.contenttype","pk": 4,"fields": {"app_label": "contenttypes","model": "contenttype"}}
+{"model": "contenttypes.contenttype","pk": 5,"fields": {"app_label": "sessions","model": "session"}}
+{"model": "contenttypes.contenttype","pk": 6,"fields": {"app_label": "accounts","model": "user"}}
+{"model": "contenttypes.contenttype","pk": 7,"fields": {"app_label": "equipment","model": "arrowrest"}}
+{"model": "contenttypes.contenttype","pk": 8,"fields": {"app_label": "equipment","model": "barebow"}}
+{"model": "contenttypes.contenttype","pk": 9,"fields": {"app_label": "equipment","model": "clicker"}}
+{"model": "contenttypes.contenttype","pk": 10,"fields": {"app_label": "equipment","model": "dampeners"}}
+{"model": "contenttypes.contenttype","pk": 11,"fields": {"app_label": "equipment","model": "scope"}}
+{"model": "contenttypes.contenttype","pk": 12,"fields": {"app_label": "equipment","model": "compoundarrowrest"}}
+{"model": "contenttypes.contenttype","pk": 13,"fields": {"app_label": "equipment","model": "compoundscope"}}
+{"model": "contenttypes.contenttype","pk": 14,"fields": {"app_label": "equipment","model": "tube"}}
+{"model": "contenttypes.contenttype","pk": 15,"fields": {"app_label": "equipment","model": "tip"}}
+{"model": "contenttypes.contenttype","pk": 16,"fields": {"app_label": "equipment","model": "stabilisation"}}
+{"model": "contenttypes.contenttype","pk": 17,"fields": {"app_label": "equipment","model": "riser"}}
+{"model": "contenttypes.contenttype","pk": 18,"fields": {"app_label": "equipment","model": "olympicbow"}}
+{"model": "contenttypes.contenttype","pk": 19,"fields": {"app_label": "equipment","model": "nock"}}
+{"model": "contenttypes.contenttype","pk": 20,"fields": {"app_label": "equipment","model": "limbs"}}
+{"model": "contenttypes.contenttype","pk": 21,"fields": {"app_label": "equipment","model": "feathering"}}
+{"model": "contenttypes.contenttype","pk": 22,"fields": {"app_label": "equipment","model": "equipmentstring"}}
+{"model": "contenttypes.contenttype","pk": 23,"fields": {"app_label": "equipment","model": "bergerbutton"}}
+{"model": "contenttypes.contenttype","pk": 24,"fields": {"app_label": "equipment","model": "arrow"}}
+{"model": "contenttypes.contenttype","pk": 25,"fields": {"app_label": "equipment","model": "compoundbow"}}
+{"model": "contenttypes.contenttype","pk": 26,"fields": {"app_label": "records","model": "practicerecord"}}
+{"model": "contenttypes.contenttype","pk": 27,"fields": {"app_label": "records","model": "statsrecord"}}
+{"model": "contenttypes.contenttype","pk": 28,"fields": {"app_label": "records","model": "statsrecordsession"}}
+{"model": "contenttypes.contenttype","pk": 29,"fields": {"app_label": "records","model": "practicerecordsession"}}
+{"model": "sessions.session","pk": "0hg8j75rk2gtpju9o7nqshv3a2x6n3qk","fields": {"session_data": ".eJxVjMsOwiAQRf-FtSEdoTxcuu83kIEZpGogKe3K-O_apAvd3nPOfYmA21rC1nkJM4mLAHH63SKmB9cd0B3rrcnU6rrMUe6KPGiXUyN-Xg_376BgL986juB9ZgWJjWIcKPM4DtbErKw5O61AayAmj2QJlaWctWdmcg4GcFG8P_LUOHM:1oRZAh:99CtAaeen0KEscRN2fO6BMO7-sPXNM_WbUVNc86yP2E","expire_date": "2022-09-09T13:14:51.376Z"}}
+{"model": "sessions.session","pk": "besxx37mbskb9cf8nuc7uzw9ka083qgw","fields": {"session_data": "e30:1oDRQD:w3VO-1ySTxRF7-bRRPcepZ--sSu3xRoY1SNgRrEvopo","expire_date": "2022-08-01T14:08:29.393Z"}}
+{"model": "sessions.session","pk": "j14t1vg15zyagz47e7yt0qhpa9sa4rs9","fields": {"session_data": ".eJxVjEEOwiAQRe_C2hCgFMSl-56BDDODVA0kpV0Z765NutDtf-_9l4iwrSVunZc4k7gIrcXpd0yAD647oTvUW5PY6rrMSe6KPGiXUyN-Xg_376BAL986gwmg7FmNnEMwQD54i5bQafIZKStngmGvzABJDQ41Zee1CoMHGhnF-wMMbDg1:1oG9mn:IC6sYtputtSSBYF6yBdLHo4EzKm-GB7tXaki7wXoimI","expire_date": "2022-08-09T01:55:01.444Z"}}
+{"model": "sessions.session","pk": "m37rx93osof2bageyloljb3531axpo0t","fields": {"session_data": "e30:1oDRPy:8frZrFTrRxkDqIVLsqBiILINif-mLRkeDrMm3aie8pQ","expire_date": "2022-08-01T14:08:14.954Z"}}
+{"model": "sessions.session","pk": "u9xglrlqx4fhfzttp8t0msvgmo8fhj49","fields": {"session_data": ".eJxVjDsOwjAQBe_iGln-26Gkzxkse3eNA8iR4qRC3J1ESgHtzLz3ZjFta41bpyVOyK5MSnb5hTnBk9ph8JHafeYwt3WZMj8SftrOxxnpdTvbv4Oaet3XYEyRIjmlwpBBFxBaCHQ7A43SFBq8JU3ZAQnvirJkvQwI3tkgnbHs8wUB3jei:1oLuNf:PTF99do_GyNSincPTMJW4w8Tn-dDS4p-E5y-q8sS5jE","expire_date": "2022-08-24T22:40:51.355Z"}}
+{"model": "accounts.user","pk": 1,"fields": {"password": "pbkdf2_sha256$390000$jqMWwua4WHjlOLikQ9qhKA$ItzKOIlSZKuI/s9x5pnvqhZKpZ8chLU9UiVRxZcdyRs=","last_login": "2022-08-26T13:14:51.343Z","first_name": null,"last_name": null,"email": null,"pseudo": "remi","created_at": "2022-07-18T10:50:19.055Z","updated_at": "2022-07-18T10:50:19.055Z","is_active": true,"is_staff": true,"is_admin": true,"is_superuser": true}}
+{"model": "accounts.user","pk": 11,"fields": {"password": "pbkdf2_sha256$390000$qSjbctaet8iRtSM8wsdmr6$6zLB4+SDiDebPm16MBBFNPfUJkgTh0e1KXxUhIomp1o=","last_login": "2022-08-25T12:46:32.127Z","first_name": "Rémi","last_name": "Tauvel","email": null,"pseudo": "remi123456","created_at": "2022-07-24T13:10:40.851Z","updated_at": "2022-07-24T13:10:41.017Z","is_active": true,"is_staff": false,"is_admin": false,"is_superuser": false}}
+{"model": "equipment.nock","pk": 1,"fields": {"user": 11,"brand": "beiter","color": "rouge","size": "S","uses_nock_pin": true}}
+{"model": "equipment.nock","pk": 2,"fields": {"user": 11,"brand": "beiter","color": "rouge","size": "S","uses_nock_pin": false}}
+{"model": "equipment.feathering","pk": 1,"fields": {"laterality": "R","feathering_type": "SPINWINGS","user": 11,"brand": "XS - Wings","color": "bleu","cock_color": "bleu","size": "S","angle": 0,"nock_distance": 5}}
+{"model": "equipment.feathering","pk": 2,"fields": {"laterality": "R","feathering_type": "VANES","user": 11,"brand": "XS - Wings","color": "bleu","cock_color": "bleu","size": "S","angle": 0,"nock_distance": 0}}
+{"model": "equipment.feathering","pk": 3,"fields": {"laterality": "R","feathering_type": "VANES","user": 11,"brand": "XS - Wings","color": "bleu","cock_color": "bleu","size": "S","angle": 0,"nock_distance": 5}}
+{"model": "equipment.tip","pk": 1,"fields": {"user": 11,"brand": "eastion","profile": "ogive","weight": 120}}
+{"model": "equipment.tip","pk": 2,"fields": {"user": 11,"brand": "eastion","profile": "ogive","weight": 140}}
+{"model": "equipment.tip","pk": 3,"fields": {"user": 11,"brand": "easton","profile": "ogive","weight": 120}}
+{"model": "equipment.tube","pk": 1,"fields": {"user": 11,"brand": "easton","material": "CARBON","tube_length": 73.0,"spine": 1000,"tube_diameter": 4.0}}
+{"model": "equipment.arrow","pk": 6,"fields": {"user": 11,"nock": 1,"feathering": 3,"tip": 3,"tube": 1,"not_broken": true}}
+{"model": "equipment.arrow","pk": 7,"fields": {"user": 11,"nock": 1,"feathering": 3,"tip": 3,"tube": 1,"not_broken": true}}
+{"model": "equipment.arrow","pk": 8,"fields": {"user": 11,"nock": 1,"feathering": 3,"tip": 3,"tube": 1,"not_broken": true}}
+{"model": "equipment.arrow","pk": 9,"fields": {"user": 11,"nock": 1,"feathering": 3,"tip": 3,"tube": 1,"not_broken": true}}
+{"model": "equipment.arrow","pk": 10,"fields": {"user": 11,"nock": 1,"feathering": 3,"tip": 3,"tube": 1,"not_broken": true}}
+{"model": "equipment.arrow","pk": 11,"fields": {"user": 11,"nock": 1,"feathering": 3,"tip": 3,"tube": 1,"not_broken": true}}
+{"model": "records.practicerecordsession","pk": 8,"fields": {"user": 11,"session_datetime": "2022-08-04T17:11:08.556Z","conditions": "EXT","distance": 70,"comment": "pas de vent","number_of_volleys": 10,"max_arrows_in_volley": 6}}
+{"model": "records.practicerecordsession","pk": 9,"fields": {"user": 11,"session_datetime": "2022-08-11T07:11:02.899Z","conditions": "INT","distance": 20,"comment": "efb","number_of_volleys": 10,"max_arrows_in_volley": 3}}

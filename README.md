@@ -24,11 +24,13 @@ this is a studies final project on helping archers on 3 manners:
 
 ```bash
 git clone this project
+install sqlite
 install pipx with your packer manager
 pipx install poetry
 cd OC-P13_ArcheryBuddy/ArcheryBuddy
 poetry install
 poetry shell
+./manage.py makemigrations accounts equipment records
 ./manage.py migrate
 ```
 
@@ -42,6 +44,7 @@ same procedure than for development installation, then end with:
 ```bash
 ./manage.py test
 ```
+
 
 ### linting and formatting options
 

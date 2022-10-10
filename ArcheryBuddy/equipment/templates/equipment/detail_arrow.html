@@ -1,0 +1,78 @@
+<h1>Création de flèches</h1>
+<div>
+    <h2>Encoche</h2>
+
+    <div class="fieldWrapper">
+        marque: {{ arrow.nock.brand }}
+    </div>
+
+    <div class="fieldWrapper">
+        couleur: {{ arrow.nock.color }}
+    </div>
+    <div class="fieldWrapper">
+        taille: {{ arrow.nock.size }}
+    </div>
+    <div class="fieldWrapper">
+        utilise un nock-pin{{ arrow.uses_nock_pin }}
+    </div>
+</div>
+<hr/>
+<h2>Empennage</h2>
+<div class="fieldWrapper">
+    latéralité: {{ arrow.feathering.laterality }}
+</div>
+<div class="fieldWrapper">
+    type: {{ arrow.feathering.type }}
+</div>
+<div class="fieldWrapper">
+    marque: {{ arrow.feathering.brand }}
+</div>
+<div class="fieldWrapper">
+    couleur: {{ arrow.feathering.color }}
+</div>
+<div class="fieldWrapper">
+    couleur de la plume coq:{{ arrow.feathering.cock_color }}
+</div>
+<div class="fieldWrapper">
+    taille: {{ arrow.feathering.size }}
+</div>
+<div class="fieldWrapper">
+    angle de collage: {{ arrow.feathering.angle }}
+</div>
+<div class="fieldWrapper">
+    distance à l'encoche: {{ arrow.feathering.nock_distance }}
+</div>
+<hr/>
+<h2>Pointe</h2>
+<div class="fieldWrapper">
+    marque: {{ arrow.tip.brand }}
+</div>    
+<div class="fieldWrapper">
+    profil: {{ arrow.tip.profile }}
+</div>    
+<div class="fieldWrapper">
+    masse: {{ arrow.tip.weight }}
+</div>
+<hr/>
+<h3>Tube</h3>
+<div class="fieldWrapper">
+    marque: {{ arrow.tube.brand }}
+</div>    
+<div class="fieldWrapper">
+    matériau: {{ arrow.tube.material }}
+</div>    
+<div class="fieldWrapper">
+    longueur: {{ arrow.tube.tube_length }}
+</div>    
+<div class="fieldWrapper">
+    spine:{{ arrow.tube.spine }}
+</div>    
+<div class="fieldWrapper">
+    diametre: {{ arrow.tube.tube_diameter }}
+</div>
+<hr/>
+<div class="fieldWrapper">
+    en état de voler: {{ arrow.not_broken|yesno:"oui, non" }}
+</div>
+
+<a href="http://127.0.0.1:8000/arrows/list">retour à la liste des flèches</a>
