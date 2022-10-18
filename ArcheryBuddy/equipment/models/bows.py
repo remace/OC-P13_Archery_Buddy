@@ -105,7 +105,7 @@ class ArrowRest(models.Model):
 
 
 class BergerButton(models.Model):
-    ser = models.ForeignKey(
+    user = models.ForeignKey(
         "accounts.User",
         related_name="BergerButton",
         on_delete=models.CASCADE,
@@ -272,6 +272,8 @@ class CompoundBow(Bow):
     brace_height = models.FloatField()  # simili-band
     draw_length = models.FloatField()  # allonge
 
+    scope = models.ManyToManyField("equipment.CompoundScope", verbose_name="scope")
+
     arrow_rest = models.ForeignKey(
         "equipment.CompoundArrowRest",
         verbose_name="repose_flèche",
@@ -285,7 +287,7 @@ class CompoundBow(Bow):
     dampeners = models.ForeignKey("equipment.Dampeners", on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.brand}"
+        return f"{self.bow_brand}"
 
     class Meta:
         verbose_name = "Arc à poulies"
