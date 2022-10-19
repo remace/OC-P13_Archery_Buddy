@@ -1,0 +1,424 @@
+{% extends 'core/base.html' %}
+{% load static%}
+{% block content %}
+<h1>modification d'arc</h1>
+<form method="POST" action="{% url 'bows_update' bow_type bow.id %}">
+    {% csrf_token %}
+    <div>
+        <label for="bow_type">type d'arc</label>
+        <select name="bow_type" id="bow_type_selector" disabled>
+            <option value="barebow" {% if bow_type == "barebow" %}selected{%endif%}>Barebow</option>
+            <option value="olympic" {% if bow_type == "olympic" %}selected{%endif%}>Arc Olympique</option>
+            <option value="compound"{% if bow_type == "compound" %}selected{%endif%}>Arc à Poulies</option>
+        </select>
+    </div>
+    <div>
+        <label for="power">puissance</label>
+        <input type="number" id="power" name="power"
+            min="0" max="100" value={{bow.power}}>
+    </div>
+    <div>
+        <label for="laterality">latéralité</label>
+        <select name="laterality" id="laterality">
+            <option value="R" {% if bow.laterality == "R" %}selected {% endif %}>droitier</option>
+            <option value="L" {% if bow.laterality == "L" %}selected {% endif %}>gaucher</option>
+        </select>
+    </div>
+    <hr>
+    <div id="subFormContainer">
+        <div id="BarebowBowForm">
+            <h2>poignée</h2>
+            <div>
+                <label for="riser_brand">marque</label>
+                <input type="text" 
+                    name="riser_brand" 
+                    id="riser_brand" 
+                    maxlength="30"
+                    value={{bow.riser.brand}}>
+            </div>
+            <div>
+                <label for="riser_size">taille</label>
+                <input type="number" 
+                    name="riser_size" 
+                    id="riser_size"
+                    min="23"
+                    max="27"
+                    step="2"
+                    value="{{ bow.riser.size }}">
+            </div>
+            <div>
+                <label for="riser_color">couleur</label>
+                <input type="text" 
+                    name="riser_color" 
+                    id="riser_color" 
+                    maxlength="30"
+                    value={{ bow.riser.color }}>
+            </div>
+            <div>
+                <label for="riser_grip">grip</label>
+                <input type="text" 
+                    name="riser_grip" 
+                    id="riser_grip" 
+                    maxlength="30"
+                    value="{{bow.riser.grip}}">
+            </div>
+            <hr>
+            <h2>Branches</h2>
+            <div>
+                <label for="limbs_brand">marque</label>
+                <input type="text" 
+                    name="limbs_brand" 
+                    id="limbs_brand" 
+                    maxlength="30"
+                    value="{{bow.limbs.brand}}">
+            </div>
+            <div>
+                <label for="limbs_power">puissance</label>
+                <input type="number" id="limbs_power" name="limbs_power"
+                    min="0" max="100" value="{{bow.limbs.power}}">
+            </div>
+            <div>
+                <label for="limbs_size">taille:</label>
+                <input type="number" 
+                    name="limbs_size" 
+                    id="limbs_size"
+                    min="60"
+                    max="72"
+                    step="2"
+                    value="{{bow.limbs.size}}">
+            </div>
+            <hr>
+            <h2>Corde</h2>
+            <div>
+                <label for="string_brand">marque</label>
+                <input type="text" 
+                    name="string_brand" 
+                    id="string_brand" 
+                    maxlength="30"
+                    value="{{bow.string.brand}}">
+            </div>
+            <div>
+                <label for="material">Matériau</label>
+                <select name="material" id="material">
+                    <option value="8125" {% if bow.string.material == "8125" %}selected {% endif %}>8125</option>
+                    <option value="DACRON" {% if bow.string.material == "DACRON" %}selected {% endif %}>Dacron</option>
+                    <option value="FF" {% if bow.string.material == "FF" %}selected {% endif %}>Fast Flight</option>
+                    <option value="D75" {% if bow.string.material == "D75" %}selected {% endif %}>D75</option>
+                    <option value="FS" {% if bow.string.material == "FS" %}selected {% endif %}>Flex Supra</option>
+                </select>
+            </div>
+            <div>
+                <label for="strands">Nb de brins:</label>
+                <input type="number" 
+                    name="strands" 
+                    id="strands"
+                    min="8"
+                    max="20"
+                    step="2"
+                    value="{{bow.string.strands}}">
+            </div>
+            <hr>
+            <h2>repose-flèche</h2>
+            <div>
+                <label for="rest_type">type de repose-flèches</label>
+                <select name="rest_type" id="rest_type">
+                    <option value="SM" {% if bow.arrow_rest.rest_type == "SM" %}selected {% endif %}>Magnétique Court</option>
+                    <option value="LM" {% if bow.arrow_rest.rest_type == "LM" %}selected {% endif %}>Magnétique Long</option>
+                    <option value="P" {% if bow.arrow_rest.rest_type == "P" %}selected {% endif %}>Plastique</option>
+                </select>
+            </div>
+            <div>
+                <label for="rest_brand">marque</label>
+                <input type="text" 
+                    name="rest_brand" 
+                    id="rest_brand" 
+                    maxlength="30"
+                    value="{{bow.arrow_rest.brand}}">
+            </div>
+            <hr>
+            <h2>Berger Button</h2>
+            <div>
+                <label for="berger_brand">marque</label>
+                <input type="text" 
+                    name="berger_brand" 
+                    id="berger_brand" 
+                    maxlength="30"
+                    value="{{bow.berger_button.brand}}">
+            </div>
+            <div>
+                <label for="berger_color">couleur</label>
+                <input type="text" 
+                    name="berger_color" 
+                    id="berger_color" 
+                    maxlength="30"
+                    value="{{bow.berger_button.color}}">
+            </div>
+            <div>
+                <label for="berger_spring">ressort:</label>
+                <input type="text" name="berger_spring" id="berger_spring" maxlength="30" value="{{bow.berger_button.spring}}">
+
+            </div>
+            <hr>
+            <h2>spécificités de l'arc</h2>
+            <div>
+                <label for="string_turns">tours de corde:</label>
+                <input type="number" name="string_turns" id="string_turns" min="0" max="40" step="1" value="{{bow.number_of_turns}}">
+            </div>
+            <div>
+                <label for="nockset_offset">hauteur nockset:</label>
+                <input type="number" name="nockset_offset" id="nockset_offset" min="0" max="40" step="0.1" value="{{bow.nockset_offset}}">
+            </div>
+            <div>
+                <label for="band">band:</label>
+                <input type="number" name="band" id="band" min="0" max="40" step="0.1" value="{{bow.band}}">
+            </div>
+            <div>
+                <label for="high_tiller">tiller haut:</label>
+                <input type="number" name="high_tiller" id="high_tiller" min="0" max="40" step="0.1" value="{{bow.high_tiller}}">
+            </div>
+            <div>
+                <label for="low_tiller">tiller bas:</label>
+                <input type="number" name="low_tiller" id="low_tiller" min="0" max="40" step="0.1" value="{{bow.low_tiller}}">
+            </div>
+        </div>
+    </div>
+    <button type="submit">modifier Arc</button>
+</form>
+<div class="hidden" id="hiddenSubFormsContainer">
+    <div id="OlympicBowForm">
+        <h2>poignée</h2>
+        <div>
+            <label for="riser_brand">marque</label>
+            <input type="text" 
+                name="riser_brand" 
+                id="riser_brand" 
+                maxlength="30">
+        </div>
+        <div>
+            <label for="riser_size">taille</label>
+            <input type="number" 
+                name="riser_size" 
+                id="riser_size"
+                min="23"
+                max="27"
+                step="2"
+                value="25">
+        </div>
+        <div>
+            <label for="riser_color">couleur</label>
+            <input type="text" 
+                name="riser_color" 
+                id="riser_color" 
+                maxlength="30">
+        </div>
+        <div>
+            <label for="grip">grip</label>
+            <input type="text" 
+                name="grip" 
+                id="grip" 
+                maxlength="30">
+        </div>
+        <hr>
+        <h2>Branches</h2>
+        <div>
+            <label for="limbs_brand">marque</label>
+            <input type="text" 
+                name="limbs_brand" 
+                id="limbs_brand" 
+                maxlength="30">
+        </div>
+        <div>
+            <label for="limbs_power">puissance</label>
+            <input type="number" id="limbs_power" name="limbs_power"
+                min="0" max="100">
+        </div>
+        <div>
+            <label for="limbs_size">taille:</label>
+            <input type="number" 
+                name="limbs_size" 
+                id="limbs_size"
+                min="60"
+                max="72"
+                step="2"
+                value="68">
+        </div>
+        <hr>
+        <h2>Corde</h2>
+        <div>
+            <label for="string_brand">marque</label>
+            <input type="text" 
+                name="string_brand" 
+                id="string_brand" 
+                maxlength="30">
+        </div>
+        <div>
+            <label for="material">Matériau</label>
+            <select name="material" id="material">
+                <option value="8125">8125</option>
+                <option value="DACRON">Dacron</option>
+                <option value="FF">Fast Flight</option>
+                <option value="D75">D75</option>
+                <option value="FS">Flex Supra</option>
+            </select>
+        </div>
+        <div>
+            <label for="strands">Nb de brins:</label>
+            <input type="number" 
+                name="strands" 
+                id="strands"
+                min="8"
+                max="20"
+                step="2"
+                value="10">
+        </div>
+        <hr>
+        <h2>repose-flèche</h2>
+        <div>
+            <label for="rest_brand">marque</label>
+            <input type="text" 
+                name="brand" 
+                id="brand" 
+                maxlength="30">
+        </div>
+        <div>
+            <label for="rest_type">type de repose-flèches</label>
+            <select name="rest_type" id="rest_type">
+                <option value="SM">Magnétique Court</option>
+                <option value="LM">Magnétique Long</option>
+                <option value="P">Plastique</option>
+            </select>
+        </div>
+        <hr>
+        <h2>Berger Button</h2>
+        <div>
+            <label for="berger_brand">marque</label>
+            <input type="text" 
+                name="berger_brand" 
+                id="berger_brand" 
+                maxlength="30">
+        </div>
+        <div>
+            <label for="berger_color">couleur</label>
+            <input type="text" 
+                name="berger_color" 
+                id="berger_color" 
+                maxlength="30">
+        </div>
+        <div>
+            <label for="berger_spring">ressort:</label>
+            <input type="text" name="berger_spring" id="berger_spring" maxlength="30">
+        </div>
+        <h2>Viseur</h2>
+        <div>
+            <label for="scope_brand">Marque</label>
+            <input type="text" 
+            name="scope_brand" 
+            id="scope_brand" 
+            maxlength="30">
+        </div>
+        <h2>clicker</h2>
+        <div>
+            <label for="clicker_brand">Marque</label>
+            <input type="text" 
+            name="clicker_brand" 
+            id="clicker_brand" 
+            maxlength="30">
+        </div>
+        <h2>Stabilisation</h2>
+        <div>
+            <label for="stab_brand">stabilisation:</label>
+            <input type="text" 
+            name="stab_brand" 
+            id="stab_brand" 
+            maxlength="30">
+        </div>
+        <h2>amortisseurs</h2>
+        <div>
+            <label for="front_brand">Marque</label>
+            <input type="text" 
+            name="front_brand" 
+            id="front_brand" 
+            maxlength="30">
+        </div>
+        <div>
+            <label for="rear_brand">Marque</label>
+            <input type="text" 
+            name="rears_brand" 
+            id="rears_brand" 
+            maxlength="30">
+        </div>
+    </div>
+
+    <div id="CompoundBowForm">
+        <div>
+            <label for="bow_brand">Marque</label>
+            <input type="text" 
+            name="bow_brand" 
+            id="bow_brand" 
+            maxlength="30">
+        </div>
+        <div>
+            <label for="entraxe">Entraxe</label>
+            <input type="number" name="entraxe" id="entraxe">
+        </div>
+        <div>
+            <label for="compound_power">puissance brute</label>
+            <input type="number" name="compound_power" id="compound_power">
+        </div>
+        <div>
+            <label for="reduced_power">puissance brute</label>
+            <input type="number" name="reduced_power" id="reduced_power">
+        </div>
+        <div>
+            <label for="compoundBand">band</label>
+            <input type="number" name="compoundBand" id="compoundBand">
+        </div>
+        <div>
+            <label for="drawLength">allonge</label>
+            <input type="number" name="compoundBand" id="compoundBand">
+        </div>
+        <div>
+            <label for="CompoundRestBrand">marque</label>
+            <input type="text" 
+            name="CompoundRestBrand" 
+            id="CompoundRestBrand" 
+            maxlength="30">
+        </div>
+        <div>
+            <label for="compoundRestType">type</label>
+            <select name="CompoundRestType" id="CompoundRestType">
+                <option value="B">lame</option>
+                <option value="MB">lame mobile</option>
+                <option value="A">aiguille</option>
+                <option value="D">donuts</option>
+            </select>
+        </div>
+
+        <h2>Stabilisation</h2>
+        <div>
+            <label for="stab_brand">stabilisation:</label>
+            <input type="text" 
+            name="stab_brand" 
+            id="stab_brand" 
+            maxlength="30">
+        </div>
+        <h2>amortisseurs</h2>
+        <div>
+            <label for="front_brand">Marque</label>
+            <input type="text" 
+            name="front_brand" 
+            id="front_brand" 
+            maxlength="30">
+        </div>
+        <div>
+            <label for="rear_brand">Marque</label>
+            <input type="text" 
+            name="rears_brand" 
+            id="rears_brand" 
+            maxlength="30">
+        </div>
+        
+    </div>
+</div>
+<script src="{% static 'equipment/js/FormSelector.js' %}"></script>
+{% endblock content %}
