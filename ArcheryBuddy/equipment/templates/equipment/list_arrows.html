@@ -1,6 +1,3 @@
-{% extends 'core/base.html' %}
-
-{% block content %}
 <h1>Liste des flèches</h1>
 
 {% if arrows %}
@@ -28,4 +25,3 @@
 </table>
 {% endif %}
 <a href={% url 'arrows_create'%}>créer des flèches</a>
-{% endblock content %}

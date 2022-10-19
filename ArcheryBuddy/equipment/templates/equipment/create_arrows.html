@@ -1,19 +1,15 @@
-{% extends 'core/base.html' %}
-
-{% block content %}
-
 <h1>Création de flèches</h1>
 <form action="{% url 'arrows_create' %}" method="post">
     {% csrf_token %}
     <div>
         <h2>Encoche</h2>
-        
+
         <div class="fieldWrapper">
             {{ form.nock_brand.errors }}
             {{ form.nock_brand.label_tag }}
             {{ form.nock_brand }}
         </div>
-        
+
         <div class="fieldWrapper">
             {{ form.nock_color.errors }}
             {{ form.nock_color.label_tag }}
@@ -129,4 +125,3 @@
     </div>
     <input type="submit" value="créer">
 </form>
-{% endblock content %}

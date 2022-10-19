@@ -18,11 +18,8 @@ from django.urls import path, include
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("core.urls")),
     path("user/", include("accounts.urls")),
     path("arrows/", include("equipment.urls.arrows")),
-    path("bows/", include("equipment.urls.bows")),
     path("practice/", include("records.urls")),
-    path("__reload__/", include("django_browser_reload.urls")),
     path("__debug__/", include("debug_toolbar.urls")),
 ]

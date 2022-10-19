@@ -8,7 +8,6 @@ license = "WTFPL"
 [tool.poetry.dependencies]
 python = "^3.10"
 Django = "^4.0.5"
-django-tailwind = "^3.4.0"
 
 [tool.poetry.dev-dependencies]
 pylint = "^2.14.4"
