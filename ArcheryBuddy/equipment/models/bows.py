@@ -34,7 +34,7 @@ class Bow(models.Model):
 
 class Riser(models.Model):
     user = models.ForeignKey(
-        "accounts.User", related_name="alternativeRiser", on_delete=models.CASCADE
+        "accounts.User", related_name="Riser", on_delete=models.CASCADE
     )
     brand = models.CharField("Marque", max_length=30)
     size = models.IntegerField("Taille (in.)")
@@ -51,7 +51,7 @@ class Riser(models.Model):
 
 class Limbs(models.Model):
     user = models.ForeignKey(
-        "accounts.User", related_name="alternativeLimbs", on_delete=models.CASCADE
+        "accounts.User", related_name="Limbs", on_delete=models.CASCADE
     )
     brand = models.CharField("Marque", max_length=30)
     power = models.IntegerField("Puissance")
@@ -67,7 +67,7 @@ class Limbs(models.Model):
 
 class EquipmentString(models.Model):
     user = models.ForeignKey(
-        "accounts.User", related_name="alternativeString", on_delete=models.CASCADE
+        "accounts.User", related_name="String", on_delete=models.CASCADE
     )
     brand = models.CharField(max_length=30)
     material = models.CharField(
@@ -87,7 +87,7 @@ class EquipmentString(models.Model):
 
 class ArrowRest(models.Model):
     user = models.ForeignKey(
-        "accounts.User", related_name="alternativeArrowRest", on_delete=models.CASCADE
+        "accounts.User", related_name="ArrowRest", on_delete=models.CASCADE
     )
     brand = models.CharField(max_length=30)
     rest_type = models.CharField(
@@ -105,9 +105,9 @@ class ArrowRest(models.Model):
 
 
 class BergerButton(models.Model):
-    ser = models.ForeignKey(
+    user = models.ForeignKey(
         "accounts.User",
-        related_name="alternativeBergerButton",
+        related_name="BergerButton",
         on_delete=models.CASCADE,
     )
     brand = models.CharField(max_length=30)
@@ -126,7 +126,7 @@ class BergerButton(models.Model):
 
 class Scope(models.Model):
     user = models.ForeignKey(
-        "accounts.User", related_name="alternativeScope", on_delete=models.CASCADE
+        "accounts.User", related_name="Scope", on_delete=models.CASCADE
     )
     brand = models.CharField(max_length=30)
 
@@ -140,7 +140,7 @@ class Scope(models.Model):
 
 class Clicker(models.Model):
     user = models.ForeignKey(
-        "accounts.User", related_name="alternativeClicker", on_delete=models.CASCADE
+        "accounts.User", related_name="Clicker", on_delete=models.CASCADE
     )
     brand = models.CharField(max_length=30)
 
@@ -155,7 +155,7 @@ class Clicker(models.Model):
 class Stabilisation(models.Model):
     user = models.ForeignKey(
         "accounts.User",
-        related_name="alternativeStabilisation",
+        related_name="Stabilisation",
         on_delete=models.CASCADE,
     )
     brand = models.CharField(max_length=30)
@@ -170,7 +170,7 @@ class Stabilisation(models.Model):
 
 class Dampeners(models.Model):
     user = models.ForeignKey(
-        "accounts.User", related_name="alternativeDampeners", on_delete=models.CASCADE
+        "accounts.User", related_name="Dampeners", on_delete=models.CASCADE
     )
     front_brand = models.CharField(max_length=30)
     rears_brand = models.CharField(max_length=30)
@@ -185,7 +185,7 @@ class Dampeners(models.Model):
 
 class Barebow(Bow):
     user = models.ForeignKey(
-        "accounts.User", related_name="alternativeBarebow", on_delete=models.CASCADE
+        "accounts.User", related_name="Barebow", on_delete=models.CASCADE
     )
     riser = models.ForeignKey("equipment.Riser", on_delete=models.CASCADE)
     limbs = models.ForeignKey("equipment.Limbs", on_delete=models.CASCADE)
@@ -215,7 +215,7 @@ class Barebow(Bow):
 
 class OlympicBow(Bow):
     user = models.ForeignKey(
-        "accounts.User", related_name="alternativeOlympicBow", on_delete=models.CASCADE
+        "accounts.User", related_name="OlympicBow", on_delete=models.CASCADE
     )
     barebow = models.ForeignKey("equipment.Barebow", on_delete=models.CASCADE)
     scope = models.ForeignKey("equipment.Scope", on_delete=models.CASCADE)
@@ -262,7 +262,7 @@ class CompoundScope(Scope):
 
 class CompoundBow(Bow):
     user = models.ForeignKey(
-        "accounts.User", related_name="alternativeCompoundBow", on_delete=models.CASCADE
+        "accounts.User", related_name="CompoundBow", on_delete=models.CASCADE
     )
     # general stuff
     bow_brand = models.CharField(max_length=30)
@@ -271,6 +271,8 @@ class CompoundBow(Bow):
     draw_weight_dropped = models.IntegerField()
     brace_height = models.FloatField()  # simili-band
     draw_length = models.FloatField()  # allonge
+
+    scope = models.ManyToManyField("equipment.CompoundScope", verbose_name="scope")
 
     arrow_rest = models.ForeignKey(
         "equipment.CompoundArrowRest",
@@ -285,7 +287,7 @@ class CompoundBow(Bow):
     dampeners = models.ForeignKey("equipment.Dampeners", on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.brand}"
+        return f"{self.bow_brand}"
 
     class Meta:
         verbose_name = "Arc à poulies"

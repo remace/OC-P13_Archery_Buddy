@@ -19,7 +19,7 @@ def login_view(request):
         if user is not None:
             login(request, user)
             messages.success(request, f"{user.pseudo} connecté")
-            return render(request, "accounts/login.html", context=ctx)
+            return redirect("home")
         else:
             messages.error(request, "identifiants erronés")
             return render(request, "accounts/login.html", context=ctx)

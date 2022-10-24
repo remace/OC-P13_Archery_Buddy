@@ -1,4 +1,7 @@
-<h1>Création de flèches</h1>
+{% extends 'core/base.html' %}
+
+{% block content %}
+<h1>détail de la flèche {{arrow.id}}</h1>
 <div>
     <h2>Encoche</h2>
 
@@ -76,3 +79,4 @@
 </div>
 
 <a href="http://127.0.0.1:8000/arrows/list">retour à la liste des flèches</a>
+{% endblock content %}

@@ -17,6 +17,8 @@ INSTALLED_APPS = [
     "accounts",
     "equipment",
     "records",
+    "tailwind",
+    "theme",
 ]
 
 MIDDLEWARE = [
@@ -98,3 +100,6 @@ AUTH_USER_MODEL = "accounts.User"
 
 # pour @login_required
 LOGIN_URL = "/user/login"
+
+# tailwind
+TAILWIND_APP_NAME = "theme"
