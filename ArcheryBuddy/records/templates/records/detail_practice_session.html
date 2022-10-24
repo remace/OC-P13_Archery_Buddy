@@ -1,6 +1,8 @@
 {% extends 'core/base.html' %}
 
 {% load static %}
+{% load get_score %}
+
 {% block content %}
 
     <div>
@@ -23,11 +25,11 @@
                     {% for volley in volley_range %}
                     <tr>
                         <td>{{volley}}</td>
-                        {% for arrow in arrow_range %}
+                        {% for shot in shot_range %}
                             <td>
-                                <input type="text" class="text-field" id="input-score-{{volley}}-{{arrow}}" name="input-score-{{volley}}-{{arrow}}"
-                                minlength="1" maxlength="2" size="10" placeholder="score">
-                                <input type="hidden" class="arrow-field" id="volley-arrow-{{volley}}-{{arrow}}" name="input-arrow-{{volley}}-{{arrow}}"
+                                <input type="text" class="text-field" id="input-score-{{volley}}-{{shot}}" name="input-score-{{volley}}-{{shot}}"
+                                minlength="1" maxlength="50" size="10" placeholder="score" value={% get_score volley shot %}>
+                                <input type="hidden" class="arrow-field" id="volley-arrow-{{volley}}-{{arrow}}" name="input-arrow-{{volley}}-{{shot}}"
                                 minlength="1" maxlength="2" size="10" placeholder="arrow" value={% cycle 6 7 8 %}>
                             </td>
                         {% endfor %}
