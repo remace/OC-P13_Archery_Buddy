@@ -272,7 +272,9 @@ class CompoundBow(Bow):
     brace_height = models.FloatField()  # simili-band
     draw_length = models.FloatField()  # allonge
 
-    scope = models.ManyToManyField("equipment.CompoundScope", verbose_name="scope")
+    scope = models.ForeignKey(
+        "equipment.CompoundScope", verbose_name="scope", on_delete=models.CASCADE
+    )
 
     arrow_rest = models.ForeignKey(
         "equipment.CompoundArrowRest",
