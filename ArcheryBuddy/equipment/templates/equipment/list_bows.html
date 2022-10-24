@@ -19,7 +19,7 @@
         {%for bow in barebows %}
         <tr>
             <td><a href="{% url 'bows_detail' "barebow" bow.id %}" >{{bow.id}}</a></td>
-            <td>{{bow.riser.brand}} {{bow.riser.size}} {{brand.size.color}}</td>
+            <td>{{bow.riser.brand}} {{bow.riser.size}} {{bow.riser.color}}</td>
             <td>{{bow.limbs.brand}} {{bow.limbs.power}}@{{bow.limbs.size}}</td>
             <td><a href="{% url 'bows_update' bow_type="barebow" bow_id=bow.id %}" >modifier</a></td>
             <td><a href="{% url 'bows_delete' bow_type="barebow" bow_id=bow.id %}" >supprimer</a></td>
@@ -40,11 +40,11 @@
         </tr>
     </thead>
     <tbody>
-        {%for bow in Olympic %}
+        {%for bow in olympics %}
         <tr>
             <td><a href="{% url 'bows_detail' "olympic" bow.id %}" >{{bow.id}}</a></td>
-            <td>{{bow.riser.brand}} {{bow.riser.size}} {{brand.size.color}}</td>
-            <td>{{bow.limbs.brand}} {{bow.limbs.power}}@{{bow.limbs.size}}</td>
+            <td>{{bow.barebow.riser.brand}} {{bow.barebow.riser.size}} {{bow.barebow.riser.color}}</td>
+            <td>{{bow.barebow.limbs.brand}} {{bow.barebow.limbs.power}}@{{bow.barebow.limbs.size}}</td>
             <td><a href="{% url 'bows_update' bow_type="olympic" bow_id=bow.id %}" >modifier</a></td>
             <td><a href="{% url 'bows_delete' bow_type="olympic" bow_id=bow.id %}" >supprimer</a></td>    
         </tr>
@@ -63,10 +63,10 @@
         </tr>
     </thead>
     <tbody>
-        {%for bow in compound %}
+        {%for bow in compounds %}
         <tr>
             <td><a href="{% url 'bows_detail' "compound" bow.id %}" >{{bow.id}}</a></td>
-            <td>{{bow.brand}}@{{bow.power}}</bow><td>
+            <td>{{bow.bow_brand}}@{{bow.draw_weight}}<td>
                 <td><a href="{% url 'bows_update' bow_type="compound" bow_id=bow.id %}" >modifier</a></td>
                 <td><a href="{% url 'bows_delete' bow_type="compound" bow_id=bow.id %}" >supprimer</a></td>
         </tr>

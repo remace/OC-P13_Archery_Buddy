@@ -1,0 +1,215 @@
+{% extends 'core/base.html' %}
+{% load static%}
+{% block content %}
+<h1>Arc {{bow_type}} n° {{bow.id}}</h1>
+<div>
+    puissance mesurée: {{bow.power}}
+</div>
+<div>
+    latéralité: {{bow.laterality}}
+</div>
+<hr>
+{% if bow_type == "barebow" %}
+<h2>BAREBOW</h2>
+<h2>poignée</h2>
+<div>
+    marque: {{bow.riser.brand}}
+</div>
+<div>
+    taille: {{bow.riser.size}}
+</div>
+<div>
+    couleur: {{bow.riser.color}}
+</div>
+    grip: {{bow.riser.grip}}
+</div>
+<hr>
+<h2>Branches</h2>
+    marque:{{bow.limbs.brand}}
+</div>
+<div>
+    puissance:{{bow.limbs.power}}
+</div>
+<div>
+    taille: {{bow.limbs.size}}
+</div>
+<hr>
+<h2>Corde</h2>
+marque/facteur:{{bow.string.brand}}
+</div>
+<div>
+    materiau:{{bow.string.material}}
+</div>
+<div>
+    nombre de brins: {{bow.string.strands}}
+</div>
+<hr>
+<h2>repose-flèche</h2>
+<div>
+    type: {{bow.arrow_rest.rest_type}}
+</div>
+<div>
+    marque:{{bow.arrow_rest.brand}}">
+</div>
+<hr>
+<h2>Berger Button</h2>
+<div>
+    marque{{bow.berger_button.brand}}
+</div>
+<div>
+    couleur: {{bow.berger_button.color}}
+</div>
+<div>
+    ressort:{{bow.berger_button.spring}}
+</div>
+<hr>
+<h2>Spécificités de l'arc</h2>
+<div>
+    tours de corde: {{bow.number_of_turns}}
+</div>
+<div>
+    offset du nockset: {{bow.nockset_offset}}    
+</div>
+<div>
+    band: {{bow.band}}
+</div>
+<div>
+    Tiller haut: {{bow.high_tiller}}
+</div>
+<div>
+    tiller bas: {{bow.low_tiller}}
+</div>
+{% elif bow_type == 'olympic' %}
+<h2>poignée</h2>
+<div>
+    marque:{{bow.barebow.riser.brand}}
+</div>
+<div>
+taille: {{bow.barebow.riser.size}}
+</div>
+<div>
+couleur: {{bow.barebow.riser.color}}
+</div>
+<div>
+    grip: {{bow.barebow.riser.brand}}
+</div>
+<hr>
+<h2>Branches</h2>
+<div>
+    marque: {{bow.barebow.limbs.brand}}
+</div>
+<div>
+    puissance: {{bow.barebow.limbs.power}}
+</div>
+<div>
+    taille: {{bow.barebow.limbs.size}}
+</div>
+<hr>
+<h2>Corde</h2>
+<div>
+    marque/facteur{{bow.barebow.string.brand}}">
+</div>
+<div>
+    materiau: {{bow.barebow.string.material}}
+</div>
+<div>
+    nombre de brins: {{bow.barebow.string.number_of_strands}}
+</div>
+<hr>
+<h2>repose-flèche</h2>
+<div>
+    marque: {{bow.barebow.arrow_rest.brand}}
+</div>
+<div>
+    type: {{bow.arrow_rest.rest_type}}
+</div>
+<hr>
+<h2>Berger Button</h2>
+<div>
+    marque: {{bow.barebow.berger_button.brand}}
+</div>
+<div>
+    couleur: {{bow.barebow.berger_button.color}}
+</div>
+<div>
+    ressort: {{bow.barebow.berger_button.spring}}
+</div>
+<h2>Viseur</h2>
+<div>
+    marque{{bow.scope.brand}}
+</div>
+<h2>clicker</h2>
+<div>
+    clicker: {{bow.clicker.brand}}
+</div>
+<h2>Stabilisation</h2>
+<div>
+    stabilisation: {{bow.stabilisation.brand}}">
+</div>
+<h2>amortisseurs</h2>
+<div>
+    avant: {{bow.dampeners.front_brand}}">
+</div>
+<div>
+    arrière:{{bow.dampeners.rears_brand}}">
+</div>
+<h2>Spécificités de l'arc</h2>
+<div>
+    tours de corde: {{bow.barebow.number_of_turns}}
+</div>
+<div>
+    offset du nockset: {{bow.barebow.nockset_offset}}    
+</div>
+<div>
+    band: {{bow.barebow.band}}
+</div>
+<div>
+    Tiller haut: {{bow.barebow.high_tiller}}
+</div>
+<div>
+    tiller bas: {{bow.barebow.low_tiller}}
+</div>
+
+{% elif bow_type == 'compound'%}
+<div id="CompoundBowForm">
+<div>
+    marque: {{bow.brand}}
+</div>
+<div>
+    entraxe: {{bow.axle_to_axle}}
+</div>
+<div>
+    puissance brute:{{bow.draw_weight}}
+</div>
+<div>
+    puissance au mur: {{bow.draw_weight_dropped}}</div>
+<div>
+    hauteur de poignée: {{bow.brace_height}}
+</div>
+<div>
+    allonge: {{bow.draw_length}}
+</div>
+<hr>
+<h2>repose-flèche</h2>
+<div>
+    marque: {{bow.arrow_rest.brand}}
+</div>
+<div>
+    type:{{bow.arrow_rest.rest_type}}
+</div>
+
+<h2>Stabilisation</h2>
+<div>
+    stabilisation: {{bow.stabilisation.brand}}
+</div>
+<h2>amortisseurs</h2>
+<div>
+    avant: {{bow.dampeners.front_brand}}
+</div>
+<div>
+    arrière: {{bow.dampeners.rears_brand}}
+</div>
+{% else %}
+{% endif %}
+<script src="{% static 'equipment/js/FormSelector.js' %}"></script>
+{% endblock content %}

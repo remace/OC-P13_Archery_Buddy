@@ -1,7 +1,7 @@
 {% extends 'core/base.html' %}
 {% load static%}
 {% block content %}
-<h1>création d'arc</h1>
+<h1 class="text-3xl">création d'arc</h1>
 <form method="POST" action="{% url 'bows_create' %}">
     {% csrf_token %}
     <div>
@@ -27,7 +27,7 @@
     <hr>
     <div id="subFormContainer">
         <div id="BarebowBowForm">
-            <h2>poignée</h2>
+            <h2 class="text-2xl">poignée</h2>
             <div>
                 <label for="riser_brand">marque</label>
                 <input type="text" 
@@ -60,7 +60,7 @@
                     maxlength="30">
             </div>
             <hr>
-            <h2>Branches</h2>
+            <h2 class="text-2xl">Branches</h2>
             <div>
                 <label for="limbs_brand">marque</label>
                 <input type="text" 
@@ -84,7 +84,7 @@
                     value="68">
             </div>
             <hr>
-            <h2>Corde</h2>
+            <h2 class="text-2xl">Corde</h2>
             <div>
                 <label for="string_brand">marque</label>
                 <input type="text" 
@@ -113,7 +113,7 @@
                     value="10">
             </div>
             <hr>
-            <h2>repose-flèche</h2>
+            <h2 class="text-2xl">repose-flèche</h2>
             <div>
                 <label for="rest_type">type de repose-flèches</label>
                 <select name="rest_type" id="rest_type">
@@ -130,7 +130,7 @@
                     maxlength="30">
             </div>
             <hr>
-            <h2>Berger Button</h2>
+            <h2 class="text-2xl">Berger Button</h2>
             <div>
                 <label for="berger_brand">marque</label>
                 <input type="text" 
@@ -150,7 +150,7 @@
                 <input type="text" name="berger_spring" id="berger_spring" maxlength="30">
             </div>
             <hr>
-            <h2>spécificités de l'arc</h2>
+            <h2 class="text-2xl">spécificités de l'arc</h2>
             <div>
                 <label for="string_turns">tours de corde:</label>
                 <input type="number" name="string_turns" id="string_turns" min="0" max="40" step="1">
@@ -177,7 +177,7 @@
 </form>
 <div class="hidden" id="hiddenSubFormsContainer">
     <div id="OlympicBowForm">
-        <h2>poignée</h2>
+        <h2 class="text-2xl">poignée</h2>
         <div>
             <label for="riser_brand">marque</label>
             <input type="text" 
@@ -203,14 +203,14 @@
                 maxlength="30">
         </div>
         <div>
-            <label for="grip">grip</label>
+            <label for="riser_grip">grip</label>
             <input type="text" 
-                name="grip" 
-                id="grip" 
+                name="riser_grip" 
+                id="riser_grip" 
                 maxlength="30">
         </div>
         <hr>
-        <h2>Branches</h2>
+        <h2 class="text-2xl">Branches</h2>
         <div>
             <label for="limbs_brand">marque</label>
             <input type="text" 
@@ -234,7 +234,7 @@
                 value="68">
         </div>
         <hr>
-        <h2>Corde</h2>
+        <h2 class="text-2xl">Corde</h2>
         <div>
             <label for="string_brand">marque</label>
             <input type="text" 
@@ -263,12 +263,12 @@
                 value="10">
         </div>
         <hr>
-        <h2>repose-flèche</h2>
+        <h2 class="text-2xl">repose-flèche</h2>
         <div>
             <label for="rest_brand">marque</label>
             <input type="text" 
-                name="brand" 
-                id="brand" 
+                name="rest_brand" 
+                id="rest_brand" 
                 maxlength="30">
         </div>
         <div>
@@ -280,7 +280,7 @@
             </select>
         </div>
         <hr>
-        <h2>Berger Button</h2>
+        <h2 class="text-2xl">Berger Button</h2>
         <div>
             <label for="berger_brand">marque</label>
             <input type="text" 
@@ -299,7 +299,7 @@
             <label for="berger_spring">ressort:</label>
             <input type="text" name="berger_spring" id="berger_spring" maxlength="30">
         </div>
-        <h2>Viseur</h2>
+        <h2 class="text-2xl">Viseur</h2>
         <div>
             <label for="scope_brand">Marque</label>
             <input type="text" 
@@ -307,7 +307,7 @@
             id="scope_brand" 
             maxlength="30">
         </div>
-        <h2>clicker</h2>
+        <h2 class="text-2xl">clicker</h2>
         <div>
             <label for="clicker_brand">Marque</label>
             <input type="text" 
@@ -315,7 +315,7 @@
             id="clicker_brand" 
             maxlength="30">
         </div>
-        <h2>Stabilisation</h2>
+        <h2 class="text-2xl">Stabilisation</h2>
         <div>
             <label for="stab_brand">stabilisation:</label>
             <input type="text" 
@@ -323,7 +323,7 @@
             id="stab_brand" 
             maxlength="30">
         </div>
-        <h2>amortisseurs</h2>
+        <h2 class="text-2xl">amortisseurs</h2>
         <div>
             <label for="front_brand">Marque</label>
             <input type="text" 
@@ -338,6 +338,28 @@
             id="rears_brand" 
             maxlength="30">
         </div>
+        <hr>
+            <h2 class="text-2xl">spécificités de l'arc</h2>
+            <div>
+                <label for="string_turns">tours de corde:</label>
+                <input type="number" name="string_turns" id="string_turns" min="0" max="40" step="1">
+            </div>
+            <div>
+                <label for="nockset_offset">hauteur nockset:</label>
+                <input type="number" name="nockset_offset" id="nockset_offset" min="0" max="40" step="0.1">
+            </div>
+            <div>
+                <label for="band">band:</label>
+                <input type="number" name="band" id="band" min="0" max="40" step="0.1">
+            </div>
+            <div>
+                <label for="high_tiller">tiller haut:</label>
+                <input type="number" name="high_tiller" id="high_tiller" min="0" max="40" step="0.1">
+            </div>
+            <div>
+                <label for="low_tiller">tiller bas:</label>
+                <input type="number" name="low_tiller" id="low_tiller" min="0" max="40" step="0.1">
+            </div>
     </div>
 
     <div id="CompoundBowForm">
@@ -357,7 +379,7 @@
             <input type="number" name="compound_power" id="compound_power">
         </div>
         <div>
-            <label for="reduced_power">puissance brute</label>
+            <label for="reduced_power">puissance réduite</label>
             <input type="number" name="reduced_power" id="reduced_power">
         </div>
         <div>
@@ -366,8 +388,23 @@
         </div>
         <div>
             <label for="drawLength">allonge</label>
-            <input type="number" name="compoundBand" id="compoundBand">
+            <input type="number" name="drawLength" id="Drawlength">
         </div>
+        <hr>
+        <h2 class="text-2xl">Scope</h2>
+        <div>
+            <label for="CompoundScopeBrand">marque</label>
+            <input type="text" 
+            name="CompoundScopeBrand" 
+            id="CompoundScopeBrand" 
+            maxlength="30">
+        </div>
+        <div>
+            <label for="ScopeMagnitude">grossissement</label>
+            <input type="number" name="ScopeMagnitude" id="ScopeMagnitude">
+        </div>
+        <hr>
+        <h2 class="text-2xl">Repose-flèche</h2>
         <div>
             <label for="CompoundRestBrand">marque</label>
             <input type="text" 
@@ -376,7 +413,7 @@
             maxlength="30">
         </div>
         <div>
-            <label for="compoundRestType">type</label>
+            <label for="CompoundRestType">type</label>
             <select name="CompoundRestType" id="CompoundRestType">
                 <option value="B">lame</option>
                 <option value="MB">lame mobile</option>
@@ -384,8 +421,8 @@
                 <option value="D">donuts</option>
             </select>
         </div>
-
-        <h2>Stabilisation</h2>
+        <hr>
+        <h2 class="text-2xl">Stabilisation</h2>
         <div>
             <label for="stab_brand">stabilisation:</label>
             <input type="text" 
@@ -393,16 +430,17 @@
             id="stab_brand" 
             maxlength="30">
         </div>
-        <h2>amortisseurs</h2>
+        <hr>
+        <h2 class="text-2xl">Amortisseurs</h2>
         <div>
-            <label for="front_brand">Marque</label>
+            <label for="front_brand">avant: </label>
             <input type="text" 
             name="front_brand" 
             id="front_brand" 
             maxlength="30">
         </div>
         <div>
-            <label for="rear_brand">Marque</label>
+            <label for="rear_brand">arrière: </label>
             <input type="text" 
             name="rears_brand" 
             id="rears_brand" 
