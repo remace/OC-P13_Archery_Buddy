@@ -25,14 +25,14 @@ class ListPracticeSessions(View):
 
 class CreatePracticeSession(FormView):
     @method_decorator(login_required)
-    def get(self, request):
+    def get(self, request, *args, **kwargs):
         form = PracticeRecordSessionForm()
         ctx = {}
         ctx["form"] = form
         return render(request, "records/create_practice_session.html", context=ctx)
 
     @method_decorator(login_required)
-    def post(self, request):
+    def post(self, request, *args, **kwargs):
         ctx = {}
         form = PracticeRecordSessionForm(request.POST)
         if form.is_valid():
@@ -56,22 +56,26 @@ class DetailPracticeSession(View):
         prs = PracticeRecordSession.objects.get(id=prs_id)
         ctx["prs"] = prs
         ctx["volley_range"] = range(1, prs.number_of_volleys + 1)
-        ctx["arrow_range"] = range(1, prs.max_arrows_in_volley + 1)
+        ctx["shot_range"] = range(1, prs.max_arrows_in_volley + 1)
         practice_records = PracticeRecord.objects.filter(practice_session=prs).all()
         shots = {}
         for practice_record in practice_records:
             shot = {}
             shot["arrow_id"] = practice_record.arrow.id
             shot["score"] = practice_record.score
-            try:
-                temp = shots[practice_record.volley]
-            except KeyError as key_error:
-                print(f"KeyError: {key_error}")
-                shots[practice_record.volley] = []
-            finally:
-                shots[practice_record.volley].append(shot)
 
-        ctx["practice_records"] = shots
+            if not practice_record.volley in shots:
+                shots[practice_record.volley] = []
+            shots[practice_record.volley].append(shot)
+
+        ordered_shots = {}
+        for volley in shots.items():
+            ordered_volley = sorted(
+                volley[1], key=lambda item: item["score"], reverse=True
+            )
+            ordered_shots[volley[0]] = ordered_volley
+
+        ctx["practice_records"] = ordered_shots
         return render(request, "records/detail_practice_session.html", context=ctx)
 
     @method_decorator(login_required)
@@ -81,23 +85,16 @@ class DetailPracticeSession(View):
         # arrow_pattern = re.compile(r"input-arrow-[0-9]+-[0-9]+")
         prs = PracticeRecordSession.objects.get(id=prs_id)
         post = request.POST
-        print(f"post: {post}")
         for key, value in post.items():
-            print(f"key/value: -{key}:{value}-")
             if re.fullmatch(score_pattern, key):
-                print("score pattern found")
                 if value != "":
                     key_splitted = key.split("-")
                     volley = int(key_splitted[2])
                     shot = int(key_splitted[3])
                     score = int(value)
-                    print(f"chaine: input-arrow-{volley}-{shot+5}")  # n° de flèche!
+                    # print(f"chaine: input-arrow-{volley}-{shot}")  # n° de flèche!
 
                     arrow_id = int(post.get(f"input-arrow-{volley}-{shot}"))
-
-                    print(
-                        f"volley:{volley} score:{score} arrow_id:{arrow_id} shot:{key_splitted[3]}"
-                    )
 
                     try:
                         arrow = Arrow.objects.get(id=arrow_id)
