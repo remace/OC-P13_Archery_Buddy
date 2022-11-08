@@ -1,13 +1,14 @@
 {
     "python.linting.pylintArgs": [
-        "--rcfile=.pylintrc"
+        "--rcfile=.pylintrc",
+        "--django-settings-module=Djangoconf.settings.dev"
     ],
     "python.testing.unittestArgs": [
         "-v",
         "-s",
         "./ArcheryBuddy",
         "-p",
-        "tests*.py"
+        "tests*.py",
     ],
     "python.testing.pytestEnabled": false,
     "python.testing.unittestEnabled": true,
