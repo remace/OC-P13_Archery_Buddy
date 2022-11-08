@@ -1,7 +1,7 @@
 from django import setup
 import os
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "DjangoConf.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "DjangoConf.settings.testing")
 setup()
 
 from django.test import TestCase
