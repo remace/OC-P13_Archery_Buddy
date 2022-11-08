@@ -1,11 +1,11 @@
-from django.test import TestCase
-from accounts.models import User
-
-from django import setup
 import os
+from django import setup
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "DjangoConf.settings.testing")
 setup()
+
+from django.test import TestCase
+from accounts.models import User
 
 
 class UsersManagersTests(TestCase):
