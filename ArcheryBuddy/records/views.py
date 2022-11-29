@@ -66,7 +66,6 @@ class DetailPracticeSession(View):
             try:
                 temp = shots[practice_record.volley]
             except KeyError as key_error:
-                print(f"KeyError: {key_error}")
                 shots[practice_record.volley] = []
             finally:
                 shots[practice_record.volley].append(shot)
@@ -78,26 +77,17 @@ class DetailPracticeSession(View):
     def post(self, request, prs_id):
 
         score_pattern = re.compile(r"input-score-[0-9]+-[0-9]+")
-        # arrow_pattern = re.compile(r"input-arrow-[0-9]+-[0-9]+")
         prs = PracticeRecordSession.objects.get(id=prs_id)
         post = request.POST
-        print(f"post: {post}")
         for key, value in post.items():
-            print(f"key/value: -{key}:{value}-")
             if re.fullmatch(score_pattern, key):
-                print("score pattern found")
                 if value != "":
                     key_splitted = key.split("-")
                     volley = int(key_splitted[2])
                     shot = int(key_splitted[3])
                     score = int(value)
-                    print(f"chaine: input-arrow-{volley}-{shot+5}")  # n° de flèche!
 
                     arrow_id = int(post.get(f"input-arrow-{volley}-{shot}"))
-
-                    print(
-                        f"volley:{volley} score:{score} arrow_id:{arrow_id} shot:{key_splitted[3]}"
-                    )
 
                     try:
                         arrow = Arrow.objects.get(id=arrow_id)
@@ -110,7 +100,6 @@ class DetailPracticeSession(View):
                             )
 
                         except ValidationError as exception:
-                            print(f"validationError:{exception}")
                             practice_record = PracticeRecord.objects.get(
                                 arrow=arrow,
                                 practice_session=prs,
@@ -120,8 +109,7 @@ class DetailPracticeSession(View):
                             practice_record.save()
 
                     except Arrow.DoesNotExist as exception:
-                        print(f"{exception} arrow {arrow_id} does not exist")
-
+                        print(exception)
         return redirect("practice_detail", prs_id=prs.id)
 
 
