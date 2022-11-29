@@ -13,6 +13,7 @@ from equipment.tests.constants import (
     COMPOUND_NOT_VALID,
 )
 
+from django.test import TransactionTestCase, TestCase
 
 from django.test import TestCase
 

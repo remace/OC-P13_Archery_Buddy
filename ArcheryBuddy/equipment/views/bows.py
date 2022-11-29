@@ -361,98 +361,20 @@ def create(request):
 
                 case "Compound":
 
-                    print("création compound")
-
-                    user = request.user
-                    laterality = request.POST.get("laterality")
-                    power = request.POST.get("power")
-
-                    bow_brand = request.POST.get("bow_brand")
-                    entraxe = request.POST.get("entraxe")
-                    draw_weight = request.POST.get("compound_power")
-                    draw_weight_dropped = request.POST.get("reduced_power")
-                    brace_height = request.POST.get("compoundBand")
-                    draw_length = request.POST.get("drawLength")
-
-                    # scope
-                    scope_brand = request.POST.get("CompoundScopeBrand")
-                    magnitude = request.POST.get("ScopeMagnitude")
-
-                    try:
-                        compound_scope = CompoundScope(
-                            magnitude=magnitude, user=user, brand=scope_brand
-                        )
-                        compound_scope.save()
-
-                    except IntegrityError as integrity:
-                        print(integrity)
-                        messages.error(request, f"compound scope: {integrity}")
-
-                    # arrow rest
-                    arrow_rest_brand = request.POST.get("CompoundRestBrand")
-                    arrow_rest_type = request.POST.get("CompoundRestType")
-                    try:
-                        arrow_rest = CompoundArrowRest(
-                            brand=arrow_rest_brand, rest_type=arrow_rest_type, user=user
-                        )
-                        arrow_rest.save()
-                    except IntegrityError as integrity:
-                        print(integrity)
-                        messages.error(request, f"compound arrow rest: {integrity}")
-
-                    # stabilisation
-                    stabilisation_brand = request.POST.get("stab_brand")
-                    try:
-                        stabilisation = Stabilisation(
-                            user=user, brand=stabilisation_brand
-                        )
-                        stabilisation.save()
-                    except IntegrityError as integrity:
-                        print(integrity)
-                        messages.error(request, f"compound stabilisation: {integrity}")
-
-                    # dampeners
-                    dampeners_front = request.POST.get("front_brand")
-                    dampeners_rears = request.POST.get("rears_brand")
-                    try:
-                        dampeners = Dampeners(
-                            user=user,
-                            front_brand=dampeners_front,
-                            rears_brand=dampeners_rears,
-                        )
-                        dampeners.save()
-                    except IntegrityError as integrity:
-                        print(integrity)
-                        messages.error(request, f"compound dampeners: {integrity}")
-
-                    try:
-                        bow = CompoundBow(
-                            user=user,
-                            power=power,
-                            laterality=laterality,
-                            bow_brand=bow_brand,
-                            bow_axle_to_axle=entraxe,
-                            draw_weight=draw_weight,
-                            draw_weight_dropped=draw_weight_dropped,
-                            brace_height=brace_height,
-                            draw_length=draw_length,
-                            scope=compound_scope,
-                            arrow_rest=arrow_rest,
-                            stabilisation=stabilisation,
-                            dampeners=dampeners,
-                        )
-                        bow.save()
-
-                    except IntegrityError as integrity:
-                        print(integrity)
-                        messages.error(request, f"Compound: {integrity}")
-                        arrow_rest.delete()
-                        compound_scope.delete()
-                        stabilisation.delete()
-                        dampeners.delete()
-                        bow.delete()
-
-            return redirect("bows_list")
+                user = request.user
+                bow_attributes = request.POST.copy()
+                if bow_attributes.get("csrf_token"):
+                    bow_attributes.pop("csrf_token")
+                cf = CompoundFactory
+                try:
+                    cf.create_bow(user=user, bow_attributes=bow_attributes)
+                except IntegrityError as integrity:
+                    messages.error(request, f"compound: {integrity}")
+                    ctx["form"] = bow_attributes
+                    return render(
+                        request, template_name="equipment/create_bows.html", context=ctx
+                    )
+        return redirect("bows_list")
 
 
 @login_required()

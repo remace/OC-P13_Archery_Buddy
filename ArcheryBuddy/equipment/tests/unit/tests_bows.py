@@ -1,4 +1,20 @@
+import os
+from django import setup
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "DjangoConf.settings.testing")
+setup()
+
+from accounts.models import User
+from equipment.models.bows import (
+    CompoundScope,
+    Dampeners,
+    Stabilisation,
+    CompoundArrowRest,
+    CompoundBow,
+    CompoundFactory,
+)
 from equipment.tests.constants import (
+    COMPOUND,
     COMPOUND_NOT_VALID,
 from django.db import IntegrityError
 from django.test import TransactionTestCase
@@ -11,6 +27,17 @@ class BowsTestCase(TransactionTestCase):
     def tearDown(self):
         self.user = None
         self.compound_factory = None
+    def test_create_compound_success(self):
+        initial_bow_count = len(CompoundBow.objects.all())
+        user = self.user
+        bow_attributes = COMPOUND
+        bow = self.compound_factory.create_bow(user=user, bow_attributes=bow_attributes)
+
+        # assert equality of each field in object with constant
+
+        bow_count = len(CompoundBow.objects.all())
+        self.assertEqual(bow_count, initial_bow_count + 1)
+
     def test_create_compound_fail(self):
         initial_bow_count = len(CompoundBow.objects.all())
         initial_scope_count = len(CompoundScope.objects.all())
