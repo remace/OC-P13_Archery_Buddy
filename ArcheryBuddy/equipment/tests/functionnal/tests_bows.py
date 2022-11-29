@@ -8,6 +8,10 @@ from http import HTTPStatus
 
 from accounts.models import User
 from equipment.models.arrows import Arrow
+from equipment.tests.constants import (
+    COMPOUND,
+    COMPOUND_NOT_VALID,
+)
 
 
 from django.test import TestCase
@@ -30,11 +34,16 @@ class AddBowsTest(TestCase):
         self.assertEqual(response.status_code, 302)
         # test that the redirection is done to the detail page of the bow
 
-    # def test_post_fail(self):
-    #     payload = {"fail": True}
-    #     response = self.client.post("/bows/create/", data=payload)
-    #     self.assertEqual(response.status_code, 302)
-    #     # should it be a 302 response? as the method failed?
+    def test_post_compound_success(self):
+        payload = COMPOUND
+        response = self.client.post("/bows/create/", data=payload)
+        self.assertEqual(response.status_code, 302)
+        # TODO test that the redirection is done to the detail page of the bow
 
-    #     # test that the redirection is done to the same form page
-    #     # test that a flash message explains the mistake
+    def test_post_compound_fail(self):
+        payload = COMPOUND_NOT_VALID
+        response = self.client.post("/bows/create/", data=payload)
+        self.assertEqual(response.status_code, 200)
+        # test that context.messages has errors
+        messages = list(response.context["messages"])
+        self.assertGreaterEqual(len(messages), 1)

@@ -1,4 +1,5 @@
 {
+    "python.languageServer": "Pylance",
     "python.linting.pylintArgs": [
         "--rcfile=.pylintrc",
         "--django-settings-module=Djangoconf.settings.dev"

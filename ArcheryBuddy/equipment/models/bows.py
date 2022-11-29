@@ -294,3 +294,86 @@ class CompoundBow(Bow):
     class Meta:
         verbose_name = "Arc à poulies"
         verbose_name_plural = "Arcs à poulies"
+
+class CompoundFactory:
+    def create_bow(self, user, bow_attributes):
+        user = user
+        laterality = bow_attributes.get("laterality")
+        power = bow_attributes.get("power")
+
+        bow_brand = bow_attributes.get("bow_brand")
+        entraxe = bow_attributes.get("entraxe")
+        draw_weight = bow_attributes.get("compound_power")
+        draw_weight_dropped = bow_attributes.get("reduced_power")
+        brace_height = bow_attributes.get("compoundBand")
+        draw_length = bow_attributes.get("drawLength")
+
+        # scope
+        scope_brand = bow_attributes.get("CompoundScopeBrand")
+        magnitude = int(bow_attributes.get("ScopeMagnitude"))
+
+        try:
+            compound_scope = CompoundScope(
+                magnitude=magnitude, user=user, brand=scope_brand
+            )
+            compound_scope.save()
+
+        except IntegrityError as integrity:
+            raise IntegrityError
+
+        # arrow rest
+        arrow_rest_brand = bow_attributes.get("CompoundRestBrand")
+        arrow_rest_type = bow_attributes.get("CompoundRestType")
+        try:
+            arrow_rest = CompoundArrowRest(
+                brand=arrow_rest_brand, rest_type=arrow_rest_type, user=user
+            )
+            arrow_rest.save()
+        except IntegrityError as integrity:
+            raise IntegrityError
+
+        # stabilisation
+        stabilisation_brand = bow_attributes.get("stab_brand")
+        try:
+            stabilisation = Stabilisation(user=user, brand=stabilisation_brand)
+            stabilisation.save()
+        except IntegrityError as integrity:
+            raise IntegrityError
+
+        # dampeners
+        dampeners_front = bow_attributes.get("front_brand")
+        dampeners_rears = bow_attributes.get("rears_brand")
+        try:
+            dampeners = Dampeners(
+                user=user,
+                front_brand=dampeners_front,
+                rears_brand=dampeners_rears,
+            )
+            dampeners.save()
+        except IntegrityError as integrity:
+            raise IntegrityError
+
+        try:
+            bow = CompoundBow(
+                user=user,
+                power=power,
+                laterality=laterality,
+                bow_brand=bow_brand,
+                bow_axle_to_axle=entraxe,
+                draw_weight=draw_weight,
+                draw_weight_dropped=draw_weight_dropped,
+                brace_height=brace_height,
+                draw_length=draw_length,
+                scope=compound_scope,
+                arrow_rest=arrow_rest,
+                stabilisation=stabilisation,
+                dampeners=dampeners,
+            )
+            bow.save()
+
+        except IntegrityError as integrity:
+            arrow_rest.delete()
+            compound_scope.delete()
+            stabilisation.delete()
+            dampeners.delete()
+            raise IntegrityError
