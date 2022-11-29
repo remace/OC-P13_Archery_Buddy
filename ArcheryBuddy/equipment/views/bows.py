@@ -2,6 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import render, redirect
 
+from django.db import IntegrityError
+
 from equipment.models.bows import *
 
 from pprint import pprint
@@ -37,129 +39,18 @@ def create(request):
         bow_type = request.POST.get("bow_type")
         match bow_type:
             case "Barebow":
-                error = False
-                # general
-                bow_power = request.POST.get("power")
-                laterality = request.POST.get("laterality")
-
-                # riser
-                riser_brand = request.POST.get("riser_brand")
-                riser_size = request.POST.get("riser_size")
-                riser_color = request.POST.get("riser_color")
-                riser_grip = request.POST.get("riser_grip")
-
+                user = request.user
+                bow_attributes = request.POST.copy()
+                if bow_attributes.get("csrf_token"):
+                    bow_attributes.pop("csrf_token")
+                bf = BarebowFactory()
                 try:
-                    riser = Riser(
-                        user=request.user,
-                        brand=riser_brand,
-                        size=riser_size,
-                        color=riser_color,
-                        grip=riser_grip,
-                    )
-                    riser.save()
-
-                except IntegrityError as integrity:
-                    messages.error(request, f"Poignée: {integrity}")
-                    error = True
-
-                # limbs
-                limbs_brand = request.POST.get("limbs_brand")
-                limbs_power = request.POST.get("limbs_power")
-                limbs_size = request.POST.get("limbs_size")
-
-                try:
-                    limbs = Limbs(
-                        user=request.user,
-                        brand=limbs_brand,
-                        power=limbs_power,
-                        size=limbs_size,
-                    )
-                    limbs.save()
-
-                except IntegrityError as integrity:
-                    messages.error(request, f"Branches: {integrity}")
-                    error = True
-
-                # String
-                string_brand = request.POST.get("string_brand")
-                material = request.POST.get("material")
-                strands = request.POST.get("strands")
-
-                try:
-                    bow_string = EquipmentString(
-                        user=request.user,
-                        brand=string_brand,
-                        material=material,
-                        number_of_strands=strands,
-                    )
-                    bow_string.save()
-
-                except IntegrityError as integrity:
-                    messages.error(request, f"Corde: {integrity}")
-                    error = True
-
-                # Arrow Rest
-                rest_type = request.POST.get("rest_type")
-                rest_brand = request.POST.get("rest_brand")
-
-                try:
-                    rest = ArrowRest(
-                        user=request.user, brand=rest_brand, rest_type=rest_type
-                    )
-                    rest.save()
-                except IntegrityError as integrity:
-                    messages.error(request, f"Repose_flèche: {integrity}")
-                    error = True
-
-                # Berger
-                berger_brand = request.POST.get("berger_brand")
-                berger_color = request.POST.get("berger_color")
-                spring = request.POST.get("berger_spring")
-
-                try:
-                    berger = BergerButton(
-                        user=request.user,
-                        brand=berger_brand,
-                        color=berger_color,
-                        spring=spring,
-                    )
-                    berger.save()
-
-                except IntegrityError as integrity:
-                    messages.error(request, f"Berger: {integrity}")
-                    error = True
-
-                string_turns = request.POST.get("string_turns")
-                nockset_offset = request.POST.get("nockset_offset")
-                band = request.POST.get("band")
-                high_tiller = request.POST.get("high_tiller")
-                low_tiller = request.POST.get("low_tiller")
-
-                try:
-                    bow = Barebow(
-                        user=request.user,
-                        power=bow_power,
-                        laterality=laterality,
-                        riser=riser,
-                        limbs=limbs,
-                        string=bow_string,
-                        arrow_rest=rest,
-                        berger_button=berger,
-                        band=band,
-                        number_of_turns=string_turns,
-                        nockset_offset=nockset_offset,
-                        high_tiller=high_tiller,
-                        low_tiller=low_tiller,
-                    )
-                    bow.save()
-
+                    bf.create_bow(user=user, bow_attributes=bow_attributes)
                 except IntegrityError as integrity:
                     messages.error(request, f"barebow: {integrity}")
-                    riser.delete()
-                    limbs.delete()
-                    bow_string.delete()
-                    rest.delete()
-                    berger.delete()
+                    return render(
+                        request, template_name="equipment/create_bows.html", context=ctx
+                    )
 
             case "Olympic":
                 error = False
@@ -358,12 +249,11 @@ def create(request):
                 bow_attributes = request.POST.copy()
                 if bow_attributes.get("csrf_token"):
                     bow_attributes.pop("csrf_token")
-                cf = CompoundFactory
+                cf = CompoundFactory()
                 try:
                     cf.create_bow(user=user, bow_attributes=bow_attributes)
                 except IntegrityError as integrity:
                     messages.error(request, f"compound: {integrity}")
-                    ctx["form"] = bow_attributes
                     return render(
                         request, template_name="equipment/create_bows.html", context=ctx
                     )
