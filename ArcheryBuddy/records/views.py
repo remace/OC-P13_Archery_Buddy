@@ -63,9 +63,12 @@ class DetailPracticeSession(View):
             shot = {}
             shot["arrow_id"] = practice_record.arrow.id
             shot["score"] = practice_record.score
-
-            if not practice_record.volley in shots:
+            try:
+                temp = shots[practice_record.volley]
+                
+            except KeyError as key_error:
                 shots[practice_record.volley] = []
+                
             shots[practice_record.volley].append(shot)
 
         ordered_shots = {}
@@ -82,7 +85,6 @@ class DetailPracticeSession(View):
     def post(self, request, prs_id):
 
         score_pattern = re.compile(r"input-score-[0-9]+-[0-9]+")
-        # arrow_pattern = re.compile(r"input-arrow-[0-9]+-[0-9]+")
         prs = PracticeRecordSession.objects.get(id=prs_id)
         post = request.POST
         for key, value in post.items():
@@ -92,7 +94,6 @@ class DetailPracticeSession(View):
                     volley = int(key_splitted[2])
                     shot = int(key_splitted[3])
                     score = int(value)
-                    # print(f"chaine: input-arrow-{volley}-{shot}")  # n° de flèche!
 
                     arrow_id = int(post.get(f"input-arrow-{volley}-{shot}"))
 
@@ -107,7 +108,6 @@ class DetailPracticeSession(View):
                             )
 
                         except ValidationError as exception:
-                            print(f"validationError:{exception}")
                             practice_record = PracticeRecord.objects.get(
                                 arrow=arrow,
                                 practice_session=prs,
@@ -117,8 +117,7 @@ class DetailPracticeSession(View):
                             practice_record.save()
 
                     except Arrow.DoesNotExist as exception:
-                        print(f"{exception} arrow {arrow_id} does not exist")
-
+                        print(exception)
         return redirect("practice_detail", prs_id=prs.id)
 
 
