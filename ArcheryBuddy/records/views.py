@@ -25,14 +25,14 @@ class ListPracticeSessions(View):
 
 class CreatePracticeSession(FormView):
     @method_decorator(login_required)
-    def get(self, request):
+    def get(self, request, *args, **kwargs):
         form = PracticeRecordSessionForm()
         ctx = {}
         ctx["form"] = form
         return render(request, "records/create_practice_session.html", context=ctx)
 
     @method_decorator(login_required)
-    def post(self, request):
+    def post(self, request, *args, **kwargs):
         ctx = {}
         form = PracticeRecordSessionForm(request.POST)
         if form.is_valid():
@@ -56,7 +56,7 @@ class DetailPracticeSession(View):
         prs = PracticeRecordSession.objects.get(id=prs_id)
         ctx["prs"] = prs
         ctx["volley_range"] = range(1, prs.number_of_volleys + 1)
-        ctx["arrow_range"] = range(1, prs.max_arrows_in_volley + 1)
+        ctx["shot_range"] = range(1, prs.max_arrows_in_volley + 1)
         practice_records = PracticeRecord.objects.filter(practice_session=prs).all()
         shots = {}
         for practice_record in practice_records:
@@ -65,12 +65,20 @@ class DetailPracticeSession(View):
             shot["score"] = practice_record.score
             try:
                 temp = shots[practice_record.volley]
+                
             except KeyError as key_error:
                 shots[practice_record.volley] = []
-            finally:
-                shots[practice_record.volley].append(shot)
+                
+            shots[practice_record.volley].append(shot)
 
-        ctx["practice_records"] = shots
+        ordered_shots = {}
+        for volley in shots.items():
+            ordered_volley = sorted(
+                volley[1], key=lambda item: item["score"], reverse=True
+            )
+            ordered_shots[volley[0]] = ordered_volley
+
+        ctx["practice_records"] = ordered_shots
         return render(request, "records/detail_practice_session.html", context=ctx)
 
     @method_decorator(login_required)
