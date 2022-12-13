@@ -22,8 +22,12 @@ from django.test import TransactionTestCase, TestCase
 
 class AddBowsTest(TransactionTestCase):
     def setUp(self):
-        user = User.objects.get_or_create(pseudo="remi123456")[0]
-        self.client.force_login(user=user)
+        self.user = User.objects.get_or_create(pseudo="remi123456")[0]
+        self.client.force_login(user=self.user)
+
+    def teadDown(self):
+        self.user = None
+        self.client.logout()
 
     def test_get(self):
         response = self.client.get("/bows/create/")

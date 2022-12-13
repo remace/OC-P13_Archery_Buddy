@@ -35,12 +35,12 @@ def create(request):
 
     elif request.method == "POST":
         ctx = {"forms": request.POST}
-        pprint(request.POST)
         bow_type = request.POST.get("bow_type")
+        user = request.user
+        bow_attributes = request.POST.copy()
+
         match bow_type:
             case "Barebow":
-                user = request.user
-                bow_attributes = request.POST.copy()
                 if bow_attributes.get("csrf_token"):
                     bow_attributes.pop("csrf_token")
                 bf = BarebowFactory()
@@ -53,200 +53,18 @@ def create(request):
                     )
 
             case "Olympic":
-                error = False
-                # general
-                bow_power = request.POST.get("power")
-                laterality = request.POST.get("laterality")
-
-                # riser
-                riser_brand = request.POST.get("riser_brand")
-                riser_size = request.POST.get("riser_size")
-                riser_color = request.POST.get("riser_color")
-                riser_grip = request.POST.get("riser_grip")
-
+                if bow_attributes.get("csrf_token"):
+                    bow_attributes.pop("csrf_token")
+                obf = OlympicBowFactory()
                 try:
-                    riser = Riser(
-                        user=request.user,
-                        brand=riser_brand,
-                        size=riser_size,
-                        color=riser_color,
-                        grip=riser_grip,
+                    obf.create_bow(user=user, bow_attributes=bow_attributes)
+                except IntegrityError as integrity:
+                    messages.error(request, f"Olympique: {integrity}")
+                    return render(
+                        request, template_name="equipment/create_bows.html", context=ctx
                     )
-                    riser.save()
-
-                except IntegrityError as integrity:
-                    messages.error(request, f"Poignée: {integrity}")
-                    error = True
-
-                # limbs
-                limbs_brand = request.POST.get("limbs_brand")
-                limbs_power = request.POST.get("limbs_power")
-                limbs_size = request.POST.get("limbs_size")
-
-                try:
-                    limbs = Limbs(
-                        user=request.user,
-                        brand=limbs_brand,
-                        power=limbs_power,
-                        size=limbs_size,
-                    )
-                    limbs.save()
-
-                except IntegrityError as integrity:
-                    messages.error(request, f"Branches: {integrity}")
-                    error = True
-                # String
-                string_brand = request.POST.get("string_brand")
-                material = request.POST.get("material")
-                strands = request.POST.get("strands")
-
-                try:
-                    bow_string = EquipmentString(
-                        user=request.user,
-                        brand=string_brand,
-                        material=material,
-                        number_of_strands=strands,
-                    )
-                    bow_string.save()
-
-                except IntegrityError as integrity:
-                    messages.error(request, f"Corde: {integrity}")
-                    error = True
-
-                # Arrow Rest
-                rest_type = request.POST.get("rest_type")
-                rest_brand = request.POST.get("rest_brand")
-
-                try:
-                    rest = ArrowRest(
-                        user=request.user, brand=rest_brand, rest_type=rest_type
-                    )
-                    rest.save()
-                except IntegrityError as integrity:
-                    messages.error(request, f"Repose_flèche: {integrity}")
-                    error = True
-
-                # Berger
-                berger_brand = request.POST.get("berger_brand")
-                berger_color = request.POST.get("berger_color")
-                spring = request.POST.get("berger_spring")
-
-                try:
-                    berger = BergerButton(
-                        user=request.user,
-                        brand=berger_brand,
-                        color=berger_color,
-                        spring=spring,
-                    )
-                    berger.save()
-
-                except IntegrityError as integrity:
-                    messages.error(request, f"Berger: {integrity}")
-                    error = True
-
-                # scope
-                scope_brand = request.POST.get("scope_brand")
-
-                try:
-                    scope = Scope(user=request.user, brand=scope_brand)
-                    scope.save()
-
-                except IntegrityError as integrity:
-                    messages.error(request, f"Scope: {integrity}")
-                    error = True
-
-                # clicker
-                clicker_brand = request.POST.get("clicker_brand")
-
-                try:
-                    clicker = Clicker(user=request.user, brand=clicker_brand)
-                    clicker.save()
-
-                except IntegrityError as integrity:
-                    messages.error(request, f"Clicker: {integrity}")
-                    error = True
-
-                # stabilisation
-                stab_brand = request.POST.get("stab_brand")
-
-                try:
-                    stab = Stabilisation(user=request.user, brand=stab_brand)
-                    stab.save()
-
-                except IntegrityError as integrity:
-                    messages.error(request, f"stabilisation: {integrity}")
-                    error = True
-
-                # dampeners
-                front_brand = request.POST.get("front_brand")
-                rears_brand = request.POST.get("rears_brand")
-
-                try:
-                    dampeners = Dampeners(
-                        user=request.user,
-                        front_brand=front_brand,
-                        rears_brand=rears_brand,
-                    )
-                    dampeners.save()
-
-                except IntegrityError as integrity:
-                    messages.error(request, f"dampeners: {integrity}")
-                    error = True
-
-                string_turns = request.POST.get("string_turns")
-                nockset_offset = request.POST.get("nockset_offset")
-                band = request.POST.get("band")
-                high_tiller = request.POST.get("high_tiller")
-                low_tiller = request.POST.get("low_tiller")
-
-                try:
-                    barebow = Barebow(
-                        user=request.user,
-                        power=bow_power,
-                        laterality=laterality,
-                        riser=riser,
-                        limbs=limbs,
-                        string=bow_string,
-                        arrow_rest=rest,
-                        berger_button=berger,
-                        band=band,
-                        number_of_turns=string_turns,
-                        nockset_offset=nockset_offset,
-                        high_tiller=high_tiller,
-                        low_tiller=low_tiller,
-                    )
-                    barebow.save()
-
-                    bow = OlympicBow(
-                        user=request.user,
-                        barebow=barebow,
-                        power=bow_power,
-                        laterality=laterality,
-                        scope=scope,
-                        clicker=clicker,
-                        stabilisation=stab,
-                        dampeners=dampeners,
-                    )
-                    bow.save()
-
-                except IntegrityError as integrity:
-                    messages.error(request, f"barebow: {integrity}")
-                    riser.delete()
-                    limbs.delete()
-                    bow_string.delete()
-                    rest.delete()
-                    berger.delete()
-                    scope.delete()
-                    clicker.delete()
-                    stab.delete()
-                    dampeners.delete()
-                    barebow.delete()
-                    bow.delete()
 
             case "Compound":
-
-                user = request.user
-                bow_attributes = request.POST.copy()
                 if bow_attributes.get("csrf_token"):
                     bow_attributes.pop("csrf_token")
                 cf = CompoundFactory()

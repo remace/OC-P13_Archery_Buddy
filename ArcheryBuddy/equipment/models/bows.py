@@ -492,10 +492,184 @@ class BarebowFactory:
             bow.save()
 
         except IntegrityError as integrity:
-            # messages.error(request, f"barebow: {integrity}")
             riser.delete()
             limbs.delete()
             bow_string.delete()
             rest.delete()
             berger.delete()
+            raise IntegrityError
+
+
+class OlympicBowFactory:
+    def create_bow(slef, user, bow_attributes):
+        # general
+        bow_power = bow_attributes.get("power")
+        laterality = bow_attributes.get("laterality")
+
+        # riser
+        riser_brand = bow_attributes.get("riser_brand")
+        riser_size = bow_attributes.get("riser_size")
+        riser_color = bow_attributes.get("riser_color")
+        riser_grip = bow_attributes.get("riser_grip")
+
+        try:
+            riser = Riser(
+                user=user,
+                brand=riser_brand,
+                size=riser_size,
+                color=riser_color,
+                grip=riser_grip,
+            )
+            riser.save()
+
+        except IntegrityError as integrity:
+            raise IntegrityError
+
+        # limbs
+        limbs_brand = bow_attributes.get("limbs_brand")
+        limbs_power = bow_attributes.get("limbs_power")
+        limbs_size = bow_attributes.get("limbs_size")
+
+        try:
+            limbs = Limbs(
+                user=user,
+                brand=limbs_brand,
+                power=limbs_power,
+                size=limbs_size,
+            )
+            limbs.save()
+
+        except IntegrityError as integrity:
+            raise IntegrityError
+
+        # String
+        string_brand = bow_attributes.get("string_brand")
+        material = bow_attributes.get("material")
+        strands = bow_attributes.get("strands")
+
+        try:
+            bow_string = EquipmentString(
+                user=user,
+                brand=string_brand,
+                material=material,
+                number_of_strands=strands,
+            )
+            bow_string.save()
+
+        except IntegrityError as integrity:
+            raise IntegrityError
+
+        # Arrow Rest
+        rest_type = bow_attributes.get("rest_type")
+        rest_brand = bow_attributes.get("rest_brand")
+
+        try:
+            rest = ArrowRest(user=user, brand=rest_brand, rest_type=rest_type)
+            rest.save()
+        except IntegrityError as integrity:
+            raise IntegrityError
+
+        # Berger
+        berger_brand = bow_attributes.get("berger_brand")
+        berger_color = bow_attributes.get("berger_color")
+        spring = bow_attributes.get("berger_spring")
+
+        try:
+            berger = BergerButton(
+                user=user,
+                brand=berger_brand,
+                color=berger_color,
+                spring=spring,
+            )
+            berger.save()
+
+        except IntegrityError as integrity:
+            raise IntegrityError
+
+        # scope
+        scope_brand = bow_attributes.get("scope_brand")
+        try:
+            scope = Scope(user=user, brand=scope_brand)
+            scope.save()
+        except IntegrityError as integrity:
+            raise IntegrityError
+
+        # clicker
+        clicker_brand = bow_attributes.get("scope_brand")
+        try:
+            clicker = Clicker(user=user, brand=clicker_brand)
+            clicker.save()
+        except IntegrityError as integrity:
+            raise IntegrityError
+
+        # stab
+        stabilisation_brand = bow_attributes.get("stab_brand")
+        try:
+            stab = Stabilisation(user=user, brand=stabilisation_brand)
+            stab.save()
+        except IntegrityError as integrity:
+            raise IntegrityError
+
+        # dampeners
+        dampeners_rears = bow_attributes.get("rears_brand")
+        dampeners_front = bow_attributes.get("front_brand")
+
+        try:
+            dampeners = Dampeners(
+                user=user,
+                rears_brand=dampeners_rears,
+                front_brand=dampeners_front,
+            )
+            dampeners.save()
+
+        except IntegrityError as integrity:
+            raise IntegrityError
+
+        string_turns = bow_attributes.get("string_turns")
+        nockset_offset = bow_attributes.get("nockset_offset")
+        band = bow_attributes.get("band")
+        high_tiller = bow_attributes.get("high_tiller")
+        low_tiller = bow_attributes.get("low_tiller")
+
+        try:
+            barebow = Barebow(
+                user=user,
+                power=bow_power,
+                laterality=laterality,
+                riser=riser,
+                limbs=limbs,
+                string=bow_string,
+                arrow_rest=rest,
+                berger_button=berger,
+                band=band,
+                number_of_turns=string_turns,
+                nockset_offset=nockset_offset,
+                high_tiller=high_tiller,
+                low_tiller=low_tiller,
+            )
+            barebow.save()
+
+            bow = OlympicBow(
+                user=user,
+                barebow=barebow,
+                power=bow_power,
+                laterality=laterality,
+                scope=scope,
+                clicker=clicker,
+                stabilisation=stab,
+                dampeners=dampeners,
+            )
+            bow.save()
+
+        except IntegrityError as integrity:
+            riser.delete()
+            limbs.delete()
+            bow_string.delete()
+            rest.delete()
+            berger.delete()
+            barebow.delete()
+            scope.delete()
+            stab.delete()
+            clicker.delete()
+            dampeners.delete()
             raise IntegrityError
