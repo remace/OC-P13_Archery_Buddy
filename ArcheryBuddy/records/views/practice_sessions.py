@@ -126,6 +126,3 @@ def delete_practice_record_session(request, prs_id):
     prs = PracticeRecordSession.objects.get(id=prs_id)
     prs.delete()
     return redirect("practice_list")
-
-
-# about stats sessions
