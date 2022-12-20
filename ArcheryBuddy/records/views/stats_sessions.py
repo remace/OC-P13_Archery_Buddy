@@ -14,7 +14,11 @@ from records.forms import StatsRecordSessionForm
 class ListStatsSessions(View):
     @method_decorator(login_required)
     def get(self, request):
-        pass
+        ctx = {}
+        user = request.user
+        stats_record_sessions = StatsRecordSession.objects.filter(user=user).all()
+        ctx["stats_sessions"] = stats_record_sessions
+        return render(request, "records/list_stats_sessions.html", context=ctx)
 
 
 class CreateStatsSession(FormView):
