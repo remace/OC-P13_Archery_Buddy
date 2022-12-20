@@ -11,3 +11,7 @@ class PracticeRecordSessionForm(forms.Form):
     max_arrows_in_volley = forms.IntegerField(
         label="nombre maximum de flèches par volée"
     )
+
+
+class StatsRecordSessionForm(forms.Form):
+    pass
