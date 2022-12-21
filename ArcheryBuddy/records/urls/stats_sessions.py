@@ -10,12 +10,12 @@ urlpatterns = [
         name="stats_create",
     ),
     path(
-        "delete/<int:prs_id>",
-        stats_sessions.delete_stats_record_session,
+        "delete/<int:pk>/",
+        stats_sessions.DeleteStatsSession.as_view(),
         name="stats_delete",
     ),
     path(
-        "detail/<int:prs_id>",
+        "detail/<int:pk>/",
         stats_sessions.DetailStatsSession.as_view(),
         name="stats_detail",
     ),
