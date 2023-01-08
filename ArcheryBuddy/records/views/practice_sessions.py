@@ -65,10 +65,10 @@ class DetailPracticeSession(View):
             shot["score"] = practice_record.score
             try:
                 temp = shots[practice_record.volley]
-                
+
             except KeyError as key_error:
                 shots[practice_record.volley] = []
-                
+
             shots[practice_record.volley].append(shot)
 
         ordered_shots = {}
@@ -126,6 +126,3 @@ def delete_practice_record_session(request, prs_id):
     prs = PracticeRecordSession.objects.get(id=prs_id)
     prs.delete()
     return redirect("practice_list")
-
-
-# about stats sessions

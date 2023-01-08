@@ -1,0 +1,21 @@
+{% extends 'core/base.html' %}
+
+{% load static %}
+{% load get_score %}
+
+{% block content %}
+    Session de statistiques - {{srs.session_datetime|date:'d/m/Y G:i'}}
+    <form action="" method="post">
+        {% csrf_token %}        
+        {{form.as_p}}
+        <hr>
+        <div>
+            {% comment %}{% endcomment %}
+            {%for record in records%}
+                <p>{{record.arrow.id}} - {{record.pos_x}} - {{pos_y}}</p>
+            {% endfor %}
+            {% comment %}{% endcomment %}
+        </div>
+    </form>
+    
+    {% endblock content %}

@@ -90,6 +90,9 @@ class PracticeRecord(models.Model):
 class StatsRecordSession(RecordSession):
 
     arrows = models.ManyToManyField("equipment.Arrow", through="StatsRecord")
+    available_arrows = models.ManyToManyField(
+        "equipment.Arrow", related_name="available_arrows"
+    )
 
     def __str__(self):
         datetime_as_string = self.session_datetime.strftime("%d/%m/%Y - %H:%M")

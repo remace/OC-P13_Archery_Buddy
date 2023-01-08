@@ -1,0 +1,11 @@
+{% extends "core/base.html" %}
+
+
+{% block content %}
+<h1>Créer une session de statistiques</h1>
+    <form action="#" method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" value="créer session">
+    </form>
+    {% endblock content %}
