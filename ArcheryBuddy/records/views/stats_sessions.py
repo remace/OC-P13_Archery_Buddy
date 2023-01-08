@@ -2,9 +2,11 @@
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
 from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
+from django.urls import reverse
 from django.views import View
-from django.views.generic.edit import FormView, CreateView, BaseDeleteView
+from django.views.generic.edit import FormView, CreateView, DeleteView
 
 from equipment.models.arrows import Arrow
 from records.models import StatsRecordSession, StatsRecord
@@ -38,7 +40,7 @@ class CreateStatsSession(CreateView):
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
-
+        ctx = {}
         try:
             srs = StatsRecordSession.objects.create(
                 user=request.user,
@@ -52,7 +54,6 @@ class CreateStatsSession(CreateView):
         except:
             raise
 
-        ctx = {}
         return redirect("stats_list")
 
 
@@ -67,7 +68,9 @@ class DetailStatsSession(View):
         # find a way do display available arrows checked
         user = request.user
 
-        srs = StatsRecordSession.objects.get(user=user, pk=pk)
+        srs = get_object_or_404(StatsRecordSession, user=user, pk=pk)
+
+        print(srs)
 
         srs_dict = srs.__dict__
         srs_dict["user"] = user
@@ -96,12 +99,8 @@ class DetailStatsSession(View):
         srs.available_arrows.set(available_arrows)
 
 
-class DeleteStatsSession(View):
-    def get(self, request, pk):
-        user = request.user
-        srs = StatsRecordSession.objects.get(user=user, pk=pk)
-        try:
-            srs.delete()
-        except:
-            raise
-        return redirect("stats_list")
+class DeleteStatsSession(DeleteView):
+    model = StatsRecordSession
+
+    def get_success_url(self):
+        return reverse(("stats_list"))
