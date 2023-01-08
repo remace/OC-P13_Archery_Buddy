@@ -11,7 +11,7 @@ from django.test import Client
 from records.models import PracticeRecord, PracticeRecordSession
 
 
-class PracticeRecordViewsTest(TestCase):
+class PracticeRecordViewsTests(TestCase):
     fixtures = ["data.jsonl"]
 
     def setUp(self):
