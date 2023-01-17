@@ -113,8 +113,6 @@ class CreateStats(View):
     def post(self, request):
         ctx = {}
 
-        pprint(request.body)
-
         body = json.loads(request.body)
 
         srs_id = body.get("srs_id")
