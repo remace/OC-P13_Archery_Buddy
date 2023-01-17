@@ -54,7 +54,7 @@ class CreateStatsSession(CreateView):
         except:
             raise
 
-        return redirect("stats_list")
+        return redirect("stats_session_list")
 
 
 class DetailStatsSession(View):
@@ -103,4 +103,4 @@ class DeleteStatsSession(DeleteView):
     model = StatsRecordSession
 
     def get_success_url(self):
-        return reverse(("stats_list"))
+        return reverse(("stats_session_list"))

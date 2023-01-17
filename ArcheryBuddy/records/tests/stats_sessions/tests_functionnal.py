@@ -16,7 +16,7 @@ from django.db import transaction
 from records.models import StatsRecord, StatsRecordSession
 
 
-class StatsRecordViewsTest(TestCase):
+class StatsRecordSessionViewsTest(TestCase):
     fixtures = ["data.jsonl"]
 
     def setUp(self):
@@ -106,7 +106,7 @@ class StatsRecordViewsTest(TestCase):
         self.assertTemplateUsed("records/templates/records/list_stats_session.html")
 
     # detail
-    def test_detail(self):
+    def test_detail_stats_session(self):
         self.client.login(username="remi123456", password="123456789")
 
         response = self.client.get(reverse("stats_detail", args=(34,)))
@@ -114,7 +114,7 @@ class StatsRecordViewsTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed("records/templates/records/detail_stats_session.html")
 
-    def test_detail_bad_pk(self):
+    def test_detail_stats_session_bad_pk(self):
         self.client.login(username="remi123456", password="123456789")
 
         response = self.client.get(reverse("stats_detail", args=(75,)))
