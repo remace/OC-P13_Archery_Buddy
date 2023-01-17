@@ -1,4 +1,6 @@
 """stats sessions management related views"""
+import json
+
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
 from django.shortcuts import render, redirect
@@ -70,8 +72,6 @@ class DetailStatsSession(View):
 
         srs = get_object_or_404(StatsRecordSession, user=user, pk=pk)
 
-        print(srs)
-
         srs_dict = srs.__dict__
         srs_dict["user"] = user
 
@@ -90,6 +90,7 @@ class DetailStatsSession(View):
         """
         # TODO écrire les nouveaux champs de la session de statistiques
 
+        user = request.user
         # réécrire les champs de la session de statistiques
         srs = StatsRecordSession.objects.get(user=user, pk=pk)
         srs.conditions = request.POST.get("conditions")
@@ -97,6 +98,7 @@ class DetailStatsSession(View):
         srs.comment = request.POST.get("comment")
         available_arrows = request.POST.getlist("available_arrows")
         srs.available_arrows.set(available_arrows)
+        return redirect("stats_session_detail", srs.pk)
 
 
 class DeleteStatsSession(DeleteView):
@@ -104,3 +106,35 @@ class DeleteStatsSession(DeleteView):
 
     def get_success_url(self):
         return reverse(("stats_session_list"))
+
+
+class CreateStats(View):
+    @method_decorator(login_required)
+    def post(self, request):
+        ctx = {}
+
+        pprint(request.body)
+
+        body = json.loads(request.body)
+
+        srs_id = body.get("srs_id")
+        arrow_id = body.get("arrow_id")
+        pos_x = body.get("pos_x")
+        pos_y = body.get("pos_y")
+
+        arrow = get_object_or_404(Arrow, pk=arrow_id)
+        srs = get_object_or_404(StatsRecordSession, pk=srs_id)
+
+        stats_record = StatsRecord(
+            arrow=arrow, stats_session=srs, pos_x=pos_x, pos_y=pos_y
+        )
+        stats_record.save()
+        return redirect(reverse("stats_session_detail", args=[srs.id]))
+
+
+class DeleteStats(View):
+    @method_decorator(login_required)
+    def get(self, request, stats_session_pk, stat_pk):
+        stats_record = get_object_or_404(StatsRecord, pk=stat_pk)
+        stats_record.delete()
+        return redirect(reverse("stats_session_detail", args=[stats_session_pk]))

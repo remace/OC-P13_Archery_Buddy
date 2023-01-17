@@ -21,4 +21,14 @@ urlpatterns = [
         stats_sessions.DetailStatsSession.as_view(),
         name="stats_session_detail",
     ),
+    path(
+        "record/create/",
+        stats_sessions.CreateStats.as_view(),
+        name="stats_create",
+    ),
+    path(
+        "<int:stats_session_pk>/record/<int:stat_pk>/delete/",
+        stats_sessions.DeleteStats.as_view(),
+        name="stats_delete",
+    ),
 ]

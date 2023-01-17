@@ -121,3 +121,71 @@ class StatsRecordSessionViewsTest(TestCase):
 
         self.assertEqual(response.status_code, 404)
         self.assertTemplateUsed("records/templates/records/list_stats_session.html")
+
+
+class StatsRecordsViewsTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(
+            pseudo="pseudo_de_test", password="password_de_test"
+        )
+
+        nock = Nock.objects.create(
+            user=self.user, brand="beiter", color="red", size="S", uses_nock_pin=True
+        )
+        feathers = Feathering.objects.create(
+            user=self.user,
+            angle=0,
+            brand="XS - wings",
+            color="blue",
+            cock_color="blue",
+            size="S",
+            laterality="R",
+            feathering_type="SPINWINGS",
+            nock_distance=8,
+        )
+        tube = Tube.objects.create(
+            user=self.user,
+            brand="easton",
+            material="CARBON",
+            spine=1000,
+            tube_diameter=4,
+            tube_length=73,
+        )
+        tip = Tip.objects.create(
+            user=self.user, brand="easton", profile="ogive", weight=120
+        )
+
+        self.arrow1 = Arrow.objects.create(
+            user=self.user, nock=nock, feathering=feathers, tip=tip, tube=tube
+        )
+        self.arrow2 = Arrow.objects.create(
+            user=self.user, nock=nock, feathering=feathers, tip=tip, tube=tube
+        )
+        self.arrow3 = Arrow.objects.create(
+            user=self.user, nock=nock, feathering=feathers, tip=tip, tube=tube
+        )
+
+        self.srs = StatsRecordSession.objects.create(
+            user=self.user,
+            conditions="INT",
+            distance=18,
+            comment="RAS",
+        )
+        self.srs.available_arrows.set(
+            [
+                self.arrow1,
+                self.arrow2,
+                self.arrow3,
+            ]
+        )
+
+    def tearDown(self):
+        pass
+
+    def test_create_stats_record(self):
+        payload = {}
+        self.client.post()
+
+    def test_delete_stats_record(self):
+        pass

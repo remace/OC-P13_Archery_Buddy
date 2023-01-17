@@ -1,21 +1,29 @@
 {% extends 'core/base.html' %}
 
 {% load static %}
-{% load get_score %}
 
 {% block content %}
-    Session de statistiques - {{srs.session_datetime|date:'d/m/Y G:i'}}
+    <h1 id='srs-title'>
+        #{{srs.pk}} Session de statistiques - {{srs.session_datetime|date:'d/m/Y G:i'}}
+    </h1>
     <form action="" method="post">
         {% csrf_token %}        
         {{form.as_p}}
+        <button id="session-update" type="submit">modifier les caractéristiques de la session</button>
+    </form>
         <hr>
+    <form action="" method="post"></form>
         <div>
-            {% comment %}{% endcomment %}
+            <h2>récapitulatif des tirs déjà enregistrés</h2>
             {%for record in records%}
-                <p>{{record.arrow.id}} - {{record.pos_x}} - {{pos_y}}</p>
+                <p>{{record.arrow.id}} • {{record.pos_x}} • {{pos_y}} <a href="{% url 'stats_delete' srs.pk record.pk %}">supprimer</a></p>
             {% endfor %}
-            {% comment %}{% endcomment %}
+            <h2>tirs à enregistrer</h2>
+                <div id="shots-to-save">
+                    
+                </div>
+            <button id="shots-save" type="submit">enregistrer ces tirs</button>
         </div>
     </form>
-    
+    <script src="{% static 'records/js/statsRecords/PostNewRecords.js' %}"></script>
     {% endblock content %}
