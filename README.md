@@ -23,15 +23,24 @@ this is a studies final project on helping archers on 3 manners:
 ### for a local development installation
 
 ```bash
-git clone this project
-install sqlite
-install pipx with your packer manager
+# download this project and mandatory dependencies
+"git clone" this project
+install sqlite with your packet manager
+install pipx with your packet manager
 pipx install poetry
+# install virtual environment and dependencies
 cd OC-P13_ArcheryBuddy/ArcheryBuddy
 poetry install
 poetry shell
+# migrations
 ./manage.py makemigrations accounts equipment records
 ./manage.py migrate
+# for tailwind dev server
+./manage.py tailwind install
+./manage.py tailwind start &
+# run the server
+./manage.py runserver
+
 ```
 
 ### for deployment
