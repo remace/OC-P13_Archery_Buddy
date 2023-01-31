@@ -32,6 +32,9 @@ poetry install
 poetry shell
 ./manage.py makemigrations accounts equipment records
 ./manage.py migrate
+./manage.py tailwind start &
+./manage.py runserver
+
 ```
 
 ### for deployment
