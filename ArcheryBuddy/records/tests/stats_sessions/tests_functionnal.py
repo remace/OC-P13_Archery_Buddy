@@ -14,6 +14,8 @@ from django.db import transaction
 
 
 from records.models import StatsRecord, StatsRecordSession
+from equipment.models.arrows import Arrow
+from accounts.models import User
 
 
 class StatsRecordSessionViewsTest(TestCase):
@@ -37,6 +39,7 @@ class StatsRecordSessionViewsTest(TestCase):
     # create
 
     def test_user_not_logged_in_create_stats_session_get(self):
+        self.client.login(username="remi123456", password="123456789")
         response = self.client.get("/stats/create/")
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url.split("?")[0], "/user/login")
@@ -124,68 +127,40 @@ class StatsRecordSessionViewsTest(TestCase):
 
 
 class StatsRecordsViewsTest(TestCase):
+
+    fixtures = ["data.jsonl"]
+
     def setUp(self):
         self.client = Client()
-        self.user = User.objects.create_user(
-            pseudo="pseudo_de_test", password="password_de_test"
-        )
-
-        nock = Nock.objects.create(
-            user=self.user, brand="beiter", color="red", size="S", uses_nock_pin=True
-        )
-        feathers = Feathering.objects.create(
-            user=self.user,
-            angle=0,
-            brand="XS - wings",
-            color="blue",
-            cock_color="blue",
-            size="S",
-            laterality="R",
-            feathering_type="SPINWINGS",
-            nock_distance=8,
-        )
-        tube = Tube.objects.create(
-            user=self.user,
-            brand="easton",
-            material="CARBON",
-            spine=1000,
-            tube_diameter=4,
-            tube_length=73,
-        )
-        tip = Tip.objects.create(
-            user=self.user, brand="easton", profile="ogive", weight=120
-        )
-
-        self.arrow1 = Arrow.objects.create(
-            user=self.user, nock=nock, feathering=feathers, tip=tip, tube=tube
-        )
-        self.arrow2 = Arrow.objects.create(
-            user=self.user, nock=nock, feathering=feathers, tip=tip, tube=tube
-        )
-        self.arrow3 = Arrow.objects.create(
-            user=self.user, nock=nock, feathering=feathers, tip=tip, tube=tube
-        )
+        self.user = User.objects.get(pseudo="remi123456")
 
         self.srs = StatsRecordSession.objects.create(
-            user=self.user,
-            conditions="INT",
-            distance=18,
-            comment="RAS",
+            user=self.user, conditions="INT", distance=20, comment="RAS"
         )
-        self.srs.available_arrows.set(
-            [
-                self.arrow1,
-                self.arrow2,
-                self.arrow3,
-            ]
-        )
+
+        self.arrow = Arrow.objects.filter(user=self.user).first()
+
+        self.srs.available_arrows.add(self.arrow)
 
     def tearDown(self):
         pass
 
     def test_create_stats_record(self):
-        payload = {}
-        self.client.post()
+        self.client.login(username="remi123456", password="123456789")
+
+        payload = {
+            "srs_id": self.srs.id,
+            "arrow_id": self.arrow.pk,
+            "pos_x": 50,
+            "pos_y": 50,
+        }
+
+        count1 = StatsRecord.objects.all().count()
+
+        self.client.post("/stats/record/create", payload)
+
+        count2 = StatsRecord.objects.all().count()
+        self.assertEqual(count2, count1 + 1)
 
     def test_delete_stats_record(self):
         pass

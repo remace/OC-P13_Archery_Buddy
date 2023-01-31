@@ -64,7 +64,7 @@ class StatsRecordSessionTests(TestCase):
             distance=18,
             comment="RAS",
         )
-        self.srs.available_arrows.set([self.arrow1, self.arrow2, self.arrow3])
+        # self.srs.available_arrows.set([self.arrow1, self.arrow2, self.arrow3])
         self.datetime = self.srs.session_datetime
 
     def tearDown(self):
@@ -87,8 +87,17 @@ class StatsRecordSessionTests(TestCase):
         self.assertEqual(self.srs.conditions, "INT")
         self.assertEqual(self.srs.distance, 18)
         self.assertEqual(self.srs.comment, "RAS")
-        arrows = [arrow.id for arrow in self.srs.available_arrows.all()]
-        self.assertEqual(arrows, [self.arrow1.pk, self.arrow2.pk, self.arrow3.pk])
+
+    def test_add_available_arrows(self):
+
+        arrows = self.srs.available_arrows.all()
+        self.assertNotEqual(set(arrows), set([self.arrow1, self.arrow2, self.arrow3]))
+
+        self.srs.available_arrows.set([self.arrow1, self.arrow2, self.arrow3])
+
+        arrows = self.srs.available_arrows.all()
+
+        self.assertEqual(set(arrows), set([self.arrow1, self.arrow2, self.arrow3]))
 
     def test_stats_record_session_save_and_delete(self):
         """

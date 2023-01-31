@@ -22,7 +22,6 @@ class StatsRecordSessionForm(forms.Form):
     def __init__(self, *args, **kwargs):
 
         self.user = kwargs.pop("user")
-
         super(StatsRecordSessionForm, self).__init__(*args, **kwargs)
 
         self.fields["available_arrows"].queryset = Arrow.objects.filter(

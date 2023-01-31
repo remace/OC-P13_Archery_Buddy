@@ -12,8 +12,10 @@
 
         <form action="" method="post">
             {% csrf_token %}        
-        {{form.as_p}}
-        <button id="session-update" type="submit">modifier les caractéristiques de la session</button>
+        
+            {{form.as_div}}
+            
+            <button id="session-update" type="submit">modifier les caractéristiques de la session</button>
     </form>
     <hr>
     <form action="" method="post"></form>
@@ -38,4 +40,5 @@
     <script src="{% static 'records/js/statsRecords/PostNewRecords.js' %}"></script>
     <script src="{% static 'records/js/statsRecords/TargetClick.js' %}"></script>
 </div>
+    {% include "records/arrow_modal.html"%}
     {% endblock content %}

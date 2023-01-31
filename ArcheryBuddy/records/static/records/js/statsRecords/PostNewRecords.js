@@ -18,11 +18,7 @@ function getCookie(name) {
 function SaveShots(e) {
     e.preventDefault()
     const ShotsElements = document.querySelectorAll('#shots-to-save > div')
-    console.log("coucou")
-    console.log(ShotsElements)
     for (ShotElement of ShotsElements) {
-        console.log('coucou2')
-        console.log(ShotElement)
         let arrow_id = parseInt(ShotElement.innerText.split(" • ")[0])
         let pos_x = parseFloat(ShotElement.innerText.split(" • ")[1])
         let pos_y = parseFloat(ShotElement.innerText.split(" • ")[2])
@@ -34,7 +30,6 @@ function SaveShots(e) {
             "pos_x": pos_x,
             "pos_y": pos_y,
         }
-        console.log(data)
 
         options = {
             method: 'POST',
@@ -44,9 +39,8 @@ function SaveShots(e) {
             },
             body: JSON.stringify(data),
         }
-        console.log(options)
+        console.log(body)
 
         fetch('/stats/record/create/', options)
     }
-    console.log("coucou3")
 }

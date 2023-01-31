@@ -50,8 +50,17 @@ class CreateStatsSession(CreateView):
                 distance=request.POST.get("distance"),
                 comment=request.POST.get("comment"),
             )
-            available_arrows = request.POST.getlist("available_arrows")
-            srs.available_arrows.set(available_arrows)
+            srs.save()
+
+            available_arrow_indexes = request.POST.getlist("available_arrows")
+            arrows = [
+                Arrow.objects.filter(pk=int(index), user=request.user).first()
+                for index in available_arrow_indexes
+            ]
+            print(arrows)
+            srs.available_arrows.set(arrows)
+            srs.save()
+            print(srs.available_arrows.all())
 
         except:
             raise
@@ -73,12 +82,16 @@ class DetailStatsSession(View):
         srs = get_object_or_404(StatsRecordSession, user=user, pk=pk)
 
         srs_dict = srs.__dict__
-        srs_dict["user"] = user
 
         head_form = StatsRecordSessionForm(srs_dict, user=user)
 
         records = StatsRecord.objects.filter(stats_session=srs) or None
-        ctx = {"srs": srs, "form": head_form, "records": records}
+
+        ctx = {
+            "srs": srs,
+            "form": head_form,
+            "records": records,
+        }
         return render(request, "records/detail_stats_session.html", context=ctx)
 
     @method_decorator(login_required)
@@ -88,7 +101,6 @@ class DetailStatsSession(View):
         Args:
             pk (int): Stats Record Session identifyer
         """
-        # TODO écrire les nouveaux champs de la session de statistiques
 
         user = request.user
         # réécrire les champs de la session de statistiques
@@ -97,7 +109,10 @@ class DetailStatsSession(View):
         srs.distance = request.POST.get("distance")
         srs.comment = request.POST.get("comment")
         available_arrows = request.POST.getlist("available_arrows")
+        print(available_arrows)
         srs.available_arrows.set(available_arrows)
+        srs.save()
+        print(srs.available_arrows)
         return redirect("stats_session_detail", srs.pk)
 
 
