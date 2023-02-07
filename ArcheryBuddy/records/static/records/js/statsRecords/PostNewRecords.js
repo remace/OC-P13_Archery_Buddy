@@ -22,7 +22,10 @@ function SaveShots(e) {
         let arrow_id = parseInt(ShotElement.innerText.split(" • ")[0])
         let pos_x = parseFloat(ShotElement.innerText.split(" • ")[1])
         let pos_y = parseFloat(ShotElement.innerText.split(" • ")[2])
-        console.log(arrow_id)
+
+
+        //TODO popup
+        arrow_id = 6
 
         let data = {
             "srs_id": srsID,
@@ -32,15 +35,26 @@ function SaveShots(e) {
         }
 
         options = {
-            method: 'POST',
+            method: "POST",
             headers: {
                 "X-CSRFToken": getCookie("csrftoken"),
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data),
         }
-        console.log(body)
 
-        fetch('/stats/record/create/', options)
+        let res = fetch('/stats/record/create/', options)
+            .then((response) => {
+                return response.json()
+            })
+            .then((data) => {
+                return data
+            })
+
+        if (res == 200) {
+            // ShotElement.delete()
+            console.log(ShotElement)
+            ShotElement.remove()
+        }
     }
 }

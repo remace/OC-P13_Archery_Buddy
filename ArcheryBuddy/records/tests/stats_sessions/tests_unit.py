@@ -1,4 +1,4 @@
-"""functionnal tests for stats sessions"""
+"""unit tests for stats sessions"""
 import os
 from django import setup
 

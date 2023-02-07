@@ -57,10 +57,9 @@ class CreateStatsSession(CreateView):
                 Arrow.objects.filter(pk=int(index), user=request.user).first()
                 for index in available_arrow_indexes
             ]
-            print(arrows)
+
             srs.available_arrows.set(arrows)
             srs.save()
-            print(srs.available_arrows.all())
 
         except:
             raise
@@ -120,7 +119,7 @@ class DeleteStatsSession(DeleteView):
     model = StatsRecordSession
 
     def get_success_url(self):
-        return reverse(("stats_session_list"))
+        return reverse("stats_session_list")
 
 
 class CreateStats(View):
@@ -129,20 +128,23 @@ class CreateStats(View):
         ctx = {}
 
         body = json.loads(request.body)
+        try:
+            srs_id = body.get("srs_id")
+            arrow_id = body.get("arrow_id")
+            pos_x = body.get("pos_x")
+            pos_y = body.get("pos_y")
 
-        srs_id = body.get("srs_id")
-        arrow_id = body.get("arrow_id")
-        pos_x = body.get("pos_x")
-        pos_y = body.get("pos_y")
+            arrow = get_object_or_404(Arrow, pk=arrow_id)
+            srs = get_object_or_404(StatsRecordSession, pk=srs_id)
 
-        arrow = get_object_or_404(Arrow, pk=arrow_id)
-        srs = get_object_or_404(StatsRecordSession, pk=srs_id)
+            stats_record = StatsRecord.objects.create(
+                arrow=arrow, stats_session=srs, pos_x=pos_x, pos_y=pos_y
+            )
+            stats_record.save()
+        except:
+            raise
 
-        stats_record = StatsRecord(
-            arrow=arrow, stats_session=srs, pos_x=pos_x, pos_y=pos_y
-        )
-        stats_record.save()
-        return redirect(reverse("stats_session_detail", args=[srs.id]))
+        return redirect("stats_session_detail", srs.pk)
 
 
 class DeleteStats(View):

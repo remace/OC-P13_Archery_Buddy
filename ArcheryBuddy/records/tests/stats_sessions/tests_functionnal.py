@@ -39,7 +39,6 @@ class StatsRecordSessionViewsTest(TestCase):
     # create
 
     def test_user_not_logged_in_create_stats_session_get(self):
-        self.client.login(username="remi123456", password="123456789")
         response = self.client.get("/stats/create/")
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url.split("?")[0], "/user/login")
@@ -100,6 +99,7 @@ class StatsRecordSessionViewsTest(TestCase):
         self.client.login(username="remi123456", password="123456789")
 
         count0 = len(StatsRecordSession.objects.all())
+
         response = self.client.get("/stats/delete/75/")
 
         count1 = len(StatsRecordSession.objects.all())
@@ -112,7 +112,7 @@ class StatsRecordSessionViewsTest(TestCase):
     def test_detail_stats_session(self):
         self.client.login(username="remi123456", password="123456789")
 
-        response = self.client.get(reverse("stats_detail", args=(34,)))
+        response = self.client.get(reverse("stats_session_detail", args=(34,)))
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed("records/templates/records/detail_stats_session.html")
@@ -120,7 +120,7 @@ class StatsRecordSessionViewsTest(TestCase):
     def test_detail_stats_session_bad_pk(self):
         self.client.login(username="remi123456", password="123456789")
 
-        response = self.client.get(reverse("stats_detail", args=(75,)))
+        response = self.client.get(reverse("stats_session_detail", args=(75,)))
 
         self.assertEqual(response.status_code, 404)
         self.assertTemplateUsed("records/templates/records/list_stats_session.html")
@@ -146,7 +146,9 @@ class StatsRecordsViewsTest(TestCase):
         pass
 
     def test_create_stats_record(self):
-        self.client.login(username="remi123456", password="123456789")
+
+        client = self.client.force_login(user=self.user)
+        assert self.user.is_authenticated
 
         payload = {
             "srs_id": self.srs.id,
@@ -156,11 +158,21 @@ class StatsRecordsViewsTest(TestCase):
         }
 
         count1 = StatsRecord.objects.all().count()
-
-        self.client.post("/stats/record/create", payload)
-
+        response = self.client.post("/stats/record/create", payload)
         count2 = StatsRecord.objects.all().count()
+
+        # TODO test qui ne tourne pas, mais le code fonctionne comme prévu sur le serveur de dev
         self.assertEqual(count2, count1 + 1)
 
     def test_delete_stats_record(self):
-        pass
+
+        self.client.login(username="remi123456", password="123456789")
+        record_id = 84  # arbitraire
+        session_id = self.srs.pk
+
+        count1 = StatsRecord.objects.filter(pk=record_id).count()
+        self.client.get(f"/stats/{session_id}/record/{record_id}/delete")
+        count2 = StatsRecord.objects.filter(pk=record_id).count()
+
+        # TODO test qui ne tourne pas, mais le code fonctionne comme prévu sur le serveur de dev
+        self.assertEqual(count2, count1 - 1)
