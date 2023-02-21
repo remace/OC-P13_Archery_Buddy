@@ -23,12 +23,12 @@ urlpatterns = [
     ),
     path(
         "record/create/",
-        stats_sessions.CreateStats.as_view(),
+        stats_sessions.CreateStatsRecord.as_view(),
         name="stats_create",
     ),
     path(
         "<int:stats_session_pk>/record/<int:stat_pk>/delete/",
-        stats_sessions.DeleteStats.as_view(),
+        stats_sessions.DeleteStatsRecord.as_view(),
         name="stats_delete",
     ),
 ]

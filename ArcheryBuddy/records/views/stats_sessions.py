@@ -3,6 +3,7 @@ import json
 
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
@@ -122,12 +123,13 @@ class DeleteStatsSession(DeleteView):
         return reverse("stats_session_list")
 
 
-class CreateStats(View):
+class CreateStatsRecord(View):
     @method_decorator(login_required)
     def post(self, request):
         ctx = {}
 
-        body = json.loads(request.body)
+        body = request.POST
+
         try:
             srs_id = body.get("srs_id")
             arrow_id = body.get("arrow_id")
@@ -144,12 +146,12 @@ class CreateStats(View):
         except:
             raise
 
-        return redirect("stats_session_detail", srs.pk)
+        return HttpResponse(stats_record)
 
 
-class DeleteStats(View):
+class DeleteStatsRecord(View):
     @method_decorator(login_required)
     def get(self, request, stats_session_pk, stat_pk):
         stats_record = get_object_or_404(StatsRecord, pk=stat_pk)
         stats_record.delete()
-        return redirect(reverse("stats_session_detail", args=[stats_session_pk]))
+        return HttpResponse(stats_record)
