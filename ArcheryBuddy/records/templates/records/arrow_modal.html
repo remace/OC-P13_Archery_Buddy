@@ -1,13 +1,32 @@
-<div id="arrow_modal" class=''>
+<div id="arrow-modal" class='absolute 
+                              w-screen 
+                              h-screen 
+                              bg-gray-500/50 
+                              z-50 
+                              top-0 
+                              left-0
+                              hidden'>
+
+    <div class="absolute 
+                opacity-100 
+                bg-white 
+                top-1/2 
+                left-1/2 
+                -translate-x-1/2 
+                -translate-y-1/2 
+                w-[400px]
+                h-[400px]
+                ">
     <h2>quelle flèche?</h2>
     <div>         
         {% for arrow in available_arrows %}
             <div>
                 <input type="radio" name="arrow" id="{{arrow.id}}" value="{{arrow.id}}">
-                <label for="{{arrow.id}}">{{arrow.id}}</label>
+                <label for="{{arrow.id}}">{{arrow}}</label>
             </div>
-                {% endfor %}  
+        {% endfor %}  
     </div>
-    <button id="modal-arrow-add" class="" >Ajouter</button>
+    <button id="modal-arrow-submit" class="">Ajouter</button>
     <button id="modal-arrow-cancel" >Annuler</button>
+</div>
 </div>

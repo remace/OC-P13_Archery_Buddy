@@ -1,20 +1,58 @@
 const TARGET = document.querySelector("#target")
 const SHOTSLIST = document.querySelector("#shots-to-save")
 
+const MODAL = document.querySelector("#arrow-modal")
+const MODAL_SUBMIT = document.querySelector("#modal-arrow-submit")
+const MODAL_CANCEL = document.querySelector('#modal-arrow-cancel')
+
+console.log(MODAL) // should return a div, returns null
+console.log(MODAL_SUBMIT) // should return a div returns null
+console.log(MODAL_CANCEL) // should return a div returns null
+
+let recordCanceled = true
+let arrow_id = 0
+
 
 TARGET.addEventListener('click', (e) => {
-    x = e.offsetX
-    y = e.offsetY
+    let x = e.offsetX
+    let y = e.offsetY
+
+    console.log("target event")
 
     //modal
-    //TODO
+    MODAL.classList.toggle("hidden")
+    MODAL_SUBMIT.addEventListener('click', function modal_submit(e) {
+        arrow_id = 6 ///numero à extraire
+        MODAL.classList.toggle("hidden")
+        recordCanceled = false
 
-    //ajouter un point
+        MODAL_SUBMIT.removeEventListener('click', modal_submit())
+
+    })
+
+    MODAL_SUBMIT.addEventListener('click', function modal_cancel(e) {
+        MODAL.classList.toggle("hidden")
+        recordCanceled = true
+    })
+
+
+    if (recordCanceled !== false) {
+        return
+    }
     add_point(x, y)
-
-    addRecordToList(x, y, 6)
+    addRecordToList(x, y, arrow_id)
 })
 
+MODAL_SUBMIT.addEventListener('click', (e) => {
+    arrow_id = 6 ///numero à extraire
+    MODAL.classList.toggle("hidden")
+    recordCanceled = false
+})
+
+MODAL_SUBMIT.addEventListener('click', (e) => {
+    MODAL.classList.toggle("hidden")
+    recordCanceled = true
+})
 
 function add_point(x, y) {
     let newDiv = document.createElement('div')

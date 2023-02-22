@@ -87,10 +87,13 @@ class DetailStatsSession(View):
 
         records = StatsRecord.objects.filter(stats_session=srs) or None
 
+        available_arrows = srs.available_arrows.all()
+
         ctx = {
             "srs": srs,
             "form": head_form,
             "records": records,
+            "available_arrows": available_arrows,
         }
         return render(request, "records/detail_stats_session.html", context=ctx)
 
@@ -108,11 +111,16 @@ class DetailStatsSession(View):
         srs.conditions = request.POST.get("conditions")
         srs.distance = request.POST.get("distance")
         srs.comment = request.POST.get("comment")
-        available_arrows = request.POST.getlist("available_arrows")
-        print(available_arrows)
-        srs.available_arrows.set(available_arrows)
+        available_arrow_ids = [int(a) for a in request.POST.getlist("available_arrows")]
+
+        srs.available_arrows.clear()
+
+        print(f"{available_arrow_ids}")
+
+        for id in available_arrow_ids:
+            srs.available_arrows.add(id)
         srs.save()
-        print(srs.available_arrows)
+        print(srs.available_arrows.all())
         return redirect("stats_session_detail", srs.pk)
 
 
