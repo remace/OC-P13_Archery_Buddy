@@ -3,44 +3,44 @@
 {% load static %}
 
 {% block content %}
-    <div class="relative">
-        <h1 id='srs-title'>
-            #{{srs.pk}} Session de statistiques - {{srs.session_datetime|date:'d/m/Y G:i'}}
-        </h1>
-        <div class="flex flex-row flex-nowrap">
-        <div class="w-6/12" id="forms">
+        <div class="relative">
+            <h1 id='srs-title'>
+                #{{srs.pk}} Session de statistiques - {{srs.session_datetime|date:'d/m/Y G:i'}}
+            </h1>
+            <div class="flex flex-row flex-nowrap">
+            <div class="w-6/12" id="forms">
 
-            <form action="" method="post">
-                {% csrf_token %}        
-            
-                {{form.as_div}}
+                <form action="" method="post">
+                    {% csrf_token %}        
                 
-                <button id="session-update" type="submit">modifier les caractéristiques de la session</button>
-        </form>
-        <hr>
-        <form action="" method="post"></form>
-        <div>
-            <h2>récapitulatif des tirs déjà enregistrés</h2>
-            {%for record in records%}
-            <p>{{record.arrow.id}} • {{record.pos_x}} • {{record.pos_y}} <a href="{% url 'stats_delete' srs.pk record.pk %}">supprimer</a></p>
-                {% endfor %}
-                <h2>tirs à enregistrer</h2>
-                    <div id="shots-to-save">
-                        
+                    {{form.as_div}}
+                    
+                    <button id="session-update" type="submit">modifier les caractéristiques de la session</button>
+            </form>
+            <hr>
+            <form action="" method="post"></form>
+            <div>
+                <h2>récapitulatif des tirs déjà enregistrés</h2>
+                {%for record in records%}
+                <p>{{record.arrow.id}} • {{record.pos_x}} • {{record.pos_y}} <a href="{% url 'stats_delete' srs.pk record.pk %}">supprimer</a></p>
+                    {% endfor %}
+                    <h2>tirs à enregistrer</h2>
+                        <div id="shots-to-save">
+                            
+                        </div>
+                        <button id="shots-save" type="submit">enregistrer ces tirs</button>
                     </div>
-                    <button id="shots-save" type="submit">enregistrer ces tirs</button>
-                </div>
-        </form>
-        </div>
-        <div class="w-6/12 flex justify-center items-center" id="target-container">
-            <div id="target" class="z-10 bg-slate-50 w-[500px] h-[500px] relative">
-                <img src=" {% static 'records/assets/target.svg' %}" alt="target">
-                <div class="bg-black z-20 h-2 rounded-full w-2 absolute top-[50px] left-[50px] hidden"></div>
+            </form>
             </div>
+            <div class="w-6/12 flex justify-center items-center" id="target-container">
+                <div id="target" class="z-10 bg-slate-50 w-[500px] h-[500px] relative">
+                    <img src=" {% static 'records/assets/target.svg' %}" alt="target">
+                    {% comment %} <div class="bg-black z-20 h-2 rounded-full w-2 absolute top-[50px] left-[50px] hidden"></div> {% endcomment %}
+                </div>
+            </div>
+            <script src="{% static 'records/js/statsRecords/PostNewRecords.js' %}" defer></script>
+            <script src="{% static 'records/js/statsRecords/TargetClick.js' %}" defer></script>
         </div>
-        <script src="{% static 'records/js/statsRecords/PostNewRecords.js' %}"></script>
-        <script src="{% static 'records/js/statsRecords/TargetClick.js' %}"></script>
     </div>
-</div>
     {% include "records/arrow_modal.html"%}
-    {% endblock content %}
+{% endblock content %}
