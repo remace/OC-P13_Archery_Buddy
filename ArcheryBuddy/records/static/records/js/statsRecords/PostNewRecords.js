@@ -1,6 +1,7 @@
 
 const submitButton = document.querySelector('#shots-save')
 const ShotsElements = document.querySelectorAll('#shots-to-save > div')
+const SavedShotsElement = document.querySelector('.saved-shots-container')
 
 const StatsRecordSessionTitleElement = document.querySelector('#srs-title')
 const srsID = parseInt(StatsRecordSessionTitleElement.innerText.split(' ')[0].slice(1))
@@ -15,46 +16,41 @@ function getCookie(name) {
     return cookie ? cookie[2] : null;
 }
 
-function SaveShots(e) {
+async function SaveShots(e) {
     e.preventDefault()
-    const ShotsElements = document.querySelectorAll('#shots-to-save > div')
+    const ShotsElements = document.querySelectorAll('.shot-to-save')
+
     for (ShotElement of ShotsElements) {
         let arrow_id = parseInt(ShotElement.innerText.split(" • ")[0])
         let pos_x = parseFloat(ShotElement.innerText.split(" • ")[1])
         let pos_y = parseFloat(ShotElement.innerText.split(" • ")[2])
 
 
-        //TODO popup
-        arrow_id = 6
+        const data = new FormData()
+        data.append("srs_id", srsID)
+        data.append('arrow_id', arrow_id)
+        data.append('pos_x', pos_x)
+        data.append('pos_y', pos_y)
 
-        let data = {
-            "srs_id": srsID,
-            "arrow_id": arrow_id,
-            "pos_x": pos_x,
-            "pos_y": pos_y,
-        }
-
-        options = {
+        let options = {
             method: "POST",
             headers: {
                 "X-CSRFToken": getCookie("csrftoken"),
-                'Content-Type': 'application/json'
             },
-            body: JSON.stringify(data),
+            body: data,
         }
 
-        let res = fetch('/stats/record/create/', options)
-            .then((response) => {
-                return response.json()
-            })
-            .then((data) => {
-                return data
+        let result = await fetch('/stats/record/create/', options)
+            .then(function (response) {
+                return response.status
             })
 
-        if (res == 200) {
-            // ShotElement.delete()
-            console.log(ShotElement)
-            ShotElement.remove()
+        if (result == 200) {
+            let newP = document.createElement("p")
+            newP.classList.add(`flagged-p`)
+            newP.innerText = `${arrow_id} • ${pos_x} • ${pos_y}`
+            SavedShotsElement.appendChild(newP)
+            ShotElement.parentNode.removeChild(ShotElement)
         }
     }
 }

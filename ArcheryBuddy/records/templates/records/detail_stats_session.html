@@ -21,9 +21,11 @@
             <form action="" method="post"></form>
             <div>
                 <h2>récapitulatif des tirs déjà enregistrés</h2>
-                {%for record in records%}
-                <p>{{record.arrow.id}} • {{record.pos_x}} • {{record.pos_y}} <a href="{% url 'stats_delete' srs.pk record.pk %}">supprimer</a></p>
+                <div class="saved-shots-container">
+                    {%for record in records%}
+                    <p>{{record.arrow.id}} • {{record.pos_x}} • {{record.pos_y}} <a href="{% url 'stats_delete' srs.pk record.pk %}">supprimer</a></p>
                     {% endfor %}
+                </div>
                     <h2>tirs à enregistrer</h2>
                         <div id="shots-to-save">
                             

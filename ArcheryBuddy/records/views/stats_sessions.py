@@ -15,7 +15,7 @@ from equipment.models.arrows import Arrow
 from records.models import StatsRecordSession, StatsRecord
 from records.forms import StatsRecordSessionForm
 
-from pprint import pprint
+import pdb
 
 
 class ListStatsSessions(View):
@@ -76,17 +76,15 @@ class DetailStatsSession(View):
         Args:
             pk (int): Stats Record Session identifyer
         """
-        # find a way do display available arrows checked
+        # TODO find a way do display available arrows checked
         user = request.user
 
         srs = get_object_or_404(StatsRecordSession, user=user, pk=pk)
-
         srs_dict = srs.__dict__
 
         head_form = StatsRecordSessionForm(srs_dict, user=user)
 
         records = StatsRecord.objects.filter(stats_session=srs) or None
-
         available_arrows = srs.available_arrows.all()
 
         ctx = {
@@ -137,7 +135,7 @@ class CreateStatsRecord(View):
         ctx = {}
 
         body = request.POST
-
+        print(body)
         try:
             srs_id = body.get("srs_id")
             arrow_id = body.get("arrow_id")
@@ -146,15 +144,16 @@ class CreateStatsRecord(View):
 
             arrow = get_object_or_404(Arrow, pk=arrow_id)
             srs = get_object_or_404(StatsRecordSession, pk=srs_id)
-
             stats_record = StatsRecord.objects.create(
                 arrow=arrow, stats_session=srs, pos_x=pos_x, pos_y=pos_y
             )
+            print(stats_record)
             stats_record.save()
-        except:
-            raise
 
-        return HttpResponse(stats_record)
+        except Exception as e:
+            raise e
+
+        return HttpResponse(json.dumps({"request": request.POST}))
 
 
 class DeleteStatsRecord(View):

@@ -1,10 +1,10 @@
 const TARGET = document.querySelector("#target")
 const SHOTSLIST = document.querySelector("#shots-to-save")
 
-let DIALOG = document.querySelector("#arrow-modal")
+let DIALOG = document.querySelector("dialog")
 let DIALOG_SUBMIT = document.querySelector("#modal-arrow-submit")
 let DIALOG_CANCEL = document.querySelector("#modal-arrow-cancel")
-let DIALOG_SELECT = document.querySelector("#arrow-modal select")
+let DIALOG_SELECT = document.querySelector(".arrow-modal-container form select")
 
 let recordCanceled = true
 let arrow_id = 0
@@ -24,26 +24,29 @@ DIALOG_SELECT.addEventListener('change', function onSelect() {
     DIALOG_SUBMIT.value = DIALOG_SELECT.value
 })
 
-DIALOG.addEventListener('close', function onClose() {
-    if (DIALOG.returnValue !== "default") {
-        // addPoint(x, y)
-        console.log(DIALOG.returnValue)
-        // addRecordToList(x, y, DIALOG.returnValue)
+
+DIALOG_SUBMIT.addEventListener('click', function onClickSubmit(e) {
+    arrow_id = e.target.value
+    if (e.target.value != 'default') {
+        addPoint(x, y)
+        addRecordToList(x, y, arrow_id)
     }
+    DIALOG.close()
 })
 
-
-
+DIALOG_CANCEL.addEventListener('click', function onClickCancel() {
+    DIALOG.close()
+})
 
 function addPoint(x, y) {
     let newDiv = document.createElement('div')
-    newDiv.classList.add("z-10")
+    newDiv.classList.add("z-20")
     newDiv.classList.add("w-2")
     newDiv.classList.add("h-2")
     newDiv.classList.add("absolute")
     newDiv.classList.add(`left-[${x}px]`)
     newDiv.classList.add(`top-[${y}px]`)
-    newDiv.classList.add(`bg-green`)
+    newDiv.classList.add(`bg-black`)
     newDiv.classList.add(`rounded-full`)
     newDiv.style.top = `${y}px`
     newDiv.style.left = `${x}px`
@@ -54,6 +57,7 @@ function addRecordToList(x, y, arrow_id) {
     text = `${arrow_id} • ${x} • ${y}`
 
     newDiv = document.createElement('div')
+    newDiv.classList.add("shot-to-save")
     content = document.createTextNode(text)
 
     newDiv.appendChild(content)
