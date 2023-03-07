@@ -51,6 +51,8 @@ async function SaveShots(e) {
             newP.innerText = `${arrow_id} • ${pos_x} • ${pos_y}`
             SavedShotsElement.appendChild(newP)
             ShotElement.parentNode.removeChild(ShotElement)
+        } else {
+            console.log("erreur pendant la création de l'enregistrement")
         }
     }
 }

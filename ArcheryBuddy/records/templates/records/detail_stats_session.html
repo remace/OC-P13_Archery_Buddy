@@ -23,7 +23,7 @@
                 <h2>récapitulatif des tirs déjà enregistrés</h2>
                 <div class="saved-shots-container">
                     {%for record in records%}
-                    <p>{{record.arrow.id}} • {{record.pos_x}} • {{record.pos_y}} <a href="{% url 'stats_delete' srs.pk record.pk %}">supprimer</a></p>
+                    <p>{{record.pk}} • {{record.arrow.id}} • {{record.pos_x}} • {{record.pos_y}} <a class="delete-link" href="{% url 'stats_delete' srs.pk record.pk %}">supprimer</a></p>
                     {% endfor %}
                 </div>
                     <h2>tirs à enregistrer</h2>
@@ -40,6 +40,7 @@
                     {% comment %} <div class="bg-black z-20 h-2 rounded-full w-2 absolute top-[50px] left-[50px] hidden"></div> {% endcomment %}
                 </div>
             </div>
+            <script src="{% static 'records/js/statsRecords/DeleteSavedShot.js' %}" defer></script>
             <script src="{% static 'records/js/statsRecords/PostNewRecords.js' %}" defer></script>
             <script src="{% static 'records/js/statsRecords/TargetClick.js' %}" defer></script>
         </div>

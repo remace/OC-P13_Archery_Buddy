@@ -135,7 +135,6 @@ class CreateStatsRecord(View):
         ctx = {}
 
         body = request.POST
-        print(body)
         try:
             srs_id = body.get("srs_id")
             arrow_id = body.get("arrow_id")
@@ -147,7 +146,6 @@ class CreateStatsRecord(View):
             stats_record = StatsRecord.objects.create(
                 arrow=arrow, stats_session=srs, pos_x=pos_x, pos_y=pos_y
             )
-            print(stats_record)
             stats_record.save()
 
         except Exception as e:
@@ -161,4 +159,12 @@ class DeleteStatsRecord(View):
     def get(self, request, stats_session_pk, stat_pk):
         stats_record = get_object_or_404(StatsRecord, pk=stat_pk)
         stats_record.delete()
-        return HttpResponse(stats_record)
+        stats_dict = {
+            "id": stats_record.id,
+            "session_id": stats_record.stats_session.id,
+            "arrow_id": stats_record.arrow_id,
+            "pos_x": stats_record.pos_x,
+            "pos_y": stats_record.pos_y,
+        }
+
+        return HttpResponse(json.dumps(stats_dict))
