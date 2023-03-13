@@ -15,8 +15,8 @@ jobs:
         sqlite-year: 2022
     - name: setup nodejs and npm
       uses: actions/setup-node@v3
-  with:
-    node-version: 16
+        with:
+          - node-version: latest
     - name: setup poetry
       uses: abatilo/actions-poetry@v2
       with:
