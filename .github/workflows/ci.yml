@@ -22,8 +22,7 @@ jobs:
         with:
           poetry-version: 1.1.13
       - name: setup project dependencies
-        run: 
-          - poetry config virtualenvs.in-project true
-          - poetry config virtualenvs.path .venv
-          - poetry install
-          - poetry env info
+        - run: poetry config virtualenvs.in-project true
+        - run: poetry config virtualenvs.path .venv
+        - run: poetry install
+        - run: poetry env info
