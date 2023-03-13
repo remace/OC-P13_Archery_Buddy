@@ -1,7 +1,7 @@
 name: CI base
 on: [push]
 jobs:
-  setup all OS dependencies:
+  setup_all_OS_dependencies:
     runs-on: alpine:latest
     steps:
       - uses: actions/checkout@v3
