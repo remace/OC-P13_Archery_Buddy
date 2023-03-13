@@ -23,7 +23,11 @@ jobs:
         with:
           poetry-version: 1.1.13
       # project dependencies
+      - run: echo "project dependencies"
       - run: poetry config virtualenvs.in-project true
       - run: poetry config virtualenvs.path .venv
       - run: poetry install
       - run: poetry env info
+      - run: echo "migrations"
+      - run: poetry run pyhton -m manage.py makemigrations
+      - run: poetry run pyhton -m manage.py migrate
