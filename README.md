@@ -25,7 +25,7 @@ this is a studies final project on helping archers on 3 manners:
 ```bash
 # download this project and mandatory dependencies
 "git clone" this project
-install sqlite with your packet manager
+install sqlite, nodejs and npm with your packet manager
 install pipx with your packet manager
 pipx install poetry
 # install virtual environment and dependencies
@@ -38,7 +38,7 @@ poetry shell
 # for tailwind dev server
 ./manage.py tailwind install
 ./manage.py tailwind start &
-# run the server
+# run the django server
 ./manage.py runserver
 
 ```
