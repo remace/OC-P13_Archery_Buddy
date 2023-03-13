@@ -29,5 +29,5 @@ jobs:
       - run: poetry install
       - run: poetry env info
       - run: echo "migrations"
-      - run: poetry run pyhton -m manage.py makemigrations
-      - run: poetry run pyhton -m manage.py migrate
+      - run: poetry run pyhton -m ArcheryBuddy/manage.py makemigrations
+      - run: poetry run pyhton -m ArcheryBuddy/manage.py migrate
