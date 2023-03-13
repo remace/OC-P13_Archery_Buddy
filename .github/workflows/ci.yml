@@ -2,17 +2,17 @@ name: CI base
 on: [push]
 jobs:
   setup_all_OS_dependencies:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
           python-version: 3.10
-      - name: setup sqlite
-        uses: actions/setup-sqlite@v1
-        with:
-          sqlite-version: 3.40.0
-          sqlite-year: 2022
+      # - name: setup sqlite
+      #   uses: actions/setup-sqlite@v1
+      #   with:
+      #     sqlite-version: 3.40.0
+      #     sqlite-year: 2022
       - name: Setup node
         uses: actions/setup-node@v3
         with:
