@@ -28,6 +28,7 @@ jobs:
       - run: poetry config virtualenvs.path .venv
       - run: poetry install
       - run: poetry env info
+      - run: cd ArcheryBuddy
       - run: ls -al
-      - run: poetry run pyhton -m ./ArcheryBuddy/manage.py makemigrations
-      - run: poetry run pyhton -m ./ArcheryBuddy/manage.py migrate
+      - run: poetry run ./manage.py makemigrations
+      - run: poetry run ./manage.py migrate
