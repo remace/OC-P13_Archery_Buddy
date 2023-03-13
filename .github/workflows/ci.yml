@@ -23,12 +23,13 @@ jobs:
         with:
           poetry-version: 1.1.13
       # project dependencies
-      - run: echo "project dependencies"
-      - run: poetry config virtualenvs.in-project true
-      - run: poetry config virtualenvs.path .venv
-      - run: poetry install
-      - run: poetry env info
-      - run: echo "migrations"
-      - run: ls -al
-      - run: poetry run pyhton -m ./ArcheryBuddy/manage.py makemigrations
-      - run: poetry run pyhton -m ./ArcheryBuddy/manage.py migrate
+      - name: project dependencies
+        - run: echo "project dependencies"
+        - run: poetry config virtualenvs.in-project true
+        - run: poetry config virtualenvs.path .venv
+        - run: poetry install
+        - run: poetry env info
+      - name: migrations
+        - run: ls -al
+        - run: poetry run pyhton -m ./ArcheryBuddy/manage.py makemigrations
+        - run: poetry run pyhton -m ./ArcheryBuddy/manage.py migrate
