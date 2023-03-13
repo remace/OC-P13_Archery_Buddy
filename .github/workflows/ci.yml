@@ -30,3 +30,5 @@ jobs:
       - run: poetry env info
       - run: poetry run ./ArcheryBuddy/manage.py makemigrations
       - run: poetry run ./ArcheryBuddy/manage.py migrate
+      - name: run tests
+        run: poetry run ./ArcheryBuddy/manage.py test
