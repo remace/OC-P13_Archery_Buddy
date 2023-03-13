@@ -21,5 +21,9 @@ jobs:
         uses: abatilo/actions-poetry@v2
         with:
           poetry-version: 1.1.13
-      - name: View poetry --help
-        run: poetry --help
+      - name: setup project dependencies
+        run: 
+          - poetry config virtualenvs.in-project true
+          - poetry config virtualenvs.path .venv
+          - poetry install
+          - poetry env info
