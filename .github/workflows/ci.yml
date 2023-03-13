@@ -1,0 +1,35 @@
+name: CI base
+on: [push]
+jobs:
+  run_tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.10.10
+      # - name: setup sqlite
+      #   uses: actions/setup-sqlite@v1
+      #   with:
+      #     sqlite-version: 3.40.0
+      #     sqlite-year: 2022
+      - name: setup nodejs and npm
+        uses: actions/setup-node@v3
+        with:
+          node-version: latest
+      - name: setup poetry
+        uses: abatilo/actions-poetry@v2
+        with:
+          poetry-version: 1.1.13
+      - name: install project dependencies
+        run: |
+          poetry config virtualenvs.in-project true
+          poetry config virtualenvs.path .venv
+          poetry install
+          poetry env info
+      - name: migrations
+        run: |
+          poetry run ./ArcheryBuddy/manage.py makemigrations
+          poetry run ./ArcheryBuddy/manage.py migrate
+      - name: run tests
+        run: poetry run ./ArcheryBuddy/manage.py test
