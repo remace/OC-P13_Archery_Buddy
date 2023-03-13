@@ -54,13 +54,26 @@ function addPoint(x, y) {
 }
 
 function addRecordToList(x, y, arrow_id) {
-    text = `${arrow_id} • ${x} • ${y}`
+    text = `${arrow_id} • ${x} • ${y} `
+
 
     newDiv = document.createElement('div')
     newDiv.classList.add("shot-to-save")
     content = document.createTextNode(text)
 
     newDiv.appendChild(content)
+
+    newButton = document.createElement('button')
+    newButton.innerText = "supprimer"
+    newButton.classList.add("delete-unsaved")
+    newButton.classList.add("cursor-pointer")
+    newButton.classList.add("bg-red-500")
+    newButton.classList.add("hover:bg-red-700")
+    newButton.classList.add("font-bold")
+    newButton.classList.add("py-2")
+    newButton.classList.add("px-4")
+    newButton.classList.add("rounded")
+    newDiv.appendChild(newButton)
 
     SHOTSLIST.appendChild(newDiv)
 }

@@ -1,7 +1,7 @@
-const SHOT_DELETE_LINKS = document.querySelectorAll(".delete-link")
+const SAVED_SHOT_DELETE_LINKS = document.querySelectorAll(".delete-link")
+const UNSAVED_SHOT_DELETE_LINKS = document.querySelectorAll(".btn-delete-unsaved")
 
-
-SHOT_DELETE_LINKS.forEach(function (link) {
+SAVED_SHOT_DELETE_LINKS.forEach(function (link) {
     link.addEventListener('click', async function (e) {
         e.preventDefault()
         record_id = e.target.parentElement.innerText.split('•')[0].trim()
