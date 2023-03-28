@@ -23,7 +23,7 @@
                 <h2>récapitulatif des tirs déjà enregistrés</h2>
                 <div class="saved-shots-container">
                     {%for record in records%}
-                    <p>{{record.pk}} • {{record.arrow.id}} • {{record.pos_x}} • {{record.pos_y}} <a class="delete-link" href="{% url 'stats_delete' srs.pk record.pk %}">supprimer</a></p>
+                    <p>{{record.pk}} • {{record.arrow.id}} • {{record.pos_x}} • {{record.pos_y}} <button class="delete-saved cursor-pointer bg-red-500 hover:bg-red-700 font-bold py-2 px-4 rounded">supprimer</button></p>
                     {% endfor %}
                 </div>
                     <h2>tirs à enregistrer</h2>
@@ -37,12 +37,11 @@
             <div class="w-6/12 flex justify-center items-center" id="target-container">
                 <div id="target" class="z-10 bg-slate-50 w-[500px] h-[500px] relative">
                     <img src=" {% static 'records/assets/target.svg' %}" alt="target">
-                    {% comment %} <div class="bg-black z-20 h-2 rounded-full w-2 absolute top-[50px] left-[50px] hidden"></div> {% endcomment %}
                 </div>
             </div>
-            <script src="{% static 'records/js/statsRecords/DeleteShot.js' %}" defer></script>
-            <script src="{% static 'records/js/statsRecords/PostNewRecords.js' %}" defer></script>
-            <script src="{% static 'records/js/statsRecords/TargetClick.js' %}" defer></script>
+            <script src="{% static 'records/js/statsRecords/DeleteShot.js' %}" defer type="module"></script>
+            <script src="{% static 'records/js/statsRecords/PostNewRecords.js' %}" defer type="module"></script>
+            <script src="{% static 'records/js/statsRecords/TargetClick.js' %}" defer type="module"></script>
         </div>
     </div>
     {% include "records/arrow_modal.html"%}

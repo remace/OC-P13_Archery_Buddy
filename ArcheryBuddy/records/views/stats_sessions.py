@@ -3,7 +3,7 @@ import json
 
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
@@ -151,7 +151,21 @@ class CreateStatsRecord(View):
         except Exception as e:
             raise e
 
-        return HttpResponse(json.dumps({"request": request.POST}))
+        return JsonResponse(
+            json.dumps(
+                {
+                    "record": {
+                        "arrow": arrow.pk,
+                        "stats_session": srs.pk,
+                        "pos_x": pos_x,
+                        "pos_y": pos_y,
+                        "id": stats_record.pk,
+                    },
+                    "status_code": 200,
+                }
+            ),
+            safe=False,
+        )
 
 
 class DeleteStatsRecord(View):
@@ -167,4 +181,4 @@ class DeleteStatsRecord(View):
             "pos_y": stats_record.pos_y,
         }
 
-        return HttpResponse(json.dumps(stats_dict))
+        return JsonResponse({"data": stats_dict, "status_code": 200})

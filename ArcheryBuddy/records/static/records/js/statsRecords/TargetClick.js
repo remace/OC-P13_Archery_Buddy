@@ -28,9 +28,10 @@ DIALOG_SELECT.addEventListener('change', function onSelect() {
 DIALOG_SUBMIT.addEventListener('click', function onClickSubmit(e) {
     arrow_id = e.target.value
     if (e.target.value != 'default') {
-        addPoint(x, y)
+        addPoint(x, y, arrow_id)
         addRecordToList(x, y, arrow_id)
     }
+    DIALOG_SELECT.value = "default"
     DIALOG.close()
 })
 
@@ -38,7 +39,7 @@ DIALOG_CANCEL.addEventListener('click', function onClickCancel() {
     DIALOG.close()
 })
 
-function addPoint(x, y) {
+function addPoint(x, y, arrow_id) {
     let newDiv = document.createElement('div')
     newDiv.classList.add("z-20")
     newDiv.classList.add("w-2")
@@ -50,30 +51,33 @@ function addPoint(x, y) {
     newDiv.classList.add(`rounded-full`)
     newDiv.style.top = `${y}px`
     newDiv.style.left = `${x}px`
+    newDiv.id = `shot-dot-${arrow_id}-${x}-${y}`
     TARGET.appendChild(newDiv)
 }
 
 function addRecordToList(x, y, arrow_id) {
-    text = `${arrow_id} • ${x} • ${y} `
+    let text = `${arrow_id} • ${x} • ${y} `
 
-
-    newDiv = document.createElement('div')
+    let newDiv = document.createElement('div')
     newDiv.classList.add("shot-to-save")
-    content = document.createTextNode(text)
+    let content = document.createTextNode(text)
 
     newDiv.appendChild(content)
 
-    newButton = document.createElement('button')
-    newButton.innerText = "supprimer"
-    newButton.classList.add("delete-unsaved")
-    newButton.classList.add("cursor-pointer")
-    newButton.classList.add("bg-red-500")
-    newButton.classList.add("hover:bg-red-700")
-    newButton.classList.add("font-bold")
-    newButton.classList.add("py-2")
-    newButton.classList.add("px-4")
-    newButton.classList.add("rounded")
-    newDiv.appendChild(newButton)
+
+    /* disabled for instance */
+
+    // newButton = document.createElement('button')
+    // newButton.innerText = "supprimer"
+    // newButton.classList.add("delete-unsaved")
+    // newButton.classList.add("cursor-pointer")
+    // newButton.classList.add("bg-red-500")
+    // newButton.classList.add("hover:bg-red-700")
+    // newButton.classList.add("font-bold")
+    // newButton.classList.add("py-2")
+    // newButton.classList.add("px-4")
+    // newButton.classList.add("rounded")
+    // newDiv.appendChild(newButton)
 
     SHOTSLIST.appendChild(newDiv)
 }
