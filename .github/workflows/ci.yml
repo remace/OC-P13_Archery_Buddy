@@ -39,4 +39,8 @@ jobs:
           poetry run coverage run --source='ArcheryBuddy' ArcheryBuddy/manage.py test accounts equipment records
           poetry run coverage html
       - name: search for coverage report in runner
-        run: find . -name "htmlcov"
+        run: find . -name "htmlcov" # ./htmlcov
+      - uses: actions/upload-artifact@v3
+        with:
+          name: coverage report
+          path: ./htmlcov/
