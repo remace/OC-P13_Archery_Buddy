@@ -1,0 +1,53 @@
+<dialog id="arrow-modal" class='absolute 
+                              w-screen 
+                              h-screen 
+                              bg-gray-500/50 
+                              z-50 
+                              top-0 
+                              left-0'>
+
+    <div class="arrow-modal-container
+                absolute 
+                opacity-100 
+                bg-white 
+                top-1/2 
+                left-1/2 
+                -translate-x-1/2 
+                -translate-y-1/2 
+                w-[400px]
+                h-[400px]
+                ">
+        <h2>quelle flèche?</h2>
+        <form method="dialog">
+            <select>
+                <legend>quelle flèche?</legend>
+                    <option value="default">---------</option>
+                {% for arrow in available_arrows %}
+                    <option value="{{arrow.id}}">{{arrow}}</option>
+                {% endfor %}
+            </select>         
+        </form>
+        <menu>
+            <button id="modal-arrow-submit" 
+                    value="default" 
+                    class="bg-blue-500 
+                            hover:bg-blue-700 
+                            font-bold 
+                            py-2 
+                            px-4 
+                            rounded">
+                Ajouter
+            </button>
+            <button id="modal-arrow-cancel" 
+                    value="cancel"
+                    class="bg-red-500 
+                            hover:bg-red-700 
+                            font-bold 
+                            py-2 
+                            px-4 
+                            rounded">
+                Annuler
+            </button>
+        </menu>
+    </div>
+</dialog>

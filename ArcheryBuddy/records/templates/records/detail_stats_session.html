@@ -1,21 +1,48 @@
 {% extends 'core/base.html' %}
 
 {% load static %}
-{% load get_score %}
 
 {% block content %}
-    Session de statistiques - {{srs.session_datetime|date:'d/m/Y G:i'}}
-    <form action="" method="post">
-        {% csrf_token %}        
-        {{form.as_p}}
-        <hr>
-        <div>
-            {% comment %}{% endcomment %}
-            {%for record in records%}
-                <p>{{record.arrow.id}} - {{record.pos_x}} - {{pos_y}}</p>
-            {% endfor %}
-            {% comment %}{% endcomment %}
+        <div class="relative">
+            <h1 id='srs-title'>
+                #{{srs.pk}} Session de statistiques - {{srs.session_datetime|date:'d/m/Y G:i'}}
+            </h1>
+            <div class="flex flex-row flex-nowrap">
+            <div class="w-6/12" id="forms">
+
+                <form action="" method="post">
+                    {% csrf_token %}        
+                
+                    {{form.as_div}}
+                    
+                    <button id="session-update" type="submit">modifier les caractéristiques de la session</button>
+            </form>
+            <hr>
+            <form action="" method="post"></form>
+            <div>
+                <h2>récapitulatif des tirs déjà enregistrés</h2>
+                <div class="saved-shots-container">
+                    {%for record in records%}
+                    <p>{{record.pk}} • {{record.arrow.id}} • {{record.pos_x}} • {{record.pos_y}} <button class="delete-saved cursor-pointer bg-red-500 hover:bg-red-700 font-bold py-2 px-4 rounded">supprimer</button></p>
+                    {% endfor %}
+                </div>
+                    <h2>tirs à enregistrer</h2>
+                        <div id="shots-to-save">
+                            
+                        </div>
+                        <button id="shots-save" type="submit">enregistrer ces tirs</button>
+                    </div>
+            </form>
+            </div>
+            <div class="w-6/12 flex justify-center items-center" id="target-container">
+                <div id="target" class="z-10 bg-slate-50 w-[500px] h-[500px] relative">
+                    <img src=" {% static 'records/assets/target.svg' %}" alt="target">
+                </div>
+            </div>
+            <script src="{% static 'records/js/statsRecords/DeleteShot.js' %}" defer type="module"></script>
+            <script src="{% static 'records/js/statsRecords/PostNewRecords.js' %}" defer type="module"></script>
+            <script src="{% static 'records/js/statsRecords/TargetClick.js' %}" defer type="module"></script>
         </div>
-    </form>
-    
-    {% endblock content %}
+    </div>
+    {% include "records/arrow_modal.html"%}
+{% endblock content %}

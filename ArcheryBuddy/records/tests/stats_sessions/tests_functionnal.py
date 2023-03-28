@@ -2,6 +2,8 @@
 import os
 from django import setup
 
+import pdb
+
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "DjangoConf.settings.testing")
 setup()
 
@@ -14,13 +16,16 @@ from django.db import transaction
 
 
 from records.models import StatsRecord, StatsRecordSession
+from equipment.models.arrows import Arrow
+from accounts.models import User
 
 
-class StatsRecordViewsTest(TestCase):
+class StatsRecordSessionViewsTest(TestCase):
     fixtures = ["data.jsonl"]
 
     def setUp(self):
         self.client = Client()
+        self.user = User.objects.get(pseudo="remi123456")
 
     # list
     def test_user_not_logged_in_get_stats_sessions_list(self):
@@ -78,6 +83,7 @@ class StatsRecordViewsTest(TestCase):
                 self.assertTemplateUsed(
                     "records/templates/records/create_stats_session.html"
                 )
+
         # TODO IntegrityError remains in test trace
 
     # delete
@@ -87,9 +93,6 @@ class StatsRecordViewsTest(TestCase):
         response = self.client.get("/stats/delete/34/")
         count1 = len(StatsRecordSession.objects.all())
 
-        # self.assertEqual(count1, count0 - 1) TODO ça merdouille: la vue générique pour
-        # supprimer un élément fait 2 redirections dont une avant de supprimer l'objet
-
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed("records/templates/records/list_stats_session.html")
 
@@ -97,6 +100,7 @@ class StatsRecordViewsTest(TestCase):
         self.client.login(username="remi123456", password="123456789")
 
         count0 = len(StatsRecordSession.objects.all())
+
         response = self.client.get("/stats/delete/75/")
 
         count1 = len(StatsRecordSession.objects.all())
@@ -106,18 +110,61 @@ class StatsRecordViewsTest(TestCase):
         self.assertTemplateUsed("records/templates/records/list_stats_session.html")
 
     # detail
-    def test_detail(self):
+    def test_detail_stats_session(self):
         self.client.login(username="remi123456", password="123456789")
 
-        response = self.client.get(reverse("stats_detail", args=(34,)))
+        response = self.client.get(reverse("stats_session_detail", args=(34,)))
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed("records/templates/records/detail_stats_session.html")
 
-    def test_detail_bad_pk(self):
+    def test_detail_stats_session_bad_pk(self):
         self.client.login(username="remi123456", password="123456789")
-
-        response = self.client.get(reverse("stats_detail", args=(75,)))
+        client = self.client.force_login(user=self.user)
+        response = self.client.get(reverse("stats_session_detail", args=(75,)))
 
         self.assertEqual(response.status_code, 404)
         self.assertTemplateUsed("records/templates/records/list_stats_session.html")
+
+
+class StatsRecordsViewsTest(TestCase):
+
+    fixtures = ["data.jsonl"]
+
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.get(pseudo="remi123456")
+
+        self.srs = StatsRecordSession.objects.create(
+            user=self.user, conditions="INT", distance=20, comment="RAS"
+        )
+
+        self.arrow = Arrow.objects.filter(user=self.user).first()
+
+        self.srs.available_arrows.add(self.arrow)
+
+    def tearDown(self):
+        pass
+
+    def test_create_stats_record(self):
+
+        client = self.client.force_login(user=self.user)
+
+        payload = {
+            "srs_id": self.srs.id,
+            "arrow_id": self.arrow.pk,
+            "pos_x": 50,
+            "pos_y": 50,
+        }
+
+        response = self.client.post("/stats/record/create/", payload)
+        self.assertEqual(response.status_code, 200)
+
+    def test_delete_stats_record(self):
+
+        self.client.login(username="remi123456", password="123456789")
+        record_id = 84  # arbitraire
+        session_id = self.srs.pk
+
+        response = self.client.get(f"/stats/{session_id}/record/{record_id}/delete/")
+        self.assertEqual(response.status_code, 200)

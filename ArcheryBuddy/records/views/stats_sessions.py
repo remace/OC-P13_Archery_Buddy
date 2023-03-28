@@ -1,6 +1,9 @@
 """stats sessions management related views"""
+import json
+
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
@@ -12,7 +15,7 @@ from equipment.models.arrows import Arrow
 from records.models import StatsRecordSession, StatsRecord
 from records.forms import StatsRecordSessionForm
 
-from pprint import pprint
+import pdb
 
 
 class ListStatsSessions(View):
@@ -48,13 +51,21 @@ class CreateStatsSession(CreateView):
                 distance=request.POST.get("distance"),
                 comment=request.POST.get("comment"),
             )
-            available_arrows = request.POST.getlist("available_arrows")
-            srs.available_arrows.set(available_arrows)
+            srs.save()
+
+            available_arrow_indexes = request.POST.getlist("available_arrows")
+            arrows = [
+                Arrow.objects.filter(pk=int(index), user=request.user).first()
+                for index in available_arrow_indexes
+            ]
+
+            srs.available_arrows.set(arrows)
+            srs.save()
 
         except:
             raise
 
-        return redirect("stats_list")
+        return redirect("stats_session_list")
 
 
 class DetailStatsSession(View):
@@ -65,20 +76,23 @@ class DetailStatsSession(View):
         Args:
             pk (int): Stats Record Session identifyer
         """
-        # find a way do display available arrows checked
+        # TODO find a way do display available arrows checked
         user = request.user
 
         srs = get_object_or_404(StatsRecordSession, user=user, pk=pk)
-
-        print(srs)
-
         srs_dict = srs.__dict__
-        srs_dict["user"] = user
 
         head_form = StatsRecordSessionForm(srs_dict, user=user)
 
         records = StatsRecord.objects.filter(stats_session=srs) or None
-        ctx = {"srs": srs, "form": head_form, "records": records}
+        available_arrows = srs.available_arrows.all()
+
+        ctx = {
+            "srs": srs,
+            "form": head_form,
+            "records": records,
+            "available_arrows": available_arrows,
+        }
         return render(request, "records/detail_stats_session.html", context=ctx)
 
     @method_decorator(login_required)
@@ -88,19 +102,83 @@ class DetailStatsSession(View):
         Args:
             pk (int): Stats Record Session identifyer
         """
-        # TODO écrire les nouveaux champs de la session de statistiques
 
+        user = request.user
         # réécrire les champs de la session de statistiques
         srs = StatsRecordSession.objects.get(user=user, pk=pk)
         srs.conditions = request.POST.get("conditions")
         srs.distance = request.POST.get("distance")
         srs.comment = request.POST.get("comment")
-        available_arrows = request.POST.getlist("available_arrows")
-        srs.available_arrows.set(available_arrows)
+        available_arrow_ids = [int(a) for a in request.POST.getlist("available_arrows")]
+
+        srs.available_arrows.clear()
+
+        print(f"{available_arrow_ids}")
+
+        for id in available_arrow_ids:
+            srs.available_arrows.add(id)
+        srs.save()
+        print(srs.available_arrows.all())
+        return redirect("stats_session_detail", srs.pk)
 
 
 class DeleteStatsSession(DeleteView):
     model = StatsRecordSession
 
     def get_success_url(self):
-        return reverse(("stats_list"))
+        return reverse("stats_session_list")
+
+
+class CreateStatsRecord(View):
+    @method_decorator(login_required)
+    def post(self, request):
+        ctx = {}
+
+        body = request.POST
+        try:
+            srs_id = body.get("srs_id")
+            arrow_id = body.get("arrow_id")
+            pos_x = body.get("pos_x")
+            pos_y = body.get("pos_y")
+
+            arrow = get_object_or_404(Arrow, pk=arrow_id)
+            srs = get_object_or_404(StatsRecordSession, pk=srs_id)
+            stats_record = StatsRecord.objects.create(
+                arrow=arrow, stats_session=srs, pos_x=pos_x, pos_y=pos_y
+            )
+            stats_record.save()
+
+        except Exception as e:
+            raise e
+
+        return JsonResponse(
+            json.dumps(
+                {
+                    "record": {
+                        "arrow": arrow.pk,
+                        "stats_session": srs.pk,
+                        "pos_x": pos_x,
+                        "pos_y": pos_y,
+                        "id": stats_record.pk,
+                    },
+                    "status_code": 200,
+                }
+            ),
+            safe=False,
+        )
+
+
+class DeleteStatsRecord(View):
+    @method_decorator(login_required)
+    def get(self, request, stats_session_pk, stat_pk):
+        stats_record = get_object_or_404(StatsRecord, pk=stat_pk)
+        stats_record.delete()
+        stats_dict = {
+            "id": stats_record.id,
+            "session_id": stats_record.stats_session.id,
+            "arrow_id": stats_record.arrow_id,
+            "pos_x": stats_record.pos_x,
+            "pos_y": stats_record.pos_y,
+        }
+
+        return JsonResponse({"data": stats_dict, "status_code": 200})
