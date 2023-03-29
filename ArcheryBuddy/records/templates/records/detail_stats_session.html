@@ -37,6 +37,11 @@
             <div class="w-6/12 flex justify-center items-center" id="target-container">
                 <div id="target" class="z-10 bg-slate-50 w-[500px] h-[500px] relative">
                     <img src=" {% static 'records/assets/target.svg' %}" alt="target">
+                    {% for record in records %}
+                        <div id="shot-dot-{{record.arrow.id}}-{{record.pos_x|floatformat:"0"}}-{{record.pos_y|floatformat:"0"}}" 
+                            class="z-20 w-1 h-1 absolute bg-green-500 rounded-full" 
+                            style="top:{{record.pos_y|floatformat:"0"}}px; left:{{record.pos_x|floatformat:"0"}}px;"></div>
+                    {% endfor %}
                 </div>
             </div>
             <script src="{% static 'records/js/statsRecords/DeleteShot.js' %}" defer type="module"></script>
