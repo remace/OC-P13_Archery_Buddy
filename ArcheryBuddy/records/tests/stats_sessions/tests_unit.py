@@ -214,3 +214,14 @@ class StatsRecordTest(TestCase):
                 )
         count1 = len(StatsRecord.objects.all())
         self.assertEqual(count1, count0)
+
+
+class UtilsTest(TestCase):
+    fixtures = ["records/fixtures/data.jsonl"]
+
+    def test_calculate_barycentre(self):
+
+        point1 = StatsRecord.objects.get(pk=801)
+        point2 = StatsRecord.objects.get(pk=802)
+        points = [point1, point2]
+        self.assertEqual(calculate_barycentre(points), [147.0, 225.0])
