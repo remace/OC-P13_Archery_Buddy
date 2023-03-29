@@ -12,6 +12,7 @@ from django.db import transaction
 from accounts.models import User
 from equipment.models.arrows import Arrow, Feathering, Tube, Nock, Tip
 from records.models import StatsRecord, StatsRecordSession
+from records.utils import calculate_barycentre, calculate_convex_hull, squared_distance
 
 
 class StatsRecordSessionTests(TestCase):
@@ -225,3 +226,9 @@ class UtilsTest(TestCase):
         point2 = StatsRecord.objects.get(pk=802)
         points = [point1, point2]
         self.assertEqual(calculate_barycentre(points), [147.0, 225.0])
+
+    def test_squared_distance(self):
+        point1 = StatsRecord.objects.get(pk=801)
+        point2 = StatsRecord.objects.get(pk=802)
+        self.assertEqual(squared_distance(point1, point2), 400.0)
+
