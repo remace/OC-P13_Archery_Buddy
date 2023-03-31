@@ -21,7 +21,7 @@ def calculate_barycentre(points: list[StatsRecord]) -> list[float, float]:
     list_y = [point.get("pos_y") for point in points_as_dicts]
     mean_y = mean(list_y)
 
-    return [mean_x, mean_y]
+    return [round(mean_x, 2), round(mean_y, 2)]
 
 
 def squared_distance(point1, point2):
@@ -29,11 +29,11 @@ def squared_distance(point1, point2):
     dx, dy = point1.get("pos_x") - point2.get("pos_x"), point1.get(
         "pos_y"
     ) - point2.get("pos_y")
-    return dx**2 + dy**2
+    return round(dx**2 + dy**2, 2)
 
 
 def distance(point1, point2):
-    return sqrt(squared_distance(point1, point2))
+    return round(squared_distance(point1, point2) ** 0.5, 2)
 
 
 def direction(point1, point2, point3):
@@ -54,7 +54,7 @@ def direction(point1, point2, point3):
         point3.get("pos_y") - point2.get("pos_y"),
     )
 
-    return vecteur12[0] * vecteur23[1] - vecteur12[1] * vecteur23[0]
+    return round(vecteur12[0] * vecteur23[1] - vecteur12[1] * vecteur23[0], 2)
 
 
 def calculate_convex_hull(points):
@@ -83,6 +83,37 @@ def calculate_convex_hull(points):
             break
         result.append(prochain)
     return result
+
+
+def calculate_triangle_area(point1, point2, point3):
+
+    a = distance(point1, point2)
+    b = distance(point2, point3)
+    c = distance(point3, point1)
+    s = (a + b + c) / 2
+    area = (s * (s - a) * (s - b) * (s - c)) ** 0.5
+    return round(area, 2)
+
+
+def calculate_area(points):
+
+    # find a point in the middle of the polygon
+    mean_x, mean_y = calculate_barycentre(points)
+    barycentre = {"arrow_id": "barycentre", "pos_x": mean_x, "pos_y": mean_y}
+
+    total_area = 0
+    # accumulate areas of triangles
+    for point in points:
+        index = points.index(point)
+
+        try:
+            next_point = points[index + 1]
+        except IndexError:
+            next_point = points[0]
+
+        total_area += calculate_triangle_area(point, next_point, barycentre)
+
+    return round(total_area, 1)
 
 
 def calculate_quiver(points):
