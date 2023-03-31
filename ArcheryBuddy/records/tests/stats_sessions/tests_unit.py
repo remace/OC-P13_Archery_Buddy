@@ -16,6 +16,7 @@ from records.utils import (
     calculate_barycentre,
     calculate_convex_hull,
     squared_distance,
+    distance,
     direction,
 )
 
@@ -280,3 +281,11 @@ class UtilsTest(TestCase):
             calculate_convex_hull(points),
             true_convex_hull,
         )
+
+    def test_distance(self):
+        p1 = StatsRecord.objects.get(pk=920)
+        point1 = {"arrow_id": p1.pk, "pos_x": p1.pos_x, "pos_y": p1.pos_y}
+        p2 = StatsRecord.objects.get(pk=921)
+        point2 = {"arrow_id": p2.pk, "pos_x": p2.pos_x, "pos_y": p2.pos_y}
+
+        self.assertEqual(distance(point1, point2), 10.0)

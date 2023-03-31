@@ -1,3 +1,4 @@
+from math import sqrt
 from statistics import mean
 from records.models import StatsRecord
 
@@ -29,6 +30,10 @@ def squared_distance(point1, point2):
         "pos_y"
     ) - point2.get("pos_y")
     return dx**2 + dy**2
+
+
+def distance(point1, point2):
+    return sqrt(squared_distance(point1, point2))
 
 
 def direction(point1, point2, point3):
