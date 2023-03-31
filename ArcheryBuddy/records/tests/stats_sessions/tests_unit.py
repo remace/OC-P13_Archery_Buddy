@@ -225,10 +225,17 @@ class StatsRecordTest(TestCase):
 class UtilsTest(TestCase):
     fixtures = ["records/fixtures/data.jsonl"]
 
-    def test_calculate_barycentre(self):
-
+    def test_calculate_barycentre_with_StatsRecords(self):
         point1 = StatsRecord.objects.get(pk=801)
         point2 = StatsRecord.objects.get(pk=802)
+        points = [point1, point2]
+        self.assertEqual(calculate_barycentre(points), [147.0, 225.0])
+
+    def test_calculate_barycentre_with_points(self):
+        p1 = StatsRecord.objects.get(pk=801)
+        point1 = {"arrow_id": p1.pk, "pos_x": p1.pos_x, "pos_y": p1.pos_y}
+        p2 = StatsRecord.objects.get(pk=802)
+        point2 = {"arrow_id": p2.pk, "pos_x": p2.pos_x, "pos_y": p2.pos_y}
         points = [point1, point2]
         self.assertEqual(calculate_barycentre(points), [147.0, 225.0])
 

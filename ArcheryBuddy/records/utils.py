@@ -6,10 +6,18 @@ from pprint import pprint
 
 def calculate_barycentre(points: list[StatsRecord]) -> list[float, float]:
 
-    list_x = [point.pos_x for point in points]
+    if isinstance(points[0], StatsRecord):
+        points_as_dicts = [
+            {"arrow_id": point.arrow.pk, "pos_x": point.pos_x, "pos_y": point.pos_y}
+            for point in points
+        ]
+    else:
+        points_as_dicts = points
+
+    list_x = [point.get("pos_x") for point in points_as_dicts]
     mean_x = mean(list_x)
 
-    list_y = [point.pos_y for point in points]
+    list_y = [point.get("pos_y") for point in points_as_dicts]
     mean_y = mean(list_y)
 
     return [mean_x, mean_y]
