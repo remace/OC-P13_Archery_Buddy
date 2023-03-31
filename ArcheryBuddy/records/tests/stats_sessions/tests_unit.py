@@ -20,7 +20,10 @@ from records.utils import (
     direction,
     calculate_area,
     calculate_triangle_area,
+    calculate_quiver,
 )
+
+from pprint import pprint
 
 
 class StatsRecordSessionTests(TestCase):
@@ -284,6 +287,26 @@ class UtilsTest(TestCase):
             true_convex_hull,
         )
 
+    def test_ch(self):
+        points = [
+            {"pos_x": record.pos_x, "pos_y": record.pos_y, "arrow_id": record.pk - 919}
+            for record in StatsRecord.objects.filter(pk__gte=920).exclude(pk=921)
+        ]
+
+        true_convex_hull = [
+            points[5],
+            points[3],
+            points[7],
+            points[4],
+            points[1],
+            points[2],
+        ]
+
+        self.assertEqual(
+            calculate_convex_hull(points),
+            true_convex_hull,
+        )
+
     def test_distance(self):
         p1 = StatsRecord.objects.get(pk=920)
         point1 = {"arrow_id": p1.pk, "pos_x": p1.pos_x, "pos_y": p1.pos_y}
@@ -317,3 +340,11 @@ class UtilsTest(TestCase):
 
         self.assertEqual(calculate_triangle_area(point1, point2, point3), 50.0)
         # self.assertEqual(0.1 + 0.1 + 0.1, 0.3)  # and this is why it will break!
+
+    def test_calculate_quiver(self):
+        points = [
+            {"pos_x": record.pos_x, "pos_y": record.pos_y, "arrow_id": record.pk - 919}
+            for record in StatsRecord.objects.filter(pk__gte=920)
+        ]
+        quiver = calculate_quiver(points)
+        pass

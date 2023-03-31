@@ -58,7 +58,17 @@ def direction(point1, point2, point3):
 
 
 def calculate_convex_hull(points):
+    # on prend le point d'abcisse la plus basse
     start = min(points, key=lambda point: point.get("pos_x"))
+
+    # pour être sûr qu'il appartienne bien à l'enveloppe convexe:
+    # on vérifie qu'il n'y en a pas d'ordonnée plus grande aussi,
+    # et s'il y en a un, on change.
+    for point in points:
+        if start.get("pos_x") == point.get("pos_x"):
+            if start.get("pos_y") < point.get("pos_y"):
+                start = point
+
     current = start
     result = []
     result.append(start)
@@ -119,30 +129,69 @@ def calculate_area(points):
 def calculate_quiver(points):
     # si il y a 2 points ou moins
     # ça n'a aucun sens d'essayer de compter
-    if len(points <= 2):
-        return points
-    # s'il reste 3 points:
-    if len(points == 3):
-        d0 = distance(points[2], points[0]) + distance(points[0], points[1])
-        d1 = distance(points[0], points[1]) + distance(points[2], points[1])
-        d2 = distance(points[2], points[1]) + distance(points[2], points[0])
+    result = []
+    while points != []:
+        if len(points) < 2:
+            return None
 
-        if d0 > d1 and d0 > d2:
-            # le point 0 est le "moins groupé"
-            return calculate_quiver(points[1], points[2]), points[0]
-        if d1 > d0 and d1 > d2:
-            # le point 1 est le moins groupé
-            return calculate_quiver(points[0], points[2]), points[1]
-        if d2 > d1 and d2 > d0:
-            # le point 2 est le oins groupé
-            return calculate_quiver(points[1], points[0]), points[2]
+        elif len(points) == 2:
+            result.append(points[0])
+            result.append(points[1])
+            points = []
 
-    else:
-        pass
-    # s'il en reste plus:
-    #   - calculer l'enveloppe convexe de la récursion et son aire
-    #     (possibilité de la récupérer de la récursion précédente?)
-    #   - calculer l'enveloppe convexe "sans chaque point" et leurs aires
-    #   - trier par envelope convexe croissante
-    #   - retourner [calculate_quiver(la liste sans le point qui donne l'envelope convexe la plus grande), x ] # x étant le point sans lequel l'envelope diminue le plus
-    #     (étudier si besoin la possibilité de refiler l'envelope et son aire à la récursion suivante)
+        # s'il reste 3 points:
+        elif len(points) == 3:
+            d0 = distance(points[2], points[0]) + distance(points[0], points[1])
+            d1 = distance(points[0], points[1]) + distance(points[2], points[1])
+            d2 = distance(points[2], points[1]) + distance(points[2], points[0])
+
+            if d0 > d1 and d0 > d2:
+                # le point 0 est le "moins groupé"
+                result.append(points[0])
+                points.remove(points[0])
+            if d1 > d0 and d1 > d2:
+                # le point 1 est le moins groupé
+                result.append(points[1])
+                points.remove(points[1])
+            if d2 > d1 and d2 > d0:
+                # le point 2 est le moins groupé
+                result.append(points[2])
+                points.remove(points[2])
+
+        else:
+            areas = []
+            # print("-----------------\nrésultat du tour de boucle:\npoints:")
+            # pprint(points)
+            for point in points:
+                # print(f"point_enlevé: {point}")
+                points_without = points.copy()
+                points_without.remove(point)
+                # pprint(points_without)
+                hull = calculate_convex_hull(points_without)
+                area = calculate_area(hull)
+                areas.append({"arrow_id": point.get("arrow_id"), "area": area})
+            # print("areas:")
+            # pprint(areas)
+            # trouver l'aire minimale parmi areas
+            min_area_id = min(areas, key=lambda arrow: arrow.get("area")).get(
+                "arrow_id"
+            )
+            point_with_lower_area = list(
+                filter(lambda point: point.get("arrow_id") == min_area_id, points)
+            )[0]
+
+            # print(
+            #     f"donc l'aire la plus petite est celle de la flèche {point_with_lower_area.get('arrow_id')}"
+            # )
+
+            # l'ajouter à la liste du resultat
+            result.append(point_with_lower_area)
+            # la supprimer de points
+            points.remove(point_with_lower_area)
+
+            # print("qu'on va donc retirer des points, et ajouter au résultat:")
+            # pprint(result)
+
+    # on renverse le résultat pour avoir les "meilleures flèches" en premier
+    result.reverse()
+    return result

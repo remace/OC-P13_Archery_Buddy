@@ -4,7 +4,7 @@ from django.db.models import Avg
 from records.models import StatsRecord, StatsRecordSession
 from equipment.models.arrows import Arrow
 
-from records.utils import calculate_barycentre
+from records.utils import calculate_barycentre, calculate_quiver
 
 from pprint import pprint
 
@@ -29,11 +29,9 @@ class Command(BaseCommand):
             }
 
             barycentres.append(barycentre)
-        pprint(barycentres)
 
         quiver = calculate_quiver(barycentres)
-
-        return quiver
+        return pprint(quiver)
 
     def get_records(self):
         bulk_records = StatsRecord.objects.filter(pk__gte=800)
