@@ -1,6 +1,8 @@
 from statistics import mean
 from records.models import StatsRecord
 
+from pprint import pprint
+
 
 def calculate_barycentre(points: list[StatsRecord]) -> list[float, float]:
 
@@ -13,10 +15,61 @@ def calculate_barycentre(points: list[StatsRecord]) -> list[float, float]:
     return [mean_x, mean_y]
 
 
-def squared_distance(point_1, point_2):
-    dx, dy = point_1.pos_x - point_2.pos_x, point_1.pos_y - point_2.pos_y
+def squared_distance(point1, point2):
+
+    dx, dy = point1.get("pos_x") - point2.get("pos_x"), point1.get(
+        "pos_y"
+    ) - point2.get("pos_y")
     return dx**2 + dy**2
 
+
+def direction(point1, point2, point3):
+    """retourne la composante perpendiculaire à p1p2 et p2p3 du produit vectoriel suivant:
+    p1p2 ^ p2p3
+    si p3 est "plus à gauche que p2", la composante sera positive
+    (bête rappel: l'axe des ordonnées pointe vers le bas donc:
+        le signe du produit vectoriel est changé par rapport à d'habitude
+    )
+    """
+
+    vecteur12 = (
+        point2.get("pos_x") - point1.get("pos_x"),
+        point2.get("pos_y") - point1.get("pos_y"),
+    )
+    vecteur23 = (
+        point3.get("pos_x") - point2.get("pos_x"),
+        point3.get("pos_y") - point2.get("pos_y"),
+    )
+
+    return vecteur12[0] * vecteur23[1] - vecteur12[1] * vecteur23[0]
+
+
+def calculate_convex_hull(points):
+    start = min(points, key=lambda point: point.get("pos_x"))
+    current = start
+    result = []
+    result.append(start)
+
+    while True:
+        prochain = points[1] if points[0] != current else points[0]
+        for prochain_2 in points:
+            if prochain_2 == prochain:
+                continue
+
+            angle = direction(current, prochain, prochain_2)
+
+            if angle > 0 or (
+                angle == 0
+                and squared_distance(prochain_2, current)
+                > squared_distance(prochain, current)
+            ):
+                prochain = prochain_2
+
+        current = prochain
+        if current == start:
+            break
+        result.append(prochain)
+    return result
 
 
 def calculate_quiver(points):

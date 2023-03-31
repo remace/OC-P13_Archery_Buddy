@@ -19,12 +19,20 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         records = self.get_records()
 
-        barycentres = {}
+        barycentres = []
         for record in records.values():
-            barycentre = calculate_barycentre(record)
-            barycentres[record[0].arrow_id] = barycentre
+            barycentre_coords = calculate_barycentre(record)
+            barycentre = {
+                "arrow_id": record[0].arrow_id,
+                "pos_x": barycentre_coords[0],
+                "pos_y": barycentre_coords[1],
+            }
+
+            barycentres.append(barycentre)
+        pprint(barycentres)
 
         quiver = calculate_quiver(barycentres)
+
         return quiver
 
     def get_records(self):
