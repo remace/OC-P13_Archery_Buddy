@@ -15,11 +15,8 @@ from records.models import StatsRecord, StatsRecordSession
 from records.utils import (
     calculate_barycentre,
     calculate_convex_hull,
-    squared_distance,
     distance,
     direction,
-    calculate_area,
-    calculate_triangle_area,
     calculate_quiver,
 )
 
@@ -245,13 +242,6 @@ class UtilsTest(TestCase):
         points = [point1, point2]
         self.assertEqual(calculate_barycentre(points), [147.0, 225.0])
 
-    def test_squared_distance(self):
-        p1 = StatsRecord.objects.get(pk=801)
-        point1 = {"arrow_id": p1.pk, "pos_x": p1.pos_x, "pos_y": p1.pos_y}
-        p2 = StatsRecord.objects.get(pk=802)
-        point2 = {"arrow_id": p2.pk, "pos_x": p2.pos_x, "pos_y": p2.pos_y}
-        self.assertEqual(squared_distance(point1, point2), 400.0)
-
     def test_direction(self):
         p1 = StatsRecord.objects.get(pk=802)
         point1 = {"arrow_id": p1.pk, "pos_x": p1.pos_x, "pos_y": p1.pos_y}
@@ -314,28 +304,6 @@ class UtilsTest(TestCase):
         point2 = {"arrow_id": p2.pk, "pos_x": p2.pos_x, "pos_y": p2.pos_y}
 
         self.assertEqual(distance(point1, point2), 10.0)
-
-    def test_calculate_area(self):
-        point1 = {"arrow_id": 1, "pos_x": 295.0, "pos_y": 248.0}
-        point2 = {"arrow_id": 2, "pos_x": 295.0, "pos_y": 258.0}
-        point3 = {"arrow_id": 3, "pos_x": 305.0, "pos_y": 258.0}
-        point4 = {"arrow_id": 4, "pos_x": 305.0, "pos_y": 248.0}
-        points = [point1, point2, point3, point4]
-
-        self.assertEqual(calculate_area(points), 100.0)
-
-    def test_calculate_triangle_area(self):
-        p1 = StatsRecord.objects.get(pk=920)
-        point1 = {"arrow_id": p1.pk, "pos_x": p1.pos_x, "pos_y": p1.pos_y}
-        p2 = StatsRecord.objects.get(pk=921)
-        point2 = {"arrow_id": p2.pk, "pos_x": p2.pos_x, "pos_y": p2.pos_y}
-        p3 = StatsRecord.objects.get(pk=923)
-        point3 = {"arrow_id": p3.pk, "pos_x": p3.pos_x, "pos_y": p3.pos_y}
-
-        points = [point1, point2, point3]
-
-        self.assertEqual(calculate_triangle_area(point1, point2, point3), 50.0)
-        # self.assertEqual(0.1 + 0.1 + 0.1, 0.3)  # and this is why it will break!
 
     def test_calculate_quiver(self):
         points = [

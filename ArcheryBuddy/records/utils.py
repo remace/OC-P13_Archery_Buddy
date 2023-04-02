@@ -1,8 +1,8 @@
 from math import sqrt
 from statistics import mean
 from records.models import StatsRecord
-from shapely import minimum_bounding_radius
-from shapely.geometry import Polygon
+from shapely import minimum_bounding_radius, distance as shapely_distance
+from shapely.geometry import Polygon, Point
 
 
 from pprint import pprint
@@ -27,24 +27,19 @@ def calculate_barycentre(points: list[StatsRecord]) -> list[float, float]:
     return [round(mean_x, 2), round(mean_y, 2)]
 
 
-def squared_distance(point1, point2):
-
-    dx, dy = point1.get("pos_x") - point2.get("pos_x"), point1.get(
-        "pos_y"
-    ) - point2.get("pos_y")
-    return round(dx**2 + dy**2, 2)
-
-
 def distance(point1, point2):
-    return round(squared_distance(point1, point2) ** 0.5, 2)
+    return shapely_distance(
+        Point(point1.get("pos_x"), point1.get("pos_y")),
+        Point(point2.get("pos_x"), point2.get("pos_y")),
+    )
 
 
 def direction(point1, point2, point3):
-    """retourne la composante perpendiculaire à p1p2 et p2p3 du produit vectoriel suivant:
+    """returns perpendicular coordinate to p1p2 and p2p3 of the cross product:
     p1p2 ^ p2p3
-    si p3 est "plus à gauche que p2", la composante sera positive
-    (bête rappel: l'axe des ordonnées pointe vers le bas donc:
-        le signe du produit vectoriel est changé par rapport à d'habitude
+    if p3 is "leftmost", it will be >0
+    (attention: vertical axle is oriented to the bottom
+                so cross product's sign is changed...
     )
     """
 
@@ -61,6 +56,9 @@ def direction(point1, point2, point3):
 
 
 def calculate_convex_hull(points):
+    """returns the convex hull (ordered) of a list of points (not necessarly ordered)
+    uses Jarvis's march algorithm
+    """
     # on prend le point d'abcisse la plus basse
     start = min(points, key=lambda point: point.get("pos_x"))
 
@@ -86,8 +84,7 @@ def calculate_convex_hull(points):
 
             if angle > 0 or (
                 angle == 0
-                and squared_distance(prochain_2, current)
-                > squared_distance(prochain, current)
+                and distance(prochain_2, current) > distance(prochain, current)
             ):
                 prochain = prochain_2
 
@@ -98,44 +95,8 @@ def calculate_convex_hull(points):
     return result
 
 
-def calculate_triangle_area(point1, point2, point3):
-
-    a = distance(point1, point2)
-    b = distance(point2, point3)
-    c = distance(point3, point1)
-    s = (a + b + c) / 2
-    area = (s * (s - a) * (s - b) * (s - c)) ** 0.5
-    return round(area, 1)
-
-
-# def calculate_area(points):
-
-#     # find a point in the middle of the polygon
-#     mean_x, mean_y = calculate_barycentre(points)
-#     barycentre = {"arrow_id": "barycentre", "pos_x": mean_x, "pos_y": mean_y}
-
-#     total_area = 0
-#     # accumulate areas of triangles
-#     for point in points:
-#         index = points.index(point)
-
-#         try:
-#             next_point = points[index + 1]
-#         except IndexError:
-#             next_point = points[0]
-
-#         total_area += calculate_triangle_area(point, next_point, barycentre)
-
-#     return total_area
-
-
-def calculate_area(points):
-    rearranged_points = [(point.get("pos_x"), point.get("pos_y")) for point in points]
-    polygon = Polygon(rearranged_points)
-    return polygon.area
-
-
 def calculate_quiver(points):
+    """calculates the best quiver by excluding each round the worse grouping arrow:"""
     result = []
     while points != []:
         if len(points) < 2:
@@ -167,14 +128,13 @@ def calculate_quiver(points):
 
         else:
             circle_radiuses = []
-            # print("-----------------\nrésultat du tour de boucle:\npoints:")
-            # pprint(points)
-            for point in points:
 
-                # print(f"point_enlevé: {point}")
+            for point in points:
+                # pour chaque point
+                # on calcule le rayon du cercle circonscrit minimal
+                # de l'envelope convexe "sans lui"
                 points_without = points.copy()
                 points_without.remove(point)
-                # pprint(points_without)
                 hull = calculate_convex_hull(points_without)
                 if len(hull) > 3:
                     radius = minimum_bounding_radius(
@@ -182,19 +142,15 @@ def calculate_quiver(points):
                             [(point.get("pos_x"), point.get("pos_y")) for point in hull]
                         )
                     )
-                    # area = calculate_area(hull)
-
-                # elif len(hull) == 3:
-                #     area = calculate_triangle_area(hull[0], hull[1], hull[2])
                 else:
                     radius = 1000
 
                 circle_radiuses.append(
                     {"arrow_id": point.get("arrow_id"), "radius": radius}
                 )
-            # print("areas:")
-            # pprint(areas)
-            # trouver l'aire minimale parmi areas
+
+            # on sélectionne celui qui est associé au
+            # rayon de cercle circonscrit le plus petit
             min_radius_id = min(
                 circle_radiuses, key=lambda arrow: arrow.get("radius")
             ).get("arrow_id")
@@ -202,17 +158,10 @@ def calculate_quiver(points):
                 filter(lambda point: point.get("arrow_id") == min_radius_id, points)
             )[0]
 
-            # print(
-            #     f"donc l'aire la plus petite est celle de la flèche {point_with_lower_area.get('arrow_id')}"
-            # )
-
             # l'ajouter à la liste du resultat
             result.append(point_with_lower_radius)
             # la supprimer de points
             points.remove(point_with_lower_radius)
-
-            # print("qu'on va donc retirer des points, et ajouter au résultat:")
-            # pprint(result)
 
     # on renverse le résultat pour avoir les "meilleures flèches" en premier
     result.reverse()
