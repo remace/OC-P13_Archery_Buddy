@@ -316,17 +316,13 @@ class UtilsTest(TestCase):
         self.assertEqual(distance(point1, point2), 10.0)
 
     def test_calculate_area(self):
+        point1 = {"arrow_id": 1, "pos_x": 295.0, "pos_y": 248.0}
+        point2 = {"arrow_id": 2, "pos_x": 295.0, "pos_y": 258.0}
+        point3 = {"arrow_id": 3, "pos_x": 305.0, "pos_y": 258.0}
+        point4 = {"arrow_id": 4, "pos_x": 305.0, "pos_y": 248.0}
+        points = [point1, point2, point3, point4]
 
-        p1 = StatsRecord.objects.get(pk=920)
-        point1 = {"arrow_id": p1.pk, "pos_x": p1.pos_x, "pos_y": p1.pos_y}
-        p2 = StatsRecord.objects.get(pk=921)
-        point2 = {"arrow_id": p2.pk, "pos_x": p2.pos_x, "pos_y": p2.pos_y}
-        p3 = StatsRecord.objects.get(pk=923)
-        point3 = {"arrow_id": p3.pk, "pos_x": p3.pos_x, "pos_y": p3.pos_y}
-
-        points = [point1, point2, point3]
-
-        self.assertEqual(calculate_area(points), 50.0)
+        self.assertEqual(calculate_area(points), 100.0)
 
     def test_calculate_triangle_area(self):
         p1 = StatsRecord.objects.get(pk=920)

@@ -1,6 +1,7 @@
 from math import sqrt
 from statistics import mean
 from records.models import StatsRecord
+from shapely.geometry import Polygon
 
 from pprint import pprint
 
@@ -102,33 +103,38 @@ def calculate_triangle_area(point1, point2, point3):
     c = distance(point3, point1)
     s = (a + b + c) / 2
     area = (s * (s - a) * (s - b) * (s - c)) ** 0.5
-    return round(area, 2)
+    return round(area, 1)
+
+
+# def calculate_area(points):
+
+#     # find a point in the middle of the polygon
+#     mean_x, mean_y = calculate_barycentre(points)
+#     barycentre = {"arrow_id": "barycentre", "pos_x": mean_x, "pos_y": mean_y}
+
+#     total_area = 0
+#     # accumulate areas of triangles
+#     for point in points:
+#         index = points.index(point)
+
+#         try:
+#             next_point = points[index + 1]
+#         except IndexError:
+#             next_point = points[0]
+
+#         total_area += calculate_triangle_area(point, next_point, barycentre)
+
+#     return total_area
 
 
 def calculate_area(points):
-
-    # find a point in the middle of the polygon
-    mean_x, mean_y = calculate_barycentre(points)
-    barycentre = {"arrow_id": "barycentre", "pos_x": mean_x, "pos_y": mean_y}
-
-    total_area = 0
-    # accumulate areas of triangles
-    for point in points:
-        index = points.index(point)
-
-        try:
-            next_point = points[index + 1]
-        except IndexError:
-            next_point = points[0]
-
-        total_area += calculate_triangle_area(point, next_point, barycentre)
-
-    return round(total_area, 1)
+    """calculate of the area using shoelace algorithm"""
+    rearranged_points = [(point.get("pos_x"), point.get("pos_y")) for point in points]
+    polygon = Polygon(rearranged_points)
+    return polygon.area
 
 
 def calculate_quiver(points):
-    # si il y a 2 points ou moins
-    # ça n'a aucun sens d'essayer de compter
     result = []
     while points != []:
         if len(points) < 2:
@@ -163,12 +169,18 @@ def calculate_quiver(points):
             # print("-----------------\nrésultat du tour de boucle:\npoints:")
             # pprint(points)
             for point in points:
+
                 # print(f"point_enlevé: {point}")
                 points_without = points.copy()
                 points_without.remove(point)
                 # pprint(points_without)
                 hull = calculate_convex_hull(points_without)
-                area = calculate_area(hull)
+                if len(hull) > 3:
+                    area = calculate_area(hull)
+                elif len(hull) == 3:
+                    area = calculate_triangle_area(hull[0], hull[1], hull[2])
+                else:
+                    area = 0
                 areas.append({"arrow_id": point.get("arrow_id"), "area": area})
             # print("areas:")
             # pprint(areas)
