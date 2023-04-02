@@ -1,7 +1,9 @@
 from math import sqrt
 from statistics import mean
 from records.models import StatsRecord
+from shapely import minimum_bounding_radius
 from shapely.geometry import Polygon
+
 
 from pprint import pprint
 
@@ -128,7 +130,6 @@ def calculate_triangle_area(point1, point2, point3):
 
 
 def calculate_area(points):
-    """calculate of the area using shoelace algorithm"""
     rearranged_points = [(point.get("pos_x"), point.get("pos_y")) for point in points]
     polygon = Polygon(rearranged_points)
     return polygon.area
@@ -165,7 +166,7 @@ def calculate_quiver(points):
                 points.remove(points[2])
 
         else:
-            areas = []
+            circle_radiuses = []
             # print("-----------------\nrésultat du tour de boucle:\npoints:")
             # pprint(points)
             for point in points:
@@ -176,20 +177,29 @@ def calculate_quiver(points):
                 # pprint(points_without)
                 hull = calculate_convex_hull(points_without)
                 if len(hull) > 3:
-                    area = calculate_area(hull)
-                elif len(hull) == 3:
-                    area = calculate_triangle_area(hull[0], hull[1], hull[2])
+                    radius = minimum_bounding_radius(
+                        Polygon(
+                            [(point.get("pos_x"), point.get("pos_y")) for point in hull]
+                        )
+                    )
+                    # area = calculate_area(hull)
+
+                # elif len(hull) == 3:
+                #     area = calculate_triangle_area(hull[0], hull[1], hull[2])
                 else:
-                    area = 0
-                areas.append({"arrow_id": point.get("arrow_id"), "area": area})
+                    radius = 1000
+
+                circle_radiuses.append(
+                    {"arrow_id": point.get("arrow_id"), "radius": radius}
+                )
             # print("areas:")
             # pprint(areas)
             # trouver l'aire minimale parmi areas
-            min_area_id = min(areas, key=lambda arrow: arrow.get("area")).get(
-                "arrow_id"
-            )
-            point_with_lower_area = list(
-                filter(lambda point: point.get("arrow_id") == min_area_id, points)
+            min_radius_id = min(
+                circle_radiuses, key=lambda arrow: arrow.get("radius")
+            ).get("arrow_id")
+            point_with_lower_radius = list(
+                filter(lambda point: point.get("arrow_id") == min_radius_id, points)
             )[0]
 
             # print(
@@ -197,9 +207,9 @@ def calculate_quiver(points):
             # )
 
             # l'ajouter à la liste du resultat
-            result.append(point_with_lower_area)
+            result.append(point_with_lower_radius)
             # la supprimer de points
-            points.remove(point_with_lower_area)
+            points.remove(point_with_lower_radius)
 
             # print("qu'on va donc retirer des points, et ajouter au résultat:")
             # pprint(result)
