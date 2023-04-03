@@ -49,6 +49,9 @@
             <script src="{% static 'records/js/statsRecords/PostNewRecords.js' %}" defer type="module"></script>
             <script src="{% static 'records/js/statsRecords/TargetClick.js' %}" defer type="module"></script>
         </div>
+        <div>
+            <a class="text-center block cursor-pointer bg-violet-700 hover:bg-violet-900 font-bold py-2 px-4 rounded w-full" href="{% url 'stats_result' srs.pk%}">résultats de la session</a>
+        </div>
     </div>
     {% include "records/arrow_modal.html"%}
 {% endblock content %}
