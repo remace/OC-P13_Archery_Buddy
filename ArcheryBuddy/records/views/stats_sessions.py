@@ -14,6 +14,7 @@ from django.views.generic.edit import FormView, CreateView, DeleteView
 from equipment.models.arrows import Arrow
 from records.models import StatsRecordSession, StatsRecord
 from records.forms import StatsRecordSessionForm
+from records.utils import calculate_barycentre, calculate_quiver
 
 import pdb
 
@@ -182,3 +183,35 @@ class DeleteStatsRecord(View):
         }
 
         return JsonResponse({"data": stats_dict, "status_code": 200})
+
+
+class StatsRecordResults(View):
+    @method_decorator(login_required)
+    def get(self, request, stats_session_pk):
+
+        from pprint import pprint
+
+        shots = StatsRecord.objects.filter(stats_session=stats_session_pk)
+
+        pk_list = [id.get("arrow_id") for id in shots.values("arrow_id").distinct()]
+
+        records = {}
+        for id in pk_list:
+            records[id] = [rec for rec in shots.filter(arrow_id=id)]
+
+        barycentres = []
+        for record in records.values():
+            barycentre_coords = calculate_barycentre(record)
+            barycentre = {
+                "arrow_id": record[0].arrow_id,
+                "pos_x": barycentre_coords[0],
+                "pos_y": barycentre_coords[1],
+            }
+
+            barycentres.append(barycentre)
+
+        quiver = calculate_quiver(barycentres)
+        for arrow in quiver:
+            continue
+        ctx = {"stats_session_id": stats_session_pk, "arrows": quiver}
+        return render(request, "records/stats_session_result.html", context=ctx)
