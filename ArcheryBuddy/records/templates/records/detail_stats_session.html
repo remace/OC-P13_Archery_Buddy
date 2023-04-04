@@ -21,27 +21,36 @@
             <form action="" method="post"></form>
             <div>
                 <h2>récapitulatif des tirs déjà enregistrés</h2>
-                <div class="saved-shots-container">
+                <div class="saved-shots-container max-h-40 overflow-y-scroll">
                     {%for record in records%}
                     <p>{{record.pk}} • {{record.arrow.id}} • {{record.pos_x}} • {{record.pos_y}} <button class="delete-saved cursor-pointer bg-red-500 hover:bg-red-700 font-bold py-2 px-4 rounded">supprimer</button></p>
                     {% endfor %}
                 </div>
                     <h2>tirs à enregistrer</h2>
-                        <div id="shots-to-save">
+                        <div id="shots-to-save max-h-40 overflow-y-scroll">
                             
                         </div>
-                        <button id="shots-save" type="submit">enregistrer ces tirs</button>
+                        <button class="cursor-pointer bg-green-500 hover:bg-green-700 font-bold py-2 px-4 rounded" 
+                            id="shots-save" type="submit">enregistrer ces tirs</button>
                     </div>
             </form>
             </div>
             <div class="w-6/12 flex justify-center items-center" id="target-container">
                 <div id="target" class="z-10 bg-slate-50 w-[500px] h-[500px] relative">
                     <img src=" {% static 'records/assets/target.svg' %}" alt="target">
+                    {% for record in records %}
+                        <div id="shot-dot-{{record.arrow.id}}-{{record.pos_x|floatformat:"0"}}-{{record.pos_y|floatformat:"0"}}" 
+                            class="z-20 w-1 h-1 absolute bg-green-500 rounded-full" 
+                            style="top:{{record.pos_y|floatformat:"0"}}px; left:{{record.pos_x|floatformat:"0"}}px;"></div>
+                    {% endfor %}
                 </div>
             </div>
             <script src="{% static 'records/js/statsRecords/DeleteShot.js' %}" defer type="module"></script>
             <script src="{% static 'records/js/statsRecords/PostNewRecords.js' %}" defer type="module"></script>
             <script src="{% static 'records/js/statsRecords/TargetClick.js' %}" defer type="module"></script>
+        </div>
+        <div>
+            <a class="text-center block cursor-pointer bg-violet-700 hover:bg-violet-900 font-bold py-2 px-4 rounded w-full" href="{% url 'stats_result' srs.pk%}">résultats de la session</a>
         </div>
     </div>
     {% include "records/arrow_modal.html"%}

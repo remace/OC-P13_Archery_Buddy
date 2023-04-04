@@ -168,3 +168,19 @@ class StatsRecordsViewsTest(TestCase):
 
         response = self.client.get(f"/stats/{session_id}/record/{record_id}/delete/")
         self.assertEqual(response.status_code, 200)
+
+
+class StatsRecordsResultViewsTest(TestCase):
+
+    fixtures = ["data.jsonl"]
+
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.get(pseudo="remi123456")
+
+    def test_get_stats_record_session_result(self):
+        self.client.force_login(self.user)
+        session_id = "1"
+        response = self.client.get("/stats/1/results/")
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed("stats_session_result.html")
