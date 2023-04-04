@@ -1,0 +1,27 @@
+name: deploy github pages
+on:
+  workflow_dispatch:
+  push:
+    branches: 
+      - 50-post-coverage-reports
+  pull_request:
+    branches: 
+      - main
+
+jobs:
+  publish-coverage-to-github-pages:
+    runs-on:
+      - ubuntu-latest
+    steps:
+      - name: delete all the project from runner
+        run: rm -rf ./ArcheryBuddy
+      - name: download coverage reports
+        uses: actions/download-artifact@v3
+        with:
+          name: coverage report
+          path: ./htmlcov
+      - name: verify that it ended well
+        run: |
+          ls
+          cd htmlcov
+          ls -al
