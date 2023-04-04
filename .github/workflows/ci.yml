@@ -41,6 +41,7 @@ jobs:
           cd ArcheryBuddy
           poetry run coverage run ./manage.py test accounts equipment records
           poetry run coverage html
+          poetry run mv ./htmlcov/ ..
       - name: search for coverage report in runner
         run: find . -name "htmlcov" # ./htmlcov
       - uses: actions/upload-artifact@v3
