@@ -114,12 +114,9 @@ class DetailStatsSession(View):
 
         srs.available_arrows.clear()
 
-        print(f"{available_arrow_ids}")
-
         for id in available_arrow_ids:
             srs.available_arrows.add(id)
         srs.save()
-        print(srs.available_arrows.all())
         return redirect("stats_session_detail", srs.pk)
 
 
@@ -188,8 +185,6 @@ class DeleteStatsRecord(View):
 class StatsRecordResults(View):
     @method_decorator(login_required)
     def get(self, request, stats_session_pk):
-
-        from pprint import pprint
 
         shots = StatsRecord.objects.filter(stats_session=stats_session_pk)
 
