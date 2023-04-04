@@ -1,12 +1,16 @@
 name: deploy github pages
 on:
   workflow_dispatch:
-  push:
-    branches: 
-      - 50-post-coverage-reports
-  pull_request:
-    branches: 
-      - main
+  workflow_run:
+    workflows: [CI base]
+    types: [completed]
+    branches: [50-post-coverage-reports,main]
+  # push:
+  #   branches: 
+  #     - 50-post-coverage-reports
+  # pull_request:
+  #   branches: 
+  #     - main
 
 jobs:
   publish-coverage-to-github-pages:
