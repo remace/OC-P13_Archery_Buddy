@@ -10,6 +10,7 @@ python = "^3.10"
 Django = "^4.0.5"
 django-tailwind = "^3.4.0"
 django-dotenv = "^1.4.2"
+coverage = "^7.2.2"
 shapely = "^2.0.1"
 
 [tool.poetry.dev-dependencies]
