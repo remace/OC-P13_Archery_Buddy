@@ -170,7 +170,160 @@
 {"model": "equipment.arrow","pk": 9,"fields": {"user": 11,"nock": 1,"feathering": 3,"tip": 3,"tube": 1,"not_broken": true}}
 {"model": "equipment.arrow","pk": 10,"fields": {"user": 11,"nock": 1,"feathering": 3,"tip": 3,"tube": 1,"not_broken": true}}
 {"model": "equipment.arrow","pk": 11,"fields": {"user": 11,"nock": 1,"feathering": 3,"tip": 3,"tube": 1,"not_broken": true}}
+
 {"model": "records.practicerecordsession","pk": 8,"fields": {"user": 11,"session_datetime": "2022-08-04T17:11:08.556Z","conditions": "EXT","distance": 70,"comment": "pas de vent","number_of_volleys": 10,"max_arrows_in_volley": 6}}
 {"model": "records.practicerecordsession","pk": 9,"fields": {"user": 11,"session_datetime": "2022-08-11T07:11:02.899Z","conditions": "INT","distance": 20,"comment": "efb","number_of_volleys": 10,"max_arrows_in_volley": 3}}
 {"model": "records.statsrecordsession","pk": 34,"fields": {"user": 11,"session_datetime": "2023-01-31T05:56:18.058Z","conditions": "INT","distance": 20,"comment": "kgv","available_arrows": []}}
 {"model": "records.statsrecord","pk": 84,"fields": {"arrow": 6,"stats_session": 34,"pos_x": 147.0,"pos_y": 225.0}}
+
+{"model": "equipment.arrow","pk": 12,"fields": {"user": 11,"nock": 1,"feathering": 3,"tip": 3,"tube": 1,"not_broken": true}}
+{"model": "equipment.arrow","pk": 13,"fields": {"user": 11,"nock": 1,"feathering": 3,"tip": 3,"tube": 1,"not_broken": true}}
+{"model": "equipment.arrow","pk": 14,"fields": {"user": 11,"nock": 1,"feathering": 3,"tip": 3,"tube": 1,"not_broken": true}}
+{"model": "equipment.arrow","pk": 15,"fields": {"user": 11,"nock": 1,"feathering": 3,"tip": 3,"tube": 1,"not_broken": true}}
+{"model": "equipment.arrow","pk": 16,"fields": {"user": 11,"nock": 1,"feathering": 3,"tip": 3,"tube": 1,"not_broken": true}}
+{"model": "equipment.arrow","pk": 17,"fields": {"user": 11,"nock": 1,"feathering": 3,"tip": 3,"tube": 1,"not_broken": true}}
+{"model": "equipment.arrow","pk": 18,"fields": {"user": 11,"nock": 1,"feathering": 3,"tip": 3,"tube": 1,"not_broken": true}}
+
+{"model": "records.statsrecordsession","pk": 1,"fields": {"user": 11,"session_datetime": "2023-03-31T05:56:18.058Z","conditions": "INT","distance": 20,"comment": "test sample for quiver optimisation","available_arrows": [6,7,8,9,10,11,12,13,14,15,16,17,18]}}
+{"model": "records.statsrecord","pk": 800,"fields": {"arrow": 6,"stats_session": 1,"pos_x": 147.0,"pos_y": 225.0}}
+{"model": "records.statsrecord","pk": 801,"fields": {"arrow": 6,"stats_session": 1,"pos_x": 157.0,"pos_y": 225.0}}
+{"model": "records.statsrecord","pk": 802,"fields": {"arrow": 6,"stats_session": 1,"pos_x": 137.0,"pos_y": 225.0}}
+{"model": "records.statsrecord","pk": 803,"fields": {"arrow": 6,"stats_session": 1,"pos_x": 147.0,"pos_y": 215.0}}
+{"model": "records.statsrecord","pk": 804,"fields": {"arrow": 6,"stats_session": 1,"pos_x": 147.0,"pos_y": 235.0}}
+{"model": "records.statsrecord","pk": 805,"fields": {"arrow": 6,"stats_session": 1,"pos_x": 144.0,"pos_y": 225.0}}
+{"model": "records.statsrecord","pk": 806,"fields": {"arrow": 6,"stats_session": 1,"pos_x": 149.0,"pos_y": 226.0}}
+{"model": "records.statsrecord","pk": 807,"fields": {"arrow": 6,"stats_session": 1,"pos_x": 137.0,"pos_y": 222.0}}
+{"model": "records.statsrecord","pk": 808,"fields": {"arrow": 6,"stats_session": 1,"pos_x": 145.0,"pos_y": 235.0}}
+{"model": "records.statsrecord","pk": 809,"fields": {"arrow": 6,"stats_session": 1,"pos_x": 147.0,"pos_y": 235.0}}
+
+{"model": "records.statsrecord","pk": 810,"fields": {"arrow": 7,"stats_session": 1,"pos_x": 97.0,"pos_y": 199.0}}
+{"model": "records.statsrecord","pk": 811,"fields": {"arrow": 7,"stats_session": 1,"pos_x": 107.0,"pos_y": 199.0}}
+{"model": "records.statsrecord","pk": 812,"fields": {"arrow": 7,"stats_session": 1,"pos_x": 87.0,"pos_y": 199.0}}
+{"model": "records.statsrecord","pk": 813,"fields": {"arrow": 7,"stats_session": 1,"pos_x": 97.0,"pos_y": 189.0}}
+{"model": "records.statsrecord","pk": 814,"fields": {"arrow": 7,"stats_session": 1,"pos_x": 97.0,"pos_y": 209.0}}
+{"model": "records.statsrecord","pk": 815,"fields": {"arrow": 7,"stats_session": 1,"pos_x": 92.0,"pos_y": 201.0}}
+{"model": "records.statsrecord","pk": 816,"fields": {"arrow": 7,"stats_session": 1,"pos_x": 96.0,"pos_y": 200.0}}
+{"model": "records.statsrecord","pk": 817,"fields": {"arrow": 7,"stats_session": 1,"pos_x": 98.0,"pos_y": 199.0}}
+{"model": "records.statsrecord","pk": 818,"fields": {"arrow": 7,"stats_session": 1,"pos_x": 91.0,"pos_y": 193.0}}
+{"model": "records.statsrecord","pk": 819,"fields": {"arrow": 7,"stats_session": 1,"pos_x": 102.0,"pos_y": 194.0}}
+
+{"model": "records.statsrecord","pk": 820,"fields": {"arrow": 8,"stats_session": 1,"pos_x": 264.0,"pos_y": 243.0}}
+{"model": "records.statsrecord","pk": 821,"fields": {"arrow": 8,"stats_session": 1,"pos_x": 274.0,"pos_y": 243.0}}
+{"model": "records.statsrecord","pk": 822,"fields": {"arrow": 8,"stats_session": 1,"pos_x": 254.0,"pos_y": 243.0}}
+{"model": "records.statsrecord","pk": 823,"fields": {"arrow": 8,"stats_session": 1,"pos_x": 264.0,"pos_y": 233.0}}
+{"model": "records.statsrecord","pk": 824,"fields": {"arrow": 8,"stats_session": 1,"pos_x": 264.0,"pos_y": 253.0}}
+{"model": "records.statsrecord","pk": 825,"fields": {"arrow": 8,"stats_session": 1,"pos_x": 274.0,"pos_y": 252.0}}
+{"model": "records.statsrecord","pk": 826,"fields": {"arrow": 8,"stats_session": 1,"pos_x": 254.0,"pos_y": 240.0}}
+{"model": "records.statsrecord","pk": 827,"fields": {"arrow": 8,"stats_session": 1,"pos_x": 260.0,"pos_y": 238.0}}
+{"model": "records.statsrecord","pk": 828,"fields": {"arrow": 8,"stats_session": 1,"pos_x": 266.0,"pos_y": 245.0}}
+{"model": "records.statsrecord","pk": 829,"fields": {"arrow": 8,"stats_session": 1,"pos_x": 262.0,"pos_y": 242.0}}
+
+{"model": "records.statsrecord","pk": 830,"fields": {"arrow": 9,"stats_session": 1,"pos_x": 264.0,"pos_y": 250.0}}
+{"model": "records.statsrecord","pk": 831,"fields": {"arrow": 9,"stats_session": 1,"pos_x": 274.0,"pos_y": 250.0}}
+{"model": "records.statsrecord","pk": 832,"fields": {"arrow": 9,"stats_session": 1,"pos_x": 254.0,"pos_y": 250.0}}
+{"model": "records.statsrecord","pk": 833,"fields": {"arrow": 9,"stats_session": 1,"pos_x": 264.0,"pos_y": 260.0}}
+{"model": "records.statsrecord","pk": 834,"fields": {"arrow": 9,"stats_session": 1,"pos_x": 264.0,"pos_y": 240.0}}
+{"model": "records.statsrecord","pk": 835,"fields": {"arrow": 9,"stats_session": 1,"pos_x": 273.0,"pos_y": 255.0}}
+{"model": "records.statsrecord","pk": 836,"fields": {"arrow": 9,"stats_session": 1,"pos_x": 256.0,"pos_y": 253.0}}
+{"model": "records.statsrecord","pk": 837,"fields": {"arrow": 9,"stats_session": 1,"pos_x": 261.0,"pos_y": 247.0}}
+{"model": "records.statsrecord","pk": 838,"fields": {"arrow": 9,"stats_session": 1,"pos_x": 268.0,"pos_y": 243.0}}
+{"model": "records.statsrecord","pk": 839,"fields": {"arrow": 9,"stats_session": 1,"pos_x": 265.0,"pos_y": 252.0}}
+
+{"model": "records.statsrecord","pk": 840,"fields": {"arrow": 10,"stats_session": 1,"pos_x": 285.0,"pos_y": 314.0}}
+{"model": "records.statsrecord","pk": 841,"fields": {"arrow": 10,"stats_session": 1,"pos_x": 295.0,"pos_y": 314.0}}
+{"model": "records.statsrecord","pk": 842,"fields": {"arrow": 10,"stats_session": 1,"pos_x": 275.0,"pos_y": 314.0}}
+{"model": "records.statsrecord","pk": 843,"fields": {"arrow": 10,"stats_session": 1,"pos_x": 285.0,"pos_y": 304.0}}
+{"model": "records.statsrecord","pk": 844,"fields": {"arrow": 10,"stats_session": 1,"pos_x": 285.0,"pos_y": 324.0}}
+{"model": "records.statsrecord","pk": 845,"fields": {"arrow": 10,"stats_session": 1,"pos_x": 277.0,"pos_y": 309.0}}
+{"model": "records.statsrecord","pk": 846,"fields": {"arrow": 10,"stats_session": 1,"pos_x": 284.0,"pos_y": 315.0}}
+{"model": "records.statsrecord","pk": 847,"fields": {"arrow": 10,"stats_session": 1,"pos_x": 284.0,"pos_y": 307.0}}
+{"model": "records.statsrecord","pk": 848,"fields": {"arrow": 10,"stats_session": 1,"pos_x": 281.0,"pos_y": 310.0}}
+{"model": "records.statsrecord","pk": 849,"fields": {"arrow": 10,"stats_session": 1,"pos_x": 289.0,"pos_y": 316.0}}
+
+{"model": "records.statsrecord","pk": 850,"fields": {"arrow": 11,"stats_session": 1,"pos_x": 282.0,"pos_y": 247.0}}
+{"model": "records.statsrecord","pk": 851,"fields": {"arrow": 11,"stats_session": 1,"pos_x": 292.0,"pos_y": 247.0}}
+{"model": "records.statsrecord","pk": 852,"fields": {"arrow": 11,"stats_session": 1,"pos_x": 272.0,"pos_y": 247.0}}
+{"model": "records.statsrecord","pk": 853,"fields": {"arrow": 11,"stats_session": 1,"pos_x": 282.0,"pos_y": 237.0}}
+{"model": "records.statsrecord","pk": 854,"fields": {"arrow": 11,"stats_session": 1,"pos_x": 282.0,"pos_y": 257.0}}
+{"model": "records.statsrecord","pk": 855,"fields": {"arrow": 11,"stats_session": 1,"pos_x": 273.0,"pos_y": 250.0}}
+{"model": "records.statsrecord","pk": 856,"fields": {"arrow": 11,"stats_session": 1,"pos_x": 287.0,"pos_y": 241.0}}
+{"model": "records.statsrecord","pk": 857,"fields": {"arrow": 11,"stats_session": 1,"pos_x": 279.0,"pos_y": 246.0}}
+{"model": "records.statsrecord","pk": 858,"fields": {"arrow": 11,"stats_session": 1,"pos_x": 282.0,"pos_y": 253.0}}
+{"model": "records.statsrecord","pk": 859,"fields": {"arrow": 11,"stats_session": 1,"pos_x": 272.0,"pos_y": 246.0}}
+
+{"model": "records.statsrecord","pk": 860,"fields": {"arrow": 12,"stats_session": 1,"pos_x": 219.0,"pos_y": 290.0}}
+{"model": "records.statsrecord","pk": 861,"fields": {"arrow": 12,"stats_session": 1,"pos_x": 209.0,"pos_y": 290.0}}
+{"model": "records.statsrecord","pk": 862,"fields": {"arrow": 12,"stats_session": 1,"pos_x": 229.0,"pos_y": 290.0}}
+{"model": "records.statsrecord","pk": 863,"fields": {"arrow": 12,"stats_session": 1,"pos_x": 219.0,"pos_y": 280.0}}
+{"model": "records.statsrecord","pk": 864,"fields": {"arrow": 12,"stats_session": 1,"pos_x": 219.0,"pos_y": 300.0}}
+{"model": "records.statsrecord","pk": 865,"fields": {"arrow": 12,"stats_session": 1,"pos_x": 216.0,"pos_y": 288.0}}
+{"model": "records.statsrecord","pk": 866,"fields": {"arrow": 12,"stats_session": 1,"pos_x": 213.0,"pos_y": 297.0}}
+{"model": "records.statsrecord","pk": 867,"fields": {"arrow": 12,"stats_session": 1,"pos_x": 214.0,"pos_y": 280.0}}
+{"model": "records.statsrecord","pk": 868,"fields": {"arrow": 12,"stats_session": 1,"pos_x": 223.0,"pos_y": 287.0}}
+{"model": "records.statsrecord","pk": 869,"fields": {"arrow": 12,"stats_session": 1,"pos_x": 216.0,"pos_y": 298.0}}
+
+{"model": "records.statsrecord","pk": 870,"fields": {"arrow": 13,"stats_session": 1,"pos_x": 164.0,"pos_y": 301.0}}
+{"model": "records.statsrecord","pk": 871,"fields": {"arrow": 13,"stats_session": 1,"pos_x": 154.0,"pos_y": 301.0}}
+{"model": "records.statsrecord","pk": 872,"fields": {"arrow": 13,"stats_session": 1,"pos_x": 174.0,"pos_y": 301.0}}
+{"model": "records.statsrecord","pk": 873,"fields": {"arrow": 13,"stats_session": 1,"pos_x": 164.0,"pos_y": 291.0}}
+{"model": "records.statsrecord","pk": 874,"fields": {"arrow": 13,"stats_session": 1,"pos_x": 164.0,"pos_y": 311.0}}
+{"model": "records.statsrecord","pk": 875,"fields": {"arrow": 13,"stats_session": 1,"pos_x": 154.0,"pos_y": 310.0}}
+{"model": "records.statsrecord","pk": 876,"fields": {"arrow": 13,"stats_session": 1,"pos_x": 158.0,"pos_y": 309.0}}
+{"model": "records.statsrecord","pk": 877,"fields": {"arrow": 13,"stats_session": 1,"pos_x": 164.0,"pos_y": 301.0}}
+{"model": "records.statsrecord","pk": 878,"fields": {"arrow": 13,"stats_session": 1,"pos_x": 172.0,"pos_y": 308.0}}
+{"model": "records.statsrecord","pk": 879,"fields": {"arrow": 13,"stats_session": 1,"pos_x": 170.0,"pos_y": 304.0}}
+
+{"model": "records.statsrecord","pk": 880,"fields": {"arrow": 14,"stats_session": 1,"pos_x": 289.0,"pos_y": 188.0}}
+{"model": "records.statsrecord","pk": 881,"fields": {"arrow": 14,"stats_session": 1,"pos_x": 279.0,"pos_y": 188.0}}
+{"model": "records.statsrecord","pk": 882,"fields": {"arrow": 14,"stats_session": 1,"pos_x": 299.0,"pos_y": 188.0}}
+{"model": "records.statsrecord","pk": 883,"fields": {"arrow": 14,"stats_session": 1,"pos_x": 289.0,"pos_y": 178.0}}
+{"model": "records.statsrecord","pk": 884,"fields": {"arrow": 14,"stats_session": 1,"pos_x": 289.0,"pos_y": 198.0}}
+{"model": "records.statsrecord","pk": 885,"fields": {"arrow": 14,"stats_session": 1,"pos_x": 291.0,"pos_y": 191.0}}
+{"model": "records.statsrecord","pk": 886,"fields": {"arrow": 14,"stats_session": 1,"pos_x": 288.0,"pos_y": 186.0}}
+{"model": "records.statsrecord","pk": 887,"fields": {"arrow": 14,"stats_session": 1,"pos_x": 289.0,"pos_y": 192.0}}
+{"model": "records.statsrecord","pk": 888,"fields": {"arrow": 14,"stats_session": 1,"pos_x": 284.0,"pos_y": 196.0}}
+{"model": "records.statsrecord","pk": 889,"fields": {"arrow": 14,"stats_session": 1,"pos_x": 281.0,"pos_y": 197.0}}
+
+{"model": "records.statsrecord","pk": 890,"fields": {"arrow": 15,"stats_session": 1,"pos_x": 282.0,"pos_y": 166.0}}
+{"model": "records.statsrecord","pk": 891,"fields": {"arrow": 15,"stats_session": 1,"pos_x": 292.0,"pos_y": 166.0}}
+{"model": "records.statsrecord","pk": 892,"fields": {"arrow": 15,"stats_session": 1,"pos_x": 272.0,"pos_y": 166.0}}
+{"model": "records.statsrecord","pk": 893,"fields": {"arrow": 15,"stats_session": 1,"pos_x": 282.0,"pos_y": 156.0}}
+{"model": "records.statsrecord","pk": 894,"fields": {"arrow": 15,"stats_session": 1,"pos_x": 282.0,"pos_y": 176.0}}
+{"model": "records.statsrecord","pk": 895,"fields": {"arrow": 15,"stats_session": 1,"pos_x": 290.0,"pos_y": 158.0}}
+{"model": "records.statsrecord","pk": 896,"fields": {"arrow": 15,"stats_session": 1,"pos_x": 273.0,"pos_y": 164.0}}
+{"model": "records.statsrecord","pk": 897,"fields": {"arrow": 15,"stats_session": 1,"pos_x": 284.0,"pos_y": 164.0}}
+{"model": "records.statsrecord","pk": 898,"fields": {"arrow": 15,"stats_session": 1,"pos_x": 274.0,"pos_y": 172.0}}
+{"model": "records.statsrecord","pk": 899,"fields": {"arrow": 15,"stats_session": 1,"pos_x": 279.0,"pos_y": 169.0}}
+
+{"model": "records.statsrecord","pk": 900,"fields": {"arrow": 16,"stats_session": 1,"pos_x": 218.0,"pos_y": 332.0}}
+{"model": "records.statsrecord","pk": 901,"fields": {"arrow": 16,"stats_session": 1,"pos_x": 208.0,"pos_y": 332.0}}
+{"model": "records.statsrecord","pk": 902,"fields": {"arrow": 16,"stats_session": 1,"pos_x": 228.0,"pos_y": 332.0}}
+{"model": "records.statsrecord","pk": 903,"fields": {"arrow": 16,"stats_session": 1,"pos_x": 218.0,"pos_y": 322.0}}
+{"model": "records.statsrecord","pk": 904,"fields": {"arrow": 16,"stats_session": 1,"pos_x": 218.0,"pos_y": 342.0}}
+{"model": "records.statsrecord","pk": 905,"fields": {"arrow": 16,"stats_session": 1,"pos_x": 214.0,"pos_y": 329.0}}
+{"model": "records.statsrecord","pk": 906,"fields": {"arrow": 16,"stats_session": 1,"pos_x": 221.0,"pos_y": 328.0}}
+{"model": "records.statsrecord","pk": 907,"fields": {"arrow": 16,"stats_session": 1,"pos_x": 209.0,"pos_y": 324.0}}
+{"model": "records.statsrecord","pk": 908,"fields": {"arrow": 16,"stats_session": 1,"pos_x": 212.0,"pos_y": 326.0}}
+{"model": "records.statsrecord","pk": 909,"fields": {"arrow": 16,"stats_session": 1,"pos_x": 223.0,"pos_y": 328.0}}
+
+{"model": "records.statsrecord","pk": 910,"fields": {"arrow": 17,"stats_session": 1,"pos_x": 307.0,"pos_y": 171.0}}
+{"model": "records.statsrecord","pk": 911,"fields": {"arrow": 17,"stats_session": 1,"pos_x": 297.0,"pos_y": 171.0}}
+{"model": "records.statsrecord","pk": 912,"fields": {"arrow": 17,"stats_session": 1,"pos_x": 317.0,"pos_y": 171.0}}
+{"model": "records.statsrecord","pk": 913,"fields": {"arrow": 17,"stats_session": 1,"pos_x": 307.0,"pos_y": 161.0}}
+{"model": "records.statsrecord","pk": 914,"fields": {"arrow": 17,"stats_session": 1,"pos_x": 307.0,"pos_y": 181.0}}
+{"model": "records.statsrecord","pk": 915,"fields": {"arrow": 17,"stats_session": 1,"pos_x": 298.0,"pos_y": 181.0}}
+{"model": "records.statsrecord","pk": 916,"fields": {"arrow": 17,"stats_session": 1,"pos_x": 316.0,"pos_y": 181.0}}
+{"model": "records.statsrecord","pk": 917,"fields": {"arrow": 17,"stats_session": 1,"pos_x": 305.0,"pos_y": 172.0}}
+{"model": "records.statsrecord","pk": 918,"fields": {"arrow": 17,"stats_session": 1,"pos_x": 313.0,"pos_y": 161.0}}
+{"model": "records.statsrecord","pk": 919,"fields": {"arrow": 17,"stats_session": 1,"pos_x": 313.0,"pos_y": 173.0}}
+
+{"model": "records.statsrecord","pk": 920,"fields": {"arrow": 18,"stats_session": 1,"pos_x": 305.0,"pos_y": 258.0}}
+{"model": "records.statsrecord","pk": 921,"fields": {"arrow": 18,"stats_session": 1,"pos_x": 295.0,"pos_y": 258.0}}
+{"model": "records.statsrecord","pk": 922,"fields": {"arrow": 18,"stats_session": 1,"pos_x": 315.0,"pos_y": 258.0}}
+{"model": "records.statsrecord","pk": 923,"fields": {"arrow": 18,"stats_session": 1,"pos_x": 305.0,"pos_y": 248.0}}
+{"model": "records.statsrecord","pk": 924,"fields": {"arrow": 18,"stats_session": 1,"pos_x": 305.0,"pos_y": 268.0}}
+{"model": "records.statsrecord","pk": 925,"fields": {"arrow": 18,"stats_session": 1,"pos_x": 314.0,"pos_y": 260.0}}
+{"model": "records.statsrecord","pk": 926,"fields": {"arrow": 18,"stats_session": 1,"pos_x": 296.0,"pos_y": 249.0}}
+{"model": "records.statsrecord","pk": 927,"fields": {"arrow": 18,"stats_session": 1,"pos_x": 305.0,"pos_y": 258.0}}
+{"model": "records.statsrecord","pk": 928,"fields": {"arrow": 18,"stats_session": 1,"pos_x": 310.0,"pos_y": 265.0}}
+{"model": "records.statsrecord","pk": 929,"fields": {"arrow": 18,"stats_session": 1,"pos_x": 305.0,"pos_y": 264.0}}

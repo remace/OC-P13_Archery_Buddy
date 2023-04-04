@@ -12,6 +12,15 @@ from django.db import transaction
 from accounts.models import User
 from equipment.models.arrows import Arrow, Feathering, Tube, Nock, Tip
 from records.models import StatsRecord, StatsRecordSession
+from records.utils import (
+    calculate_barycentre,
+    calculate_convex_hull,
+    distance,
+    direction,
+    calculate_quiver,
+)
+
+from pprint import pprint
 
 
 class StatsRecordSessionTests(TestCase):
@@ -214,3 +223,92 @@ class StatsRecordTest(TestCase):
                 )
         count1 = len(StatsRecord.objects.all())
         self.assertEqual(count1, count0)
+
+
+class UtilsTest(TestCase):
+    fixtures = ["records/fixtures/data.jsonl"]
+
+    def test_calculate_barycentre_with_StatsRecords(self):
+        point1 = StatsRecord.objects.get(pk=801)
+        point2 = StatsRecord.objects.get(pk=802)
+        points = [point1, point2]
+        self.assertEqual(calculate_barycentre(points), [147.0, 225.0])
+
+    def test_calculate_barycentre_with_points(self):
+        p1 = StatsRecord.objects.get(pk=801)
+        point1 = {"arrow_id": p1.pk, "pos_x": p1.pos_x, "pos_y": p1.pos_y}
+        p2 = StatsRecord.objects.get(pk=802)
+        point2 = {"arrow_id": p2.pk, "pos_x": p2.pos_x, "pos_y": p2.pos_y}
+        points = [point1, point2]
+        self.assertEqual(calculate_barycentre(points), [147.0, 225.0])
+
+    def test_direction(self):
+        p1 = StatsRecord.objects.get(pk=802)
+        point1 = {"arrow_id": p1.pk, "pos_x": p1.pos_x, "pos_y": p1.pos_y}
+        p2 = StatsRecord.objects.get(pk=800)
+        point2 = {"arrow_id": p2.pk, "pos_x": p2.pos_x, "pos_y": p2.pos_y}
+        p3 = StatsRecord.objects.get(pk=801)
+        point3 = {"arrow_id": p3.pk, "pos_x": p3.pos_x, "pos_y": p3.pos_y}
+        p4 = StatsRecord.objects.get(pk=807)
+        point4 = {"arrow_id": p4.pk, "pos_x": p4.pos_x, "pos_y": p4.pos_y}
+
+        self.assertEqual(direction(point1, point2, point3), 0)  # vecteurs parallèles
+        self.assertGreater(direction(point2, point1, point4), 0)
+        self.assertGreater(0, direction(point1, point2, point4))
+
+    def test_calculate_convex_hull(self):
+        points = [
+            {"pos_x": record.pos_x, "pos_y": record.pos_y, "arrow_id": record.pk}
+            for record in StatsRecord.objects.filter(pk__gte=920)
+        ]
+
+        true_convex_hull = [
+            points[1],
+            points[4],
+            points[8],
+            points[5],
+            points[2],
+            points[3],
+            points[6],
+        ]
+
+        self.assertEqual(
+            calculate_convex_hull(points),
+            true_convex_hull,
+        )
+
+    def test_ch(self):
+        points = [
+            {"pos_x": record.pos_x, "pos_y": record.pos_y, "arrow_id": record.pk - 919}
+            for record in StatsRecord.objects.filter(pk__gte=920).exclude(pk=921)
+        ]
+
+        true_convex_hull = [
+            points[5],
+            points[3],
+            points[7],
+            points[4],
+            points[1],
+            points[2],
+        ]
+
+        self.assertEqual(
+            calculate_convex_hull(points),
+            true_convex_hull,
+        )
+
+    def test_distance(self):
+        p1 = StatsRecord.objects.get(pk=920)
+        point1 = {"arrow_id": p1.pk, "pos_x": p1.pos_x, "pos_y": p1.pos_y}
+        p2 = StatsRecord.objects.get(pk=921)
+        point2 = {"arrow_id": p2.pk, "pos_x": p2.pos_x, "pos_y": p2.pos_y}
+
+        self.assertEqual(distance(point1, point2), 10.0)
+
+    def test_calculate_quiver(self):
+        points = [
+            {"pos_x": record.pos_x, "pos_y": record.pos_y, "arrow_id": record.pk - 919}
+            for record in StatsRecord.objects.filter(pk__gte=920)
+        ]
+        quiver = calculate_quiver(points)
+        pass
