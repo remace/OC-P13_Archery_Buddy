@@ -1,19 +1,18 @@
 {% extends "core/base.html" %}
-
 {% block content %}
     <h2>Sessions de statistiques</h2>
     <ul>
         {% for stats_session in stats_sessions %}
-            <li class="h-full">{{stats_session.id}} - 
-                {{stats_session.session_datetime | date:'Y-m-d H:i'}} - 
-                {{stats_session.get_conditions_display}} - 
-                {{stats_session.distance}}m 
-                <a href={% url 'stats_session_detail' stats_session.id %}>détails</a> 
+            <li class="h-full">
+                {{ stats_session.id }} -
+                {{ stats_session.session_datetime | date:'Y-m-d H:i' }} -
+                {{ stats_session.get_conditions_display }} -
+                {{ stats_session.distance }}m
+                <a href={% url 'stats_session_detail' stats_session.id %}>détails</a>
                 <a href={% url 'stats_session_delete' stats_session.id %}>supprimer</a>
-                <a href={% url 'stats_result' stats_session.id%}>Résultats</a>
-            </li> 
+                <a href={% url 'stats_result' stats_session.id %}>Résultats</a>
+            </li>
         {% endfor %}
     </ul>
-    <a href="{% url 'stats_session_create' %}"> créer une session de statistiques</a>
-    
+    <a href="{% url 'stats_session_create' %}">créer une session de statistiques</a>
 {% endblock content %}

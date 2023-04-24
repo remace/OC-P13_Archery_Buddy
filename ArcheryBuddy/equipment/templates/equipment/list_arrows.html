@@ -1,31 +1,48 @@
-{% extends 'core/base.html' %}
-
+{% extends "core/base.html" %}
 {% block content %}
-<h1>Liste des flèches</h1>
-
-{% if arrows %}
-<table>
-    <tr>
-        <th>identifiant</th>
-        <th>marque de tube</th>
-        <th>couleurs d'empennage</th>
-        <th>poids de pointe</th>
-        <th>lien</th>
-        <th>cassé?</th>
-        <th>supprimer?</th>
-    </tr>
-    {% for arrow in arrows%}
-    <tr>
-        <td>{{arrow.id}}</td>
-        <td>{{arrow.tube.brand}}</td>
-        <td>{{arrow.feathering.cock_color}}/{{arrow.feathering.color}}</td>
-        <td>{{arrow.tip.weight}}</td>
-        <td><a href={% url 'arrows_detail' arrow.id %}>détails</a></td>
-        <td><a href={% url 'arrows_update' arrow.id %}>déclarer cassée</a></td>
-        <td><a href={% url 'arrows_delete' arrow.id %}>supprimer</a></td>
-    </tr>
-    {% endfor %}
-</table>
-{% endif %}
-<a href={% url 'arrows_create'%}>créer des flèches</a>
+    <h1 class="mb-8 text-2xl text-center font-bold">Liste des flèches</h1>
+    {% if arrows %}
+        <div class="relative overflow-x-auto">
+            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">Identifiant</th>
+                        <th scope="col" class="px-6 py-3">Marque de tube</th>
+                        <th scope="col" class="px-6 py-3">Couleurs d'empennage</th>
+                        <th scope="col" class="px-6 py-3">Poids de pointe</th>
+                        <th scope="col" class="px-6 py-3">Lien</th>
+                        <th scope="col" class="px-6 py-3">Cassée?</th>
+                        <th scope="col" class="px-6 py-3">Supprimer?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for arrow in arrows %}
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <th scope="row"
+                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                {{ arrow.id }}
+                            </th>
+                            <td class="px-6 py-4">{{ arrow.tube.brand }}</td>
+                            <td class="px-6 py-4">{{ arrow.feathering.cock_color }}/{{ arrow.feathering.color }}</td>
+                            <td class="px-6 py-4">{{ arrow.tip.weight }}</td>
+                            <td class="px-6 py-4">
+                                <a class="underline text-blue-700"
+                                   href="{% url 'arrows_detail' arrow.id %}">détails</a>
+                            </td>
+                            <td class="px-6 py-4">
+                                <a class="underline text-orange-500"
+                                   href="{% url 'arrows_update' arrow.id %}">déclarer cassée</a>
+                            </td>
+                            <td class="px-6 py-4">
+                                <a class="underline text-red-500"
+                                   href="{% url 'arrows_delete' arrow.id %}">supprimer</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+    <a class="my-8 text-center block cursor-pointer bg-violet-700 hover:bg-violet-900 font-bold py-2 px-4 rounded w-full"
+       href="{% url 'arrows_create' %}">créer des flèches</a>
 {% endblock content %}
