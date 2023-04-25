@@ -1,9 +1,40 @@
 {% extends "core/base.html" %}
-
 {% block content %}
-    <ul>
-        {% for practice_session in practice_sessions %}
-            <li>{{practice_session.id}} - {{practice_session.session_datetime | date:'Y-m-d H:i'}} - {{practice_session.get_conditions_display}} - {{practice_session.distance}}m <a href={% url 'practice_detail' practice_session.id %}>détails</a> <a href={% url 'practice_delete' practice_session.id %}>supprimer</a></li> 
-        {% endfor %}
-    </ul>
+    <div class="relative overflow-x-auto">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3">Identifiant</th>
+                    <th scope="col" class="px-6 py-3">date/heure</th>
+                    <th scope="col" class="px-6 py-3">interieur/exterieur</th>
+                    <th scope="col" class="px-6 py-3">distance</th>
+                    <th scope="col" class="px-6 py-3">lien</th>
+                    <th scope="col" class="px-6 py-3">supprimer</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for session in practice_sessions %}
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <th scope="row"
+                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{ session.id }}
+                        </th>
+                        <td class="px-6 py-4">{{ session.session_datetime | date:'Y-m-d H:i' }}</td>
+                        <td class="px-6 py-4">{{ session.get_conditions_display }}</td>
+                        <td class="px-6 py-4">{{ session.distance }}m</td>
+                        <td class="px-6 py-4">
+                            <a class="underline text-blue-700"
+                               href="{% url 'practice_detail' session.id %}">détails</a>
+                        </td>
+                        <td class="px-6 py-4">
+                            <a class="underline text-red-500"
+                               href="{% url 'practice_delete' session.id %}">supprimer la session</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <a class="my-8 text-center block cursor-pointer bg-violet-700 hover:bg-violet-900 font-bold py-2 px-4 rounded w-full"
+       href="{% url 'practice_create' %}">créer une session d'entrainement</a>
 {% endblock content %}
