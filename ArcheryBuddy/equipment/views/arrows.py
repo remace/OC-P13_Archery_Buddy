@@ -80,7 +80,7 @@ def create(request):
                 feathering=feathering,
                 tip=tip,
                 tube=tube,
-                not_broken=form.cleaned_data.get("not_broken"),
+                not_broken=form.cleaned_data.get("not_broken", True),
             )
         return redirect(arrows_list)
 

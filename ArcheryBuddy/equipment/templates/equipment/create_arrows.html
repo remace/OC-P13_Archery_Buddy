@@ -1,132 +1,205 @@
-{% extends 'core/base.html' %}
-
+{% extends "core/base.html" %}
 {% block content %}
-
-<h1>Création de flèches</h1>
-<form action="{% url 'arrows_create' %}" method="post">
-    {% csrf_token %}
-    <div>
-        <h2>Encoche</h2>
-        
-        <div class="fieldWrapper">
-            {{ form.nock_brand.errors }}
-            {{ form.nock_brand.label_tag }}
-            {{ form.nock_brand }}
+    <h1 class="mb-8 text-2xl text-center font-bold">Création de flèches</h1>
+    <form action="{% url 'arrows_create' %}" method="post">
+        {% csrf_token %}
+        <div class="flex flex-wrap gap-4">
+            <div class="px-4 py-6 border border-1 border-grey-300 rounded">
+                <h2 class="mb-4 text-xl text-center font-bold">Empennage</h2>
+                <div class="fieldWrapper">
+                    {{ form.feathering_laterality.errors }}
+                    {{ form.feathering_laterality.label_tag }}
+                    {{ form.feathering_laterality }}
+                </div>
+                <div class="fieldWrapper">
+                    {{ form.feathering_type.errors }}
+                    {{ form.feathering_type.label_tag }}
+                    {{ form.feathering_type }}
+                </div>
+                <div class="fieldWrapper">
+                    {{ form.feathering_brand.errors }}
+                    {{ form.feathering_brand.label_tag }}
+                    <input type="text"
+                           name="{{ form.feathering_brand.id_for_label }}"
+                           id="{{ form.feathering_brand.id_for_label }}"
+                           placeholder="{{ form.feathering_brand.label }}"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
+                </div>
+                <div class="fieldWrapper">
+                    {{ form.feathering_color.errors }}
+                    {{ form.feathering_color.label_tag }}
+                    <input type="text"
+                           name="{{ form.feathering_color.id_for_label }}"
+                           id="{{ form.feathering_color.id_for_label }}"
+                           placeholder="{{ form.feathering_color.label }}"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
+                </div>
+                <div class="fieldWrapper">
+                    {{ form.feathering_cock_color.errors }}
+                    {{ form.feathering_cock_color.label_tag }}
+                    <input type="text"
+                           name="{{ form.feathering_cock_color.id_for_label }}"
+                           id="{{ form.feathering_cock_color.id_for_label }}"
+                           placeholder="{{ form.feathering_cock_color.label }}"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
+                </div>
+                <div class="fieldWrapper">
+                    {{ form.feathering_size.errors }}
+                    {{ form.feathering_size.label_tag }}
+                    <input type="text"
+                           name="{{ form.feathering_size.id_for_label }}"
+                           id="{{ form.feathering_size.id_for_label }}"
+                           placeholder="{{ form.feathering_size.label }}"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
+                </div>
+                <div class="fieldWrapper">
+                    {{ form.feathering_angle.errors }}
+                    {{ form.feathering_angle.label_tag }}
+                    <input type="number"
+                           name="{{ form.feathering_angle.id_for_label }}"
+                           id="{{ form.feathering_angle.id_for_label }}"
+                           placeholder="{{ form.feathering_angle.label }}"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
+                </div>
+                <div class="fieldWrapper">
+                    {{ form.feathering_to_nock_distance.errors }}
+                    {{ form.feathering_to_nock_distance.label_tag }}
+                    <input type="number"
+                           name="{{ form.feathering_to_nock_distance.id_for_label }}"
+                           id="{{ form.feathering_to_nock_distance.id_for_label }}"
+                           placeholder="{{ form.feathering_to_nock_distance.label }}"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
+                </div>
+            </div>
+            <div class="px-4 py-6 border border-1 border-grey-300 rounded">
+                <h3 class="mb-4 text-xl text-center font-bold">Tube</h3>
+                <div class="fieldWrapper">
+                    {{ form.tube_brand.errors }}
+                    {{ form.tube_brand.label_tag }}
+                    <input type="text"
+                           name="{{ form.tube_brand.id_for_label }}"
+                           id="{{ form.tube_brand.id_for_label }}"
+                           placeholder="{{ form.tube_brand.label }}"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
+                </div>
+                <div class="fieldWrapper">
+                    {{ form.tube_material.errors }}
+                    {{ form.tube_material.label_tag }}
+                    {{ form.tube_material }}
+                </div>
+                <div class="fieldWrapper">
+                    {{ form.tube_length.errors }}
+                    {{ form.tube_length.label_tag }}
+                    <input type="number"
+                           name="{{ form.tube_length.id_for_label }}"
+                           id="{{ form.tube_length.id_for_label }}"
+                           placeholder="{{ form.tube_length.label }}"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
+                </div>
+                <div class="fieldWrapper">
+                    {{ form.tube_spine.errors }}
+                    {{ form.tube_spine.label_tag }}
+                    <input type="number"
+                           name="{{ form.tube_spine.id_for_label }}"
+                           id="{{ form.tube_spine.id_for_label }}"
+                           placeholder="{{ form.tube_spine.label }}"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
+                </div>
+                <div class="fieldWrapper">
+                    {{ form.tube_diameter.errors }}
+                    {{ form.tube_diameter.label_tag }}
+                    <input type="number"
+                           name="{{ form.tube_diameter.id_for_label }}"
+                           id="{{ form.tube_diameter.id_for_label }}"
+                           placeholder="{{ form.tube_diameter.label }}"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
+                </div>
+            </div>
+            <div class="px-4 py-6 border border-1 border-grey-300 rounded">
+                <h2 class="mb-4 text-xl text-center font-bold">Encoche</h2>
+                <div class="fieldWrapper">
+                    {{ form.nock_brand.errors }}
+                    {{ form.nock_brand.label_tag }}
+                    <input type="text"
+                           name="{{ form.nock_brand.id_for_label }}"
+                           id="{{ form.nock_brand.id_for_label }}"
+                           placeholder="{{ form.nock_brand.label }}"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
+                </div>
+                <div class="fieldWrapper">
+                    {{ form.nock_color.errors }}
+                    {{ form.nock_color.label_tag }}
+                    <input type="text"
+                           name="{{ form.nock_color.id_for_label }}"
+                           id="{{ form.nock_color.id_for_label }}"
+                           placeholder="{{ form.nock_color.label }}"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
+                </div>
+                <div class="fieldWrapper">
+                    {{ form.nock_size.errors }}
+                    {{ form.nock_size.label_tag }}
+                    <input type="text"
+                           name="{{ form.nock_size.id_for_label }}"
+                           id="{{ form.nock_size.id_for_label }}"
+                           placeholder="{{ form.nock_size.label }}"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
+                </div>
+                <div class="fieldWrapper">
+                    {{ form.uses_nock_pin.errors }}
+                    {{ form.uses_nock_pin.label_tag }}
+                    <input type="checkbox"
+                           name="{{ form.uses_nock_pin.id_for_label }}"
+                           id="{{ form.uses_nock_pin.id_for_label }}" />
+                </div>
+            </div>
+            <div class="px-4 py-6 border border-1 border-grey-300 rounded">
+                <h2 class="mb-4 text-xl text-center font-bold">Pointe</h2>
+                <div class="fieldWrapper">
+                    {{ form.tip_brand.errors }}
+                    {{ form.tip_brand.label_tag }}
+                    <input type="text"
+                           name="{{ form.tip_brand.id_for_label }}"
+                           id="{{ form.tip_brand.id_for_label }}"
+                           placeholder="{{ form.tip_brand.label }}"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
+                </div>
+                <div class="fieldWrapper">
+                    {{ form.tip_profile.errors }}
+                    {{ form.tip_profile.label_tag }}
+                    <input type="text"
+                           name="{{ form.tip_profile.id_for_label }}"
+                           id="{{ form.tip_profile.id_for_label }}"
+                           placeholder="{{ form.tip_profile.label }}"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
+                </div>
+                <div class="fieldWrapper">
+                    {{ form.tip_weight.errors }}
+                    {{ form.tip_weight.label_tag }}
+                    <input type="number"
+                           name="{{ form.tip_weight.id_for_label }}"
+                           id="{{ form.tip_weight.id_for_label }}"
+                           placeholder="{{ form.tip_weight.label }}"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
+                </div>
+            </div>
         </div>
-        
-        <div class="fieldWrapper">
-            {{ form.nock_color.errors }}
-            {{ form.nock_color.label_tag }}
-            {{ form.nock_color }}
+        <div class="py-4 flex flex-col items-center">
+            <div class="fieldWrapper block py-4">
+                {{ form.number_of_arrows.errors }}
+                {{ form.number_of_arrows.label_tag }}
+                {{ form.number_of_arrows }}
+            </div>
+            <div class="fieldWrapper block py-4">
+                {{ form.not_broken.errors }}
+                {{ form.not_broken.label_tag }}
+                <input type="checkbox"
+                       name="{{ form.not_broken.id_for_label }}"
+                       id="{{ form.not_broken.id_for_label }}"
+                       checked />
+            </div>
+            <input class=" text-center block cursor-pointer bg-violet-700 hover:bg-violet-900 font-bold py-2 px-4 rounded w-full"
+                   type="submit"
+                   value="créer">
         </div>
-        <div class="fieldWrapper">
-            {{ form.nock_size.errors }}
-            {{ form.nock_size.label_tag }}
-            {{ form.nock_size }}
-        </div>
-        <div class="fieldWrapper">
-            {{ form.uses_nock_pin.errors }}
-            {{ form.uses_nock_pin.label_tag }}
-            {{ form.uses_nock_pin }}
-        </div>
-    </div>
-    <hr/>
-    <h2>Empennage</h2>
-    <div class="fieldWrapper">
-        {{ form.feathering_laterality.errors }}
-        {{ form.feathering_laterality.label_tag }}
-        {{ form.feathering_laterality }}
-    </div>
-    <div class="fieldWrapper">
-        {{ form.feathering_type.errors }}
-        {{ form.feathering_type.label_tag }}
-        {{ form.feathering_type }}
-    </div>
-    <div class="fieldWrapper">
-        {{ form.feathering_brand.errors }}
-        {{ form.feathering_brand.label_tag }}
-        {{ form.feathering_brand }}
-    </div>
-    <div class="fieldWrapper">
-        {{ form.feathering_color.errors }}
-        {{ form.feathering_color.label_tag }}
-        {{ form.feathering_color }}
-    </div>
-    <div class="fieldWrapper">
-        {{ form.feathering_cock_color.errors }}
-        {{ form.feathering_cock_color.label_tag }}
-        {{ form.feathering_cock_color }}
-    </div>
-    <div class="fieldWrapper">
-        {{ form.feathering_size.errors }}
-        {{ form.feathering_size.label_tag }}
-        {{ form.feathering_size }}
-    </div>
-    <div class="fieldWrapper">
-        {{ form.feathering_angle.errors }}
-        {{ form.feathering_angle.label_tag }}
-        {{ form.feathering_angle }}
-    </div>
-    <div class="fieldWrapper">
-        {{ form.feathering_to_nock_distance.errors }}
-        {{ form.feathering_to_nock_distance.label_tag }}
-        {{ form.feathering_to_nock_distance }}
-    </div>
-    <hr/>
-    <h2>Pointe</h2>
-    <div class="fieldWrapper">
-        {{ form.tip_brand.errors }}
-        {{ form.tip_brand.label_tag }}
-        {{ form.tip_brand }}
-    </div>    
-    <div class="fieldWrapper">
-        {{ form.tip_profile.errors }}
-        {{ form.tip_profile.label_tag }}
-        {{ form.tip_profile }}
-    </div>    
-    <div class="fieldWrapper">
-        {{ form.tip_weight.errors }}
-        {{ form.tip_weight.label_tag }}
-        {{ form.tip_weight }}
-    </div>
-    <hr/>
-    <h3>Tube</h3>
-    <div class="fieldWrapper">
-        {{ form.tube_brand.errors }}
-        {{ form.tube_brand.label_tag }}
-        {{ form.tube_brand }}
-    </div>    
-    <div class="fieldWrapper">
-        {{ form.tube_material.errors }}
-        {{ form.tube_material.label_tag }}
-        {{ form.tube_material }}
-    </div>    
-    <div class="fieldWrapper">
-        {{ form.tube_length.errors }}
-        {{ form.tube_length.label_tag }}
-        {{ form.tube_length }}
-    </div>    
-    <div class="fieldWrapper">
-        {{ form.tube_spine.errors }}
-        {{ form.tube_spine.label_tag }}
-        {{ form.tube_spine }}
-    </div>    
-    <div class="fieldWrapper">
-        {{ form.tube_diameter.errors }}
-        {{ form.tube_diameter.label_tag }}
-        {{ form.tube_diameter }}
-    </div>
-    <hr/>
-    <div class="fieldWrapper">
-        {{ form.number_of_arrows.errors }}
-        {{ form.number_of_arrows.label_tag }}
-        {{ form.number_of_arrows }}
-    </div>
-    <div class="fieldWrapper">
-        {{ form.not_broken.errors }}
-        {{ form.not_broken.label_tag }}
-        {{ form.not_broken }}
-    </div>
-    <input type="submit" value="créer">
-</form>
+    </form>
 {% endblock content %}
