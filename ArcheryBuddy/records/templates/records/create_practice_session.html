@@ -1,6 +1,6 @@
 {% extends "core/base.html" %}
 {% block content %}
-    <form action="#" method="post">
+    <form action="{% url 'practice_create' %}" method="post">
         {% csrf_token %}
         <div class="flex flex-wrap justify-center items-center">
             <div class="px-4 py-6 border border-1 border-grey-300 rounded">
@@ -14,7 +14,7 @@
                     {{ form.distance.errors }}
                     {{ form.distance.label_tag }}
                     <input type="number"
-                           name="{{ form.distance.id_for_label }}"
+                           name="{{ form.distance.label }}"
                            id="{{ form.distance.id_for_label }}"
                            placeholder="{{ form.distance.label }}"
                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
@@ -23,7 +23,7 @@
                     {{ form.number_of_volleys.errors }}
                     {{ form.number_of_volleys.label_tag }}
                     <input type="number"
-                           name="{{ form.number_of_volleys.id_for_label }}"
+                           name="{{ form.number_of_volleys.label }}"
                            id="{{ form.number_of_volleys.id_for_label }}"
                            placeholder="{{ form.number_of_volleys.label }}"
                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
@@ -32,7 +32,7 @@
                     {{ form.max_arrows_in_volley.errors }}
                     {{ form.max_arrows_in_volley.label_tag }}
                     <input type="number"
-                           name="{{ form.max_arrows_in_volley.id_for_label }}"
+                           name="{{ form.max_arrows_in_volley.label }}"
                            id="{{ form.max_arrows_in_volley.id_for_label }}"
                            placeholder="{{ form.max_arrows_in_volley.label }}"
                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
@@ -41,14 +41,14 @@
                     {{ form.comment.errors }}
                     {{ form.comment.label_tag }}
                     <input type="text"
-                           name="{{ form.comment.id_for_label }}"
+                           name="{{ form.comment.label }}"
                            id="{{ form.comment.id_for_label }}"
                            placeholder="{{ form.comment.label }}"
                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
                 </div>
                 <input class="mt-4 text-center block cursor-pointer bg-violet-700 hover:bg-violet-900 font-bold py-2 px-4 rounded w-full"
                        type="submit"
-                       value="créer">
+                       value="Créer la session" />
             </div>
         </div>
     </form>
