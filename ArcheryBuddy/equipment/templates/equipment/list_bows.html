@@ -1,77 +1,122 @@
-{% extends 'core/base.html' %}
-{% load static%}
+{% extends "core/base.html" %}
+{% load static %}
 {% block content %}
-
-<a href={% url 'bows_create' %}>créer un arc</a>
-
-<h2>Barebows</h2>
-<table>
-    <thead>
-        <tr>
-            <th>id</th>
-            <th>poignée</th>
-            <th>branches</th>
-            <th>modifier</th>
-            <th>supprimer</th>
-        </tr>
-    </thead>
-    <tbody>
-        {%for bow in barebows %}
-        <tr>
-            <td><a href="{% url 'bows_detail' "barebow" bow.id %}" >{{bow.id}}</a></td>
-            <td>{{bow.riser.brand}} {{bow.riser.size}} {{bow.riser.color}}</td>
-            <td>{{bow.limbs.brand}} {{bow.limbs.power}}@{{bow.limbs.size}}</td>
-            <td><a href="{% url 'bows_update' bow_type="barebow" bow_id=bow.id %}" >modifier</a></td>
-            <td><a href="{% url 'bows_delete' bow_type="barebow" bow_id=bow.id %}" >supprimer</a></td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
-<h2>Olympique</h2>
-<table>
-    <thead>
-        <tr>
-            <th>id</th>
-            <th>poignée</th>
-            <th>branches</th>
-            <th>modifier</th>
-            <th>supprimer</th>
-        </tr>
-    </thead>
-    <tbody>
-        {%for bow in olympics %}
-        <tr>
-            <td><a href="{% url 'bows_detail' "olympic" bow.id %}" >{{bow.id}}</a></td>
-            <td>{{bow.barebow.riser.brand}} {{bow.barebow.riser.size}} {{bow.barebow.riser.color}}</td>
-            <td>{{bow.barebow.limbs.brand}} {{bow.barebow.limbs.power}}@{{bow.barebow.limbs.size}}</td>
-            <td><a href="{% url 'bows_update' bow_type="olympic" bow_id=bow.id %}" >modifier</a></td>
-            <td><a href="{% url 'bows_delete' bow_type="olympic" bow_id=bow.id %}" >supprimer</a></td>    
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
-<h2>Compound</h2>
-<table>
-    <thead>
-        <tr>
-            <th>id</th>
-            <th>marque</th>
-            <th>modifier</th>
-            <th>supprimer</th>
-        </tr>
-    </thead>
-    <tbody>
-        {%for bow in compounds %}
-        <tr>
-            <td><a href="{% url 'bows_detail' "compound" bow.id %}" >{{bow.id}}</a></td>
-            <td>{{bow.bow_brand}}@{{bow.draw_weight}}<td>
-                <td><a href="{% url 'bows_update' bow_type="compound" bow_id=bow.id %}" >modifier</a></td>
-                <td><a href="{% url 'bows_delete' bow_type="compound" bow_id=bow.id %}" >supprimer</a></td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>    
-
+    <h1 class="mb-8 text-2xl text-center font-bold">Mes arcs</h1>
+    <h2 class="mb-4 text-xl text-center font-bold">Barebows</h2>
+    <div class="relative overflow-x-auto">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3">id</th>
+                    <th scope="col" class="px-6 py-3">poignée</th>
+                    <th scope="col" class="px-6 py-3">branches</th>
+                    <th scope="col" class="px-6 py-3">lien</th>
+                    <th scope="col" class="px-6 py-3">modifier</th>
+                    <th scope="col" class="px-6 py-3">supprimer</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for bow in barebows %}
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <th scope="row"
+                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{ bow.id }}
+                        </th>
+                        <td class="px-6 py-4">{{ bow.riser.brand }} {{ bow.riser.size }} {{ bow.riser.color }}</td>
+                        <td class="px-6 py-4">{{ bow.limbs.brand }} {{ bow.limbs.power }}@{{ bow.limbs.size }}</td>
+                        <td class="px-6 py-4">
+                            <a class="underline text-blue-700"
+                               href="{% url 'bows_detail' "barebow" bow.id %}">détails</a>
+                        </td>
+                        <td class="px-6 py-4">
+                            <a class="underline text-orange-500"
+                               href="{% url 'bows_update' bow_type="barebow" bow_id=bow.id %}">modifier</a>
+                        </td class="px-6 py-4">
+                        <td>
+                            <a class="underline text-red-500"
+                               href="{% url 'bows_delete' bow_type="barebow" bow_id=bow.id %}">supprimer</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <h2 class="mb-4 text-xl text-center font-bold">Arcs Olympiques</h2>
+    <div class="relative overflow-x-auto">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3">id</th>
+                    <th scope="col" class="px-6 py-3">poignée</th>
+                    <th scope="col" class="px-6 py-3">branches</th>
+                    <th scope="col" class="px-6 py-3">lien</th>
+                    <th scope="col" class="px-6 py-3">modifier</th>
+                    <th scope="col" class="px-6 py-3">supprimer</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for bow in olympics %}
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <th scope="row"
+                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{ bow.id }}
+                        </th>
+                        <td class="px-6 py-4">{{ bow.barebow.riser.brand }} {{ bow.barebow.riser.size }}" {{ bow.barebow.riser.color }}</td>
+                        <td class="px-6 py-4">{{ bow.barebow.limbs.brand }} {{ bow.barebow.limbs.power }}lbs@{{ bow.barebow.limbs.size }}"</td>
+                        <td class="px-6 py-4">
+                            <a class="underline text-blue-700"
+                               href="{% url 'bows_detail' "barebow" bow.id %}">détails</a>
+                        </td>
+                        <td class="px-6 py-4">
+                            <a class="underline text-orange-500"
+                               href="{% url 'bows_update' bow_type="barebow" bow_id=bow.id %}">modifier</a>
+                        </td class="px-6 py-4">
+                        <td>
+                            <a class="underline text-red-500"
+                               href="{% url 'bows_delete' bow_type="barebow" bow_id=bow.id %}">supprimer</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <h2 class="mb-4 text-xl text-center font-bold">Compound</h2>
+    <div class="relative overflow-x-auto">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3">id</th>
+                    <th scope="col" class="px-6 py-3">description</th>
+                    <th scope="col" class="px-6 py-3">lien</th>
+                    <th scope="col" class="px-6 py-3">modifier</th>
+                    <th scope="col" class="px-6 py-3">supprimer</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for bow in compounds %}
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <th scope="row"
+                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{ bow.id }}
+                        </th>
+                        <td class="px-6 py-4">{{ bow.bow_brand }}@{{ bow.draw_weight }}</td>
+                        <td class="px-6 py-4">
+                            <a class="underline text-blue-700"
+                               href="{% url 'bows_update' bow_type="compound" bow_id=bow.id %}">détails</a>
+                        </td>
+                        <td class="px-6 py-4">
+                            <a class="underline text-orange-500"
+                               href="{% url 'bows_detail' "compound" bow.id %}">modifier</a>
+                        </td>
+                        <td class="px-6 py-4">
+                            <a class="underline text-red-500"
+                               href="{% url 'bows_delete' bow_type="compound" bow_id=bow.id %}">supprimer</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <a class="my-8 text-center block cursor-pointer bg-violet-700 hover:bg-violet-900 font-bold py-2 px-4 rounded w-full"
+       href="{% url 'bows_create' %}">créer un arc</a>
 {% endblock content %}
