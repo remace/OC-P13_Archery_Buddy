@@ -8,11 +8,11 @@ class PracticeRecordSessionForm(forms.Form):
     CONDITIONS_CHOICE = [("INT", "Intérieur"), ("EXT", "Extérieur")]
     conditions = forms.ChoiceField(label="conditions", choices=CONDITIONS_CHOICE)
     distance = forms.IntegerField(label="distance")
-    comment = forms.CharField(label="comment")
+    comment = forms.CharField(label="commentaire")
 
-    number_of_volleys = forms.IntegerField(label="number_of_volleys")
+    number_of_volleys = forms.IntegerField(label="nombre de volées")
     max_arrows_in_volley = forms.IntegerField(
-        label="max_arrows_in_volley",
+        label="nombre de flèches maximum par volée",
     )
 
 
