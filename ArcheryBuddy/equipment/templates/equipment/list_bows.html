@@ -31,8 +31,8 @@
                         <td class="px-6 py-4">
                             <a class="underline text-orange-500"
                                href="{% url 'bows_update' bow_type="barebow" bow_id=bow.id %}">modifier</a>
-                        </td class="px-6 py-4">
-                        <td>
+                        </td>
+                        <td class="px-6 py-4">
                             <a class="underline text-red-500"
                                href="{% url 'bows_delete' bow_type="barebow" bow_id=bow.id %}">supprimer</a>
                         </td>
@@ -65,15 +65,15 @@
                         <td class="px-6 py-4">{{ bow.barebow.limbs.brand }} {{ bow.barebow.limbs.power }}lbs@{{ bow.barebow.limbs.size }}"</td>
                         <td class="px-6 py-4">
                             <a class="underline text-blue-700"
-                               href="{% url 'bows_detail' "barebow" bow.id %}">détails</a>
+                               href="{% url 'bows_detail' bow_type="olympic" bow_id=bow.id %}">détails</a>
                         </td>
                         <td class="px-6 py-4">
                             <a class="underline text-orange-500"
-                               href="{% url 'bows_update' bow_type="barebow" bow_id=bow.id %}">modifier</a>
-                        </td class="px-6 py-4">
-                        <td>
+                               href="{% url 'bows_update' bow_type="olympic" bow_id=bow.id %}">modifier</a>
+                        </td>
+                        <td class="px-6 py-4">
                             <a class="underline text-red-500"
-                               href="{% url 'bows_delete' bow_type="barebow" bow_id=bow.id %}">supprimer</a>
+                               href="{% url 'bows_delete' bow_type="olympic" bow_id=bow.id %}">supprimer</a>
                         </td>
                     </tr>
                 {% endfor %}
@@ -102,11 +102,11 @@
                         <td class="px-6 py-4">{{ bow.bow_brand }}@{{ bow.draw_weight }}</td>
                         <td class="px-6 py-4">
                             <a class="underline text-blue-700"
-                               href="{% url 'bows_update' bow_type="compound" bow_id=bow.id %}">détails</a>
+                               href="{% url 'bows_detail' bow_type="compound" bow_id=bow.id %}">détails</a>
                         </td>
                         <td class="px-6 py-4">
                             <a class="underline text-orange-500"
-                               href="{% url 'bows_detail' "compound" bow.id %}">modifier</a>
+                               href="{% url 'bows_update' "compound" bow.id %}">modifier</a>
                         </td>
                         <td class="px-6 py-4">
                             <a class="underline text-red-500"

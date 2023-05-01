@@ -6,8 +6,6 @@ from django.db import IntegrityError
 
 from equipment.models.bows import *
 
-from pprint import pprint
-
 
 @login_required()
 def bows_list(request):
@@ -47,7 +45,9 @@ def create(request):
                 try:
                     bf.create_bow(user=user, bow_attributes=bow_attributes)
                 except IntegrityError as integrity:
-                    messages.error(request, f"barebow: {integrity}")
+                    messages.error(
+                        request, f"Impossible de créer cet arc! erreur: {integrity}"
+                    )
                     return render(
                         request, template_name="equipment/create_bows.html", context=ctx
                     )
@@ -59,7 +59,9 @@ def create(request):
                 try:
                     obf.create_bow(user=user, bow_attributes=bow_attributes)
                 except IntegrityError as integrity:
-                    messages.error(request, f"Olympique: {integrity}")
+                    messages.error(
+                        request, f"Impossible de créer cet arc! erreur: {integrity}"
+                    )
                     return render(
                         request, template_name="equipment/create_bows.html", context=ctx
                     )
@@ -71,7 +73,9 @@ def create(request):
                 try:
                     cf.create_bow(user=user, bow_attributes=bow_attributes)
                 except IntegrityError as integrity:
-                    messages.error(request, f"compound: {integrity}")
+                    messages.error(
+                        request, f"Impossible de créer cet arc! erreur: {integrity}"
+                    )
                     return render(
                         request, template_name="equipment/create_bows.html", context=ctx
                     )
