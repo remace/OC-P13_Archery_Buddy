@@ -254,7 +254,7 @@ class CompoundScope(Scope):
     magnitude = models.FloatField(verbose_name="grossissement")
 
     def __str__(self):
-        return f"{super.__str__()} - {self.magnitude}X"
+        return f"{super().__str__()} - {self.magnitude}X"
 
     class Meta:
         verbose_name = "Viseur (Compound)"
