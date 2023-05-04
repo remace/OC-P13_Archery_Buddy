@@ -1,14 +1,12 @@
-{% extends 'core/base.html' %}
-
+{% extends "core/base.html" %}
 {% load static %}
 {% load get_score %}
-
+{% load get_field_colors %}
 {% block content %}
-
-    <div>
-    {{prs}}
+    <div class="flex flex-col justify-center item-center">
+        <h1 class="mb-4 text-2xl text-center font-bold">Entrainement du {{ prs.session_datetime|date:'j/m/Y à G:i' }}</h1>
+        <h2 class="mb-4 text-xl text-center font-bold">conditions: {{ prs.conditions }} - {{ prs.comment }}</h2>
     </div>
-    
     <form action="" method="post">
         {% csrf_token %}
         <div class="table-wrapper">
@@ -16,34 +14,56 @@
                 <thead>
                     <tr>
                         <th>volée</th>
-                        
-                        <th colspan={{prs.max_arrows_in_volley}}>feuille de marque</th>
+                        <th colspan="{{ prs.max_arrows_in_volley }}">feuille de marque</th>
                         <th>total volée</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for volley in volley_range %}
-                    <tr>
-                        <td>{{volley}}</td>
-                        {% for shot in shot_range %}
-                            <td>
-                                <input type="text" class="text-field" id="input-score-{{volley}}-{{shot}}" name="input-score-{{volley}}-{{shot}}"
-                                minlength="1" maxlength="50" size="10" placeholder="score" value={% get_score volley shot %}>
-                                <input type="hidden" class="arrow-field" id="volley-arrow-{{volley}}-{{arrow}}" name="input-arrow-{{volley}}-{{shot}}"
-                                minlength="1" maxlength="2" size="10" placeholder="arrow" value={% cycle 6 7 8 %}>
-                            </td>
-                        {% endfor %}
-                        <td id="volley-total-{{volley}}" class="volley-total"></td>
-                    </tr>
+                        <tr>
+                            <td>{{ volley }}</td>
+                            {% for shot in shot_range %}
+                                <td>
+                                    <input type="text"
+                                           class="{% get_field_colors volley shot %} text-field border border-gray-300 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                           id="input-score-{{ volley }}-{{ shot }}"
+                                           name="input-score-{{ volley }}-{{ shot }}"
+                                           minlength="1"
+                                           maxlength="50"
+                                           size="10"
+                                           placeholder="score"
+                                           value="{% get_score volley shot %}">
+                                    <input type="hidden"
+                                           class="arrow-field"
+                                           id="volley-arrow-{{ volley }}-{{ arrow }}"
+                                           name="input-arrow-{{ volley }}-{{ shot }}"
+                                           minlength="1"
+                                           maxlength="2"
+                                           size="10"
+                                           placeholder="arrow"
+                                           value="{% cycle 6 7 8 9 10 11 12 %}">
+                                </td>
+                            {% endfor %}
+                            <td id="volley-total-{{ volley }}" class="volley-total"></td>
+                        </tr>
                     {% endfor %}
-                    <tr >
-                        <td colspan='{{prs.max_arrows_in_volley|add:2}}' id="total"></td>
+                    <tr>
+                        <td class="text-right"
+                            colspan='{{ prs.max_arrows_in_volley|add:2 }}'
+                            id="total"></td>
                     </tr>
                 </tbody>
             </table>
-            <button type="submit">submit</button>
+            <button class="text-center block cursor-pointer bg-violet-700 hover:bg-violet-900 font-bold py-2 px-4 mt-4 rounded w-full"
+                    type="submit">submit</button>
         </div>
     </form>
-    
+    <div class="hidden">
+        <div class="bg-yellow-400 text-black"></div>
+        <div class="bg-red-500 text-white"></div>
+        <div class="bg-blue-400 text-black"></div>
+        <div class="bg-black text-white"></div>
+        <div class="bg-white text-black"></div>
+    </div>
     <script src={% static 'records/js/practiceRecords/automateVolleyTotal.js' %}></script>
-    {% endblock content %}
+{% endblock content %}
