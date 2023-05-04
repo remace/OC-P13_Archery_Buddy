@@ -71,3 +71,11 @@ def logout_view(request):
     logout(request)
     messages.success(request, "déconnecté avec succès")
     return redirect("login")
+
+
+@login_required(login_url="/user/login/")
+def detail_view(request):
+    user = request.user
+    ctx = {}
+    ctx["user"] = user
+    return render(request, "accounts/detail.html", context=ctx)
