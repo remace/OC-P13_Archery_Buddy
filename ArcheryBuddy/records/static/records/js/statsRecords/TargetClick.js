@@ -1,5 +1,5 @@
 const TARGET = document.querySelector("#target")
-const SHOTSLIST = document.querySelector("#shots-to-save")
+const SHOTSLIST = document.querySelector("#shots-to-save-table-body")
 
 let DIALOG = document.querySelector("dialog")
 let DIALOG_SUBMIT = document.querySelector("#modal-arrow-submit")
@@ -28,6 +28,7 @@ DIALOG_SELECT.addEventListener('change', function onSelect() {
 DIALOG_SUBMIT.addEventListener('click', function onClickSubmit(e) {
     arrow_id = e.target.value
     if (e.target.value != 'default') {
+        console.log(x, y, arrow_id)
         addPoint(x, y, arrow_id)
         addRecordToList(x, y, arrow_id)
     }
@@ -42,12 +43,12 @@ DIALOG_CANCEL.addEventListener('click', function onClickCancel() {
 function addPoint(x, y, arrow_id) {
     let newDiv = document.createElement('div')
     newDiv.classList.add("z-20")
-    newDiv.classList.add("w-2")
-    newDiv.classList.add("h-2")
+    newDiv.classList.add("w-1")
+    newDiv.classList.add("h-1")
     newDiv.classList.add("absolute")
     newDiv.classList.add(`left-[${x}px]`)
     newDiv.classList.add(`top-[${y}px]`)
-    newDiv.classList.add(`bg-black`)
+    newDiv.classList.add(`bg-green-500`)
     newDiv.classList.add(`rounded-full`)
     newDiv.style.top = `${y}px`
     newDiv.style.left = `${x}px`
@@ -56,28 +57,35 @@ function addPoint(x, y, arrow_id) {
 }
 
 function addRecordToList(x, y, arrow_id) {
-    let text = `${arrow_id} • ${x} • ${y} `
+    let idTh = document.createElement('th')
+    let content = document.createTextNode(arrow_id)
+    idTh.appendChild(content)
 
-    let newDiv = document.createElement('div')
-    newDiv.classList.add("shot-to-save")
-    let content = document.createTextNode(text)
+    idTh.classList.add("px-6")
+    idTh.classList.add("py-2")
+    idTh.classList.add("text-center")
 
-    newDiv.appendChild(content)
+    let xTd = document.createElement('td')
+    content = document.createTextNode(x)
+    xTd.appendChild(content)
+
+    xTd.classList.add("px-6")
+    xTd.classList.add("py-2")
+    xTd.classList.add("text-center")
 
 
-    /* disabled for instance */
+    let yTd = document.createElement('td')
+    content = document.createTextNode(y)
+    yTd.appendChild(content)
+    yTd.classList.add("px-6")
+    yTd.classList.add("py-2")
+    yTd.classList.add("text-center")
 
-    // newButton = document.createElement('button')
-    // newButton.innerText = "supprimer"
-    // newButton.classList.add("delete-unsaved")
-    // newButton.classList.add("cursor-pointer")
-    // newButton.classList.add("bg-red-500")
-    // newButton.classList.add("hover:bg-red-700")
-    // newButton.classList.add("font-bold")
-    // newButton.classList.add("py-2")
-    // newButton.classList.add("px-4")
-    // newButton.classList.add("rounded")
-    // newDiv.appendChild(newButton)
+    let newTr = document.createElement('tr')
+    newTr.classList.add("shot-to-save")
+    newTr.appendChild(idTh)
+    newTr.appendChild(xTd)
+    newTr.appendChild(yTd)
 
-    SHOTSLIST.appendChild(newDiv)
+    SHOTSLIST.appendChild(newTr)
 }
