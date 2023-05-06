@@ -2,7 +2,6 @@ let ARROWS = document.getElementsByClassName("arrow-container")
 
 
 function getPointFromArrow(element) {
-
     let arrow_id = element.children[0].innerText
     let pos_x = Math.round(parseFloat(element.children[1].innerText.replace(',', '.'))).toString()
     let pos_y = Math.round(parseFloat(element.children[2].innerText.replace(',', '.'))).toString()
