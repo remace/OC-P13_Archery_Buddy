@@ -8,7 +8,7 @@
         <p class="px-16 my-6 text-justify mb-4">À terme, elle devra:</p>
         <ul role="list"
             class="px-16 text-justify ml-8"
-            style='list-style-type:"\21AA   "'>
+            style="list-style-type:'\21AA   '">
             <li>Permettre à un archer de référencer son matériel (arcs et flèches)</li>
             <li>Permettre à un archer d'enregistrer ses feuilles d'entrainement "compétition fictive"</li>
             <li>
@@ -17,6 +17,6 @@
         </ul>
     </div>
     <p class="px-16 my-6 text-justify ">
-        Commencez par créer un compte, puis enregistrez votre matériel, et profitez de l'application!
+        Commencez par <a class="text-violet-700 underline" href="{% url 'register' %}">créer un compte</a>, puis enregistrez votre matériel, et profitez de l'application!
     </p>
 {% endblock content %}
