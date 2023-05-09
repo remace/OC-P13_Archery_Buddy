@@ -1,11 +1,10 @@
 {% extends "core/base.html" %}
-
-
 {% block content %}
-<h1>Créer une session de statistiques</h1>
-    <form action="#" method="POST">
+    <h1 class="my-8 text-2xl text-center font-bold">Créer une session de statistiques</h1>
+    <form action="#" method="post">
         {% csrf_token %}
-        {{form.as_p}}
-        <input type="submit" value="créer session">
+        {{ form.as_p }}
+        <button class="text-center block cursor-pointer bg-violet-700 hover:bg-violet-900 font-bold py-2 px-4 mt-4 rounded w-full"
+                type="submit">Créer session</button>
     </form>
-    {% endblock content %}
+{% endblock content %}

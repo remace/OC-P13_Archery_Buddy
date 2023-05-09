@@ -1,7 +1,7 @@
 {% extends "core/base.html" %}
 {% load static %}
 {% block content %}
-    <h1 class="mb-8 text-2xl text-center font-bold">Création d'arc</h1>
+    <h1 class="my-8 text-2xl text-center font-bold">Création d'arc</h1>
     <form method="post" action="{% url 'bows_create' %}">
         {% csrf_token %}
         <div class="flex flex-wrap gap-4">

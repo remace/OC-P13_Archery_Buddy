@@ -4,8 +4,8 @@
 {% load get_field_colors %}
 {% block content %}
     <div class="flex flex-col justify-center item-center">
-        <h1 class="mb-4 text-2xl text-center font-bold">Entrainement du {{ prs.session_datetime|date:'j/m/Y à G:i' }}</h1>
-        <h2 class="mb-4 text-xl text-center font-bold">conditions: {{ prs.conditions }} - {{ prs.comment }}</h2>
+        <h1 class="my-4 text-2xl text-center font-bold">Entrainement du {{ prs.session_datetime|date:'j/m/Y à G:i' }}</h1>
+        <h2 class="my-4 text-xl text-center font-bold">conditions: {{ prs.conditions }} - {{ prs.comment }}</h2>
     </div>
     <form action="" method="post">
         {% csrf_token %}
