@@ -1,55 +1,57 @@
 {% extends "core/base.html" %}
 {% block content %}
-    <form action="{% url 'practice_create' %}" method="post">
-        {% csrf_token %}
-        <div class="flex flex-wrap justify-center items-center">
-            <div class="px-4 py-6 border border-1 border-grey-300 rounded">
-                <h2 class="mb-4 text-xl text-center font-bold">créer une session d'entrainement</h2>
-                <div class="fieldWrapper">
-                    {{ form.conditions.errors }}
-                    {{ form.conditions.label_tag }}
-                    {{ form.conditions }}
+    <h1 class="my-8 text-xl text-center font-bold">Créer une session d'entrainement</h1>
+    <div class="mx-auto max-w-2xl justify-center">
+        <form action="{% url 'practice_create' %}" method="post">
+            {% csrf_token %}
+            <div class="flex flex-wrap justify-center items-center">
+                <div class="px-4 py-6 border border-1 border-grey-300 rounded">
+                    <div class="fieldWrapper">
+                        {{ form.conditions.errors }}
+                        {{ form.conditions.label_tag }}
+                        {{ form.conditions }}
+                    </div>
+                    <div class="fieldWrapper">
+                        {{ form.distance.errors }}
+                        {{ form.distance.label_tag }}
+                        <input type="number"
+                               name="{{ form.distance.label }}"
+                               id="{{ form.distance.id_for_label }}"
+                               placeholder="{{ form.distance.label }}"
+                               class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
+                    </div>
+                    <div class="fieldWrapper">
+                        {{ form.number_of_volleys.errors }}
+                        {{ form.number_of_volleys.label_tag }}
+                        <input type="number"
+                               name="{{ form.number_of_volleys.label }}"
+                               id="{{ form.number_of_volleys.id_for_label }}"
+                               placeholder="{{ form.number_of_volleys.label }}"
+                               class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
+                    </div>
+                    <div class="fieldWrapper">
+                        {{ form.max_arrows_in_volley.errors }}
+                        {{ form.max_arrows_in_volley.label_tag }}
+                        <input type="number"
+                               name="{{ form.max_arrows_in_volley.label }}"
+                               id="{{ form.max_arrows_in_volley.id_for_label }}"
+                               placeholder="{{ form.max_arrows_in_volley.label }}"
+                               class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
+                    </div>
+                    <div class="fieldWrapper">
+                        {{ form.comment.errors }}
+                        {{ form.comment.label_tag }}
+                        <input type="text"
+                               name="{{ form.comment.label }}"
+                               id="{{ form.comment.id_for_label }}"
+                               placeholder="{{ form.comment.label }}"
+                               class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
+                    </div>
+                    <input class="mt-4 text-center block cursor-pointer bg-violet-700 hover:bg-violet-900 font-bold py-2 px-4 rounded w-full"
+                           type="submit"
+                           value="Créer la session" />
                 </div>
-                <div class="fieldWrapper">
-                    {{ form.distance.errors }}
-                    {{ form.distance.label_tag }}
-                    <input type="number"
-                           name="{{ form.distance.label }}"
-                           id="{{ form.distance.id_for_label }}"
-                           placeholder="{{ form.distance.label }}"
-                           class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
-                </div>
-                <div class="fieldWrapper">
-                    {{ form.number_of_volleys.errors }}
-                    {{ form.number_of_volleys.label_tag }}
-                    <input type="number"
-                           name="{{ form.number_of_volleys.label }}"
-                           id="{{ form.number_of_volleys.id_for_label }}"
-                           placeholder="{{ form.number_of_volleys.label }}"
-                           class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
-                </div>
-                <div class="fieldWrapper">
-                    {{ form.max_arrows_in_volley.errors }}
-                    {{ form.max_arrows_in_volley.label_tag }}
-                    <input type="number"
-                           name="{{ form.max_arrows_in_volley.label }}"
-                           id="{{ form.max_arrows_in_volley.id_for_label }}"
-                           placeholder="{{ form.max_arrows_in_volley.label }}"
-                           class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
-                </div>
-                <div class="fieldWrapper">
-                    {{ form.comment.errors }}
-                    {{ form.comment.label_tag }}
-                    <input type="text"
-                           name="{{ form.comment.label }}"
-                           id="{{ form.comment.id_for_label }}"
-                           placeholder="{{ form.comment.label }}"
-                           class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" />
-                </div>
-                <input class="mt-4 text-center block cursor-pointer bg-violet-700 hover:bg-violet-900 font-bold py-2 px-4 rounded w-full"
-                       type="submit"
-                       value="Créer la session" />
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 {% endblock content %}
