@@ -9,7 +9,10 @@
                 <h2 class="mb-4 text-xl text-center font-bold">Généralités</h2>
                 <div>
                     <label for="bow_type">type d'arc</label>
-                    <select name="bow_type" id="bow_type_selector" disabled>
+                    <select class="bg-gray-50 block w-full pl-4 my-4 text-field border border-gray-300 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                            name="bow_type"
+                            id="bow_type_selector"
+                            disabled>
                         <option value="barebow" {% if bow_type == "barebow" %}selected{% endif %}>Barebow</option>
                         <option value="olympic" {% if bow_type == "olympic" %}selected{% endif %}>Arc Olympique</option>
                         <option value="compound"{% if bow_type == "compound" %} selected {% endif %}>Arc à Poulies</option>
@@ -27,7 +30,9 @@
                 </div>
                 <div>
                     <label for="laterality">latéralité</label>
-                    <select name="laterality" id="laterality">
+                    <select class="bg-gray-50 block w-full pl-4 my-4 text-field border border-gray-300 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                            name="laterality"
+                            id="laterality">
                         <option value="R" {% if bow.laterality == "R" %}selected{% endif %}>droitier</option>
                         <option value="L" {% if bow.laterality == "L" %}selected{% endif %}>gaucher</option>
                     </select>
@@ -121,7 +126,9 @@
                     </div>
                     <div>
                         <label for="material">Matériau</label>
-                        <select name="material" id="material">
+                        <select class="bg-gray-50 block w-full pl-4 my-4 text-field border border-gray-300 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                name="material"
+                                id="material">
                             <option value="8125"
                                     {% if bow.string.material == "8125" %}selected{% endif %}>8125</option>
                             <option value="DACRON"
@@ -156,7 +163,9 @@
                     </div>
                     <div>
                         <label for="rest_type">type:</label>
-                        <select name="rest_type" id="rest_type">
+                        <select class="bg-gray-50 block w-full pl-4 my-4 text-field border border-gray-300 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                name="rest_type"
+                                id="rest_type">
                             <option value="SM"
                                     {% if bow.arrow_rest.rest_type == "SM" %}selected{% endif %}>
                                 Magnétique Court
@@ -348,7 +357,7 @@
                 </div>
                 <div>
                     <label for="material">Matériau</label>
-                    <select name="material" id="material">
+                    <select class="bg-gray-50 block w-full pl-4 my-4 text-field border border-gray-300 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" name="material" id="material">
                         <option value="8125"
                                 {% if bow.barebow.string.material == "8125" %}selected{% endif %}>8125</option>
                         <option value="DACRON"
@@ -386,7 +395,7 @@
                 </div>
                 <div>
                     <label for="rest_type">type de repose-flèches</label>
-                    <select name="rest_type" id="rest_type">
+                    <select class="bg-gray-50 block w-full pl-4 my-4 text-field border border-gray-300 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" name="rest_type" id="rest_type">
                         <option value="SM"
                                 {% if bow.arrow_rest.rest_type == "SM" %}selected{% endif %}>Magnétique Court</option>
                         <option value="LM"
@@ -593,7 +602,7 @@
                     </div>
                     <div>
                         <label for="rest_type">type:</label>
-                        <select name="rest_type" id="rest_type">
+                        <select class="bg-gray-50 block w-full pl-4 my-4 text-field border border-gray-300 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" name="rest_type" id="rest_type">
                             <option value="B"
                                     {% if bow.arrow_rest.rest_type == "B" %}selected="selected"{% endif %}>
                                 Lame
@@ -653,6 +662,5 @@
     </form>
     <a class="text-center block cursor-pointer bg-violet-700 hover:bg-violet-900 font-bold py-2 px-4 mt-4 rounded w-full"
        href="{% url 'bows_list' %}">Retour à la Liste des arcs</a>
-    <div>{{ bow.brace_height }}</div>
     <script src="{% static 'equipment/js/FormSelector.js' %}"></script>
 {% endblock content %}

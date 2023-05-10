@@ -100,7 +100,9 @@
             <form action="" method="post">
                 {% csrf_token %}
                 {{ form.as_div }}
-                <button id="session-update" type="submit">modifier</button>
+                <button class="mt-4 py-4 cursor-pointer bg-green-500 hover:bg-green-700 font-bold py-2 px-4 rounded w-full"
+                        id="session-update"
+                        type="submit">modifier</button>
             </form>
         </div>
         <div class="hidden">

@@ -81,9 +81,8 @@ class DetailStatsSession(View):
         user = request.user
 
         srs = get_object_or_404(StatsRecordSession, user=user, pk=pk)
-        srs_dict = srs.__dict__
 
-        head_form = StatsRecordSessionForm(srs_dict, user=user)
+        head_form = StatsRecordSessionForm(srs, user=user)
 
         records = StatsRecord.objects.filter(stats_session=srs) or None
         available_arrows = srs.available_arrows.all()

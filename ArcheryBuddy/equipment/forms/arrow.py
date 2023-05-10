@@ -7,7 +7,9 @@ class ArrowForm(forms.Form):
     nock_color = forms.CharField(label="couleur", max_length=32)
     nock_size = forms.CharField(label="taille", max_length=32)
     uses_nock_pin = forms.BooleanField(
-        label="utilise un pin-nock", initial=False, required=False
+        label="utilise un pin-nock",
+        initial=False,
+        required=False,
     )
 
     # feathering
@@ -21,9 +23,23 @@ class ArrowForm(forms.Form):
     ]
 
     feathering_laterality = forms.ChoiceField(
-        label="latéralité", choices=LATERALITY_CHOICES
+        label="latéralité",
+        choices=LATERALITY_CHOICES,
+        widget=forms.Select(
+            attrs={
+                "class": "block w-full pl-4 my-4 text-field border border-gray-300 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+            },
+        ),
     )
-    feathering_type = forms.ChoiceField(label="type", choices=FEATHERING_TYPE_CHOICES)
+    feathering_type = forms.ChoiceField(
+        label="type",
+        choices=FEATHERING_TYPE_CHOICES,
+        widget=forms.Select(
+            attrs={
+                "class": "block w-full pl-4 my-4 text-field border border-gray-300 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+            },
+        ),
+    )
     feathering_brand = forms.CharField(label="marque", max_length=32)
     feathering_color = forms.CharField(label="couleur", max_length=32)
     feathering_cock_color = forms.CharField(label="couleur coq", max_length=32)
@@ -43,7 +59,15 @@ class ArrowForm(forms.Form):
         ("WOOD", "bois"),
     ]
     tube_brand = forms.CharField(label="marque", max_length=32)
-    tube_material = forms.ChoiceField(label="materiau", choices=TUBE_MATERIAL_CHOICES)
+    tube_material = forms.ChoiceField(
+        label="materiau",
+        choices=TUBE_MATERIAL_CHOICES,
+        widget=forms.Select(
+            attrs={
+                "class": "block w-full pl-4 my-4 text-field border border-gray-300 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+            },
+        ),
+    )
     tube_length = forms.FloatField(label="longueur")
     tube_spine = forms.IntegerField(label="spine")
     tube_diameter = forms.FloatField(label="diamètre exterieur")

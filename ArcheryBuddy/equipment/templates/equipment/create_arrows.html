@@ -149,7 +149,8 @@
                     {{ form.uses_nock_pin.label_tag }}
                     <input type="checkbox"
                            name="{{ form.uses_nock_pin.html_name }}"
-                           id="{{ form.uses_nock_pin.id_for_label }}" />
+                           id="{{ form.uses_nock_pin.id_for_label }}"
+                           class="text-violet-700 rounded focus:ring-violet-500 focus:border-violet-500" />
                 </div>
             </div>
             <div class="px-4 py-6 border border-1 border-grey-300 rounded">
@@ -195,6 +196,7 @@
                 <input type="checkbox"
                        name="{{ form.not_broken.html_name }}"
                        id="{{ form.not_broken.id_for_label }}"
+                       class="text-violet-700 rounded focus:ring-violet-500 focus:border-violet-500"
                        checked />
             </div>
             <input class=" text-center block cursor-pointer bg-violet-700 hover:bg-violet-900 font-bold py-2 px-4 rounded w-full"
