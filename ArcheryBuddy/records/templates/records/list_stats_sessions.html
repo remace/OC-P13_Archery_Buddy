@@ -1,19 +1,46 @@
 {% extends "core/base.html" %}
-
 {% block content %}
-    <h2>Sessions de statistiques</h2>
-    <ul>
-        {% for stats_session in stats_sessions %}
-            <li class="h-full">{{stats_session.id}} - 
-                {{stats_session.session_datetime | date:'Y-m-d H:i'}} - 
-                {{stats_session.get_conditions_display}} - 
-                {{stats_session.distance}}m 
-                <a href={% url 'stats_session_detail' stats_session.id %}>détails</a> 
-                <a href={% url 'stats_session_delete' stats_session.id %}>supprimer</a>
-                <a href={% url 'stats_result' stats_session.id%}>Résultats</a>
-            </li> 
-        {% endfor %}
-    </ul>
-    <a href="{% url 'stats_session_create' %}"> créer une session de statistiques</a>
-    
+    <h2 class="my-8 text-2xl text-center font-bold">Sessions de statistiques</h2>
+    <div class="relative overflow-x-auto">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3">Identifiant</th>
+                    <th scope="col" class="px-6 py-3">Date/Heure</th>
+                    <th scope="col" class="px-6 py-3">Interieur/Exterieur</th>
+                    <th scope="col" class="px-6 py-3">Distance</th>
+                    <th scope="col" class="px-6 py-3">Lien</th>
+                    <th scope="col" class="px-6 py-3">Résultats</th>
+                    <th scope="col" class="px-6 py-3">Supprimer</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for session in stats_sessions %}
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <th scope="row"
+                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{ session.id }}
+                        </th>
+                        <td class="px-6 py-4">{{ session.session_datetime | date:'Y-m-d H:i' }}</td>
+                        <td class="px-6 py-4">{{ session.get_conditions_display }}</td>
+                        <td class="px-6 py-4">{{ session.distance }}m</td>
+                        <td class="px-6 py-4">
+                            <a class="underline text-blue-700"
+                               href="{% url 'stats_session_detail' session.id %}">Détails</a>
+                        </td>
+                        <td class="px-6 py-4">
+                            <a class="underline text-violet-700"
+                               href="{% url 'stats_result' session.id %}">Résultats</a>
+                        </td>
+                        <td class="px-6 py-4">
+                            <a class="underline text-red-500"
+                               href="{% url 'stats_session_delete' session.id %}">Supprimer la session</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <a class="my-8 text-center block cursor-pointer bg-violet-700 hover:bg-violet-900 font-bold py-2 px-4 rounded w-full"
+       href="{% url 'stats_session_create' %}">créer une session de statistiques</a>
 {% endblock content %}

@@ -254,7 +254,7 @@ class CompoundScope(Scope):
     magnitude = models.FloatField(verbose_name="grossissement")
 
     def __str__(self):
-        return f"{super.__str__()} - {self.magnitude}X"
+        return f"{super().__str__()} - {self.magnitude}X"
 
     class Meta:
         verbose_name = "Viseur (Compound)"
@@ -501,7 +501,7 @@ class BarebowFactory:
 
 
 class OlympicBowFactory:
-    def create_bow(slef, user, bow_attributes):
+    def create_bow(self, user, bow_attributes):
         # general
         bow_power = bow_attributes.get("power")
         laterality = bow_attributes.get("laterality")
@@ -613,7 +613,6 @@ class OlympicBowFactory:
         # dampeners
         dampeners_rears = bow_attributes.get("rears_brand")
         dampeners_front = bow_attributes.get("front_brand")
-
         try:
             dampeners = Dampeners(
                 user=user,

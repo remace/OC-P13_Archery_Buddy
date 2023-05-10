@@ -1,0 +1,9 @@
+{% extends "core/base.html" %}
+{% block content %}
+    <h1 class="my-8 text-xl text-center font-bold">Profil</h1>
+    <div class="mx-16 ">
+        <p>Prénom: {{ user.first_name }}</p>
+        <p>Nom: {{ user.last_name }}</p>
+        <p>Pseudo: {{ user.pseudo }}</p>
+    </div>
+{% endblock content %}

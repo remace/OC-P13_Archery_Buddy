@@ -1,82 +1,53 @@
-{% extends 'core/base.html' %}
-
+{% extends "core/base.html" %}
 {% block content %}
-<h1>détail de la flèche {{arrow.id}}</h1>
-<div>
-    <h2>Encoche</h2>
-
-    <div class="fieldWrapper">
-        marque: {{ arrow.nock.brand }}
+    <h1 class="my-8 text-2xl text-center font-bold">détail de la flèche {{ arrow.id }}</h1>
+    <div class="flex flex-wrap justify-stretch gap-4">
+        <div class="px-4 py-6 border border-1 border-grey-300 rounded">
+            <h2 class="mb-4 text-xl text-center font-bold">Encoche</h2>
+            <div class="fieldWrapper">marque: {{ arrow.nock.brand }}</div>
+            <div class="fieldWrapper">couleur: {{ arrow.nock.color }}</div>
+            <div class="fieldWrapper">taille: {{ arrow.nock.size }}</div>
+            <div class="fieldWrapper">utilise un nock-pin{{ arrow.uses_nock_pin }}</div>
+        </div>
+        <div class="px-4 py-6 border border-1 border-grey-300 rounded">
+            <h2 class="mb-4 text-xl text-center font-bold">Empennage</h2>
+            <div class="fieldWrapper">latéralité: {{ arrow.feathering.laterality }}</div>
+            <div class="fieldWrapper">type: {{ arrow.feathering.type }}</div>
+            <div class="fieldWrapper">marque: {{ arrow.feathering.brand }}</div>
+            <div class="fieldWrapper">couleur: {{ arrow.feathering.color }}</div>
+            <div class="fieldWrapper">couleur de la plume coq:{{ arrow.feathering.cock_color }}</div>
+            <div class="fieldWrapper">taille: {{ arrow.feathering.size }}</div>
+            <div class="fieldWrapper">angle de collage: {{ arrow.feathering.angle }}</div>
+            <div class="fieldWrapper">distance à l'encoche: {{ arrow.feathering.nock_distance }}</div>
+        </div>
+        <div class="px-4 py-6 border border-1 border-grey-300 rounded">
+            <h2 class="mb-4 text-xl text-center font-bold">Pointe</h2>
+            <div class="fieldWrapper">marque: {{ arrow.tip.brand }}</div>
+            <div class="fieldWrapper">profil: {{ arrow.tip.profile }}</div>
+            <div class="fieldWrapper">masse: {{ arrow.tip.weight }}</div>
+        </div>
+        <div class="px-4 py-6 border border-1 border-grey-300 rounded">
+            <h3 class="mb-4 text-xl text-center font-bold">Tube</h3>
+            <div class="fieldWrapper">marque: {{ arrow.tube.brand }}</div>
+            <div class="fieldWrapper">matériau: {{ arrow.tube.material }}</div>
+            <div class="fieldWrapper">longueur: {{ arrow.tube.tube_length }}</div>
+            <div class="fieldWrapper">spine:{{ arrow.tube.spine }}</div>
+            <div class="fieldWrapper">diametre: {{ arrow.tube.tube_diameter }}</div>
+        </div>
+        <div class="px-4 py-6 border border-1 border-grey-300 rounded">
+            <h3 class="mb-4 text-xl text-center font-bold">Administration</h3>
+            <div class="fieldWrapper">en état de voler: {{ arrow.not_broken|yesno:"oui, non" }}</div>
+            {% if arrow.not_broken %}
+                <a class="text-center block cursor-pointer bg-red-500 hover:bg-red-600 font-bold py-2 px-4 rounded w-full"
+                   href="#"
+                   disabled>Déclarer cassée</a>
+            {% else %}
+                <a class="text-center block cursor-pointer bg-green-500 hover:bg-green-900 font-bold py-2 px-4 rounded w-full"
+                   href="#"
+                   disabled>Déclarer réparée</a>
+            {% endif %}
+        </div>
     </div>
-
-    <div class="fieldWrapper">
-        couleur: {{ arrow.nock.color }}
-    </div>
-    <div class="fieldWrapper">
-        taille: {{ arrow.nock.size }}
-    </div>
-    <div class="fieldWrapper">
-        utilise un nock-pin{{ arrow.uses_nock_pin }}
-    </div>
-</div>
-<hr/>
-<h2>Empennage</h2>
-<div class="fieldWrapper">
-    latéralité: {{ arrow.feathering.laterality }}
-</div>
-<div class="fieldWrapper">
-    type: {{ arrow.feathering.type }}
-</div>
-<div class="fieldWrapper">
-    marque: {{ arrow.feathering.brand }}
-</div>
-<div class="fieldWrapper">
-    couleur: {{ arrow.feathering.color }}
-</div>
-<div class="fieldWrapper">
-    couleur de la plume coq:{{ arrow.feathering.cock_color }}
-</div>
-<div class="fieldWrapper">
-    taille: {{ arrow.feathering.size }}
-</div>
-<div class="fieldWrapper">
-    angle de collage: {{ arrow.feathering.angle }}
-</div>
-<div class="fieldWrapper">
-    distance à l'encoche: {{ arrow.feathering.nock_distance }}
-</div>
-<hr/>
-<h2>Pointe</h2>
-<div class="fieldWrapper">
-    marque: {{ arrow.tip.brand }}
-</div>    
-<div class="fieldWrapper">
-    profil: {{ arrow.tip.profile }}
-</div>    
-<div class="fieldWrapper">
-    masse: {{ arrow.tip.weight }}
-</div>
-<hr/>
-<h3>Tube</h3>
-<div class="fieldWrapper">
-    marque: {{ arrow.tube.brand }}
-</div>    
-<div class="fieldWrapper">
-    matériau: {{ arrow.tube.material }}
-</div>    
-<div class="fieldWrapper">
-    longueur: {{ arrow.tube.tube_length }}
-</div>    
-<div class="fieldWrapper">
-    spine:{{ arrow.tube.spine }}
-</div>    
-<div class="fieldWrapper">
-    diametre: {{ arrow.tube.tube_diameter }}
-</div>
-<hr/>
-<div class="fieldWrapper">
-    en état de voler: {{ arrow.not_broken|yesno:"oui, non" }}
-</div>
-
-<a href="http://127.0.0.1:8000/arrows/list">retour à la liste des flèches</a>
+    <a class="text-center block cursor-pointer bg-violet-700 hover:bg-violet-900 font-bold py-2 px-4 rounded w-full"
+       href="{% url 'arrows_list' %}">Retour à la Liste des flèches</a>
 {% endblock content %}

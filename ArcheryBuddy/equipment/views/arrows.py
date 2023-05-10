@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.shortcuts import render, redirect
 
 from equipment.forms.arrow import ArrowForm
@@ -29,6 +30,7 @@ def create(request):
     if request.method == "POST":
         form = ArrowForm(request.POST)
         if not form.is_valid():
+            messages.error(request, message="formulaire invalide")
             return render(
                 request,
                 "equipment/create_arrows.html",
@@ -80,7 +82,7 @@ def create(request):
                 feathering=feathering,
                 tip=tip,
                 tube=tube,
-                not_broken=form.cleaned_data.get("not_broken"),
+                not_broken=form.cleaned_data.get("not_broken", True),
             )
         return redirect(arrows_list)
 

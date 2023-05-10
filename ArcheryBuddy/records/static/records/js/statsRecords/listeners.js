@@ -7,7 +7,7 @@ export function AddDeleteClickListener(button) {
     button.addEventListener('click', async function (e) {
         e.preventDefault()
         e.target.toggleAttribute("disabled", false)
-        let record_id = e.target.parentElement.innerText.split('•')[0].trim()
+        let record_id = e.target.parentElement.parentElement.children[0].innerText
         const URI = `http://127.0.0.1:8000/stats/103/record/${record_id}/delete/`
 
         let options = {
@@ -29,7 +29,7 @@ export function AddDeleteClickListener(button) {
             let pos_x = result.data.pos_x
             let pos_y = result.data.pos_y
 
-            e.target.parentElement.parentElement.removeChild(e.target.parentElement)
+            e.target.parentElement.parentElement.parentElement.removeChild(e.target.parentElement.parentElement)
             let dot_on_target = document.getElementById(`shot-dot-${arrow_id}-${pos_x}-${pos_y}`)
             dot_on_target.parentElement.removeChild(dot_on_target)
         } else {
@@ -39,22 +39,33 @@ export function AddDeleteClickListener(button) {
 }
 
 export async function SaveShotsListener(e) {
+
+    /*
+   <tr>
+        <th scope="row" class="px-6 py-2 items-center justify-center">{{ record.pk }}</th>
+        <td class="px-6 py-2">{{ record.arrow.id }}</td>
+        <td class="px-6 py-2">{{ record.pos_x }}</td>
+        <td class="px-6 py-2">{{ record.pos_y }}</td>
+        <td class="px-6 py-2">
+            <button class="delete-saved cursor-pointer bg-red-500 hover:bg-red-700 font-bold py-2 px-4 rounded">supprimer</button>
+        </td>
+    </tr>
+    */
+
+
     e.preventDefault()
 
     const SavedShotsElement = document.querySelector('.saved-shots-container')
-
     const StatsRecordSessionTitleElement = document.querySelector('#srs-title')
     const srsID = parseInt(StatsRecordSessionTitleElement.innerText.split(' ')[0].slice(1))
-
     const CSRF = document.querySelector('input[name=csrfmiddlewaretoken]').value
-
 
     const ShotsElements = document.querySelectorAll('.shot-to-save')
 
     for (let ShotElement of ShotsElements) {
-        let arrow_id = parseInt(ShotElement.innerText.split(" • ")[0])
-        let pos_x = parseFloat(ShotElement.innerText.split(" • ")[1])
-        let pos_y = parseFloat(ShotElement.innerText.split(" • ")[2])
+        let arrow_id = parseInt(ShotElement.children[0].innerText)
+        let pos_x = parseFloat(ShotElement.children[1].innerText)
+        let pos_y = parseFloat(ShotElement.children[2].innerText)
 
 
         const data = new FormData()
@@ -80,10 +91,9 @@ export async function SaveShotsListener(e) {
 
         if (responseData.status_code == 200) {
 
-            let shot_id = responseData.record.id
+            let newTr = document.createElement("tr")
 
-            let newP = document.createElement("p")
-            newP.classList.add(`flagged-p`)
+            let shot_id = responseData.record.id
 
             let newDeleteButton = document.createElement("button")
             newDeleteButton.innerText = "supprimer"
@@ -98,10 +108,48 @@ export async function SaveShotsListener(e) {
 
             AddDeleteClickListener(newDeleteButton)
 
-            newP.innerHTML = `${shot_id} • ${arrow_id} • ${pos_x} • ${pos_y} • `
-            newP.appendChild(newDeleteButton)
+            let tdShotid = document.createElement('th')
+            tdShotid.classList.add("px-6")
+            tdShotid.classList.add("item-center")
+            tdShotid.classList.add("py-2")
+            tdShotid.setAttribute("scope", "row")
+            let content = document.createTextNode(shot_id)
+            tdShotid.appendChild(content)
 
-            SavedShotsElement.appendChild(newP)
+            let tdArrowid = document.createElement('td')
+            tdArrowid.classList.add("px-6")
+            tdArrowid.classList.add("text-center")
+            tdArrowid.classList.add("py-2")
+            content = document.createTextNode(arrow_id)
+            tdArrowid.appendChild(content)
+
+            let tdPosX = document.createElement('td')
+            tdPosX.classList.add("px-6")
+            tdPosX.classList.add("text-center")
+            tdPosX.classList.add("py-2")
+            content = document.createTextNode(pos_x.toFixed(1).replace('.', ','))
+            tdPosX.appendChild(content)
+
+            let tdPosY = document.createElement('td')
+            tdPosY.classList.add("px-6")
+            tdPosY.classList.add("text-center")
+            tdPosY.classList.add("py-2")
+            content = document.createTextNode(pos_y.toFixed(1).replace('.', ','))
+            tdPosY.appendChild(content)
+
+            let tdDeleteButton = document.createElement('td')
+            tdDeleteButton.classList.add("px-6")
+            tdDeleteButton.classList.add("py-2")
+            tdDeleteButton.appendChild(newDeleteButton)
+
+            newTr.appendChild(tdShotid)
+            newTr.appendChild(tdArrowid)
+            newTr.appendChild(tdPosX)
+            newTr.appendChild(tdPosY)
+            newTr.appendChild(tdDeleteButton)
+
+            SavedShotsElement.appendChild(newTr)
+
             ShotElement.parentNode.removeChild(ShotElement)
         } else {
             console.log("erreur pendant la création de l'enregistrement")

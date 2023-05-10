@@ -1,57 +1,115 @@
-{% extends 'core/base.html' %}
-
+{% extends "core/base.html" %}
 {% load static %}
-
 {% block content %}
-        <div class="relative">
-            <h1 id='srs-title'>
-                #{{srs.pk}} Session de statistiques - {{srs.session_datetime|date:'d/m/Y G:i'}}
-            </h1>
-            <div class="flex flex-row flex-nowrap">
-            <div class="w-6/12" id="forms">
-
-                <form action="" method="post">
-                    {% csrf_token %}        
-                
-                    {{form.as_div}}
-                    
-                    <button id="session-update" type="submit">modifier les caractéristiques de la session</button>
-            </form>
-            <hr>
-            <form action="" method="post"></form>
-            <div>
-                <h2>récapitulatif des tirs déjà enregistrés</h2>
-                <div class="saved-shots-container max-h-40 overflow-y-scroll">
-                    {%for record in records%}
-                    <p>{{record.pk}} • {{record.arrow.id}} • {{record.pos_x}} • {{record.pos_y}} <button class="delete-saved cursor-pointer bg-red-500 hover:bg-red-700 font-bold py-2 px-4 rounded">supprimer</button></p>
-                    {% endfor %}
+    <div class="relative">
+        <h1 id="srs-title" class="my-4 text-2xl text-center font-bold">
+            #{{ srs.pk }} Session de statistiques - {{ srs.session_datetime|date:'d/m/Y G:i' }}
+        </h1>
+        <div class="flex flex-row flex-wrap md:flex-nowrap ">
+            <div class="w-6/12 flex flex-col justify-between" id="shots-lists">
+                <div class="max-h-600">
+                    <form action="" method="post">
+                        <h2 class="mb-4 text-xl text-center font-bold">tirs à enregistrer</h2>
+                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" class="px-6 py-2 text-center">N° de flèche</th>
+                                    <th scope="col" class="px-6 py-2 text-center">x</th>
+                                    <th scope="col" class="px-6 py-2 text-center">y</th>
+                                </tr>
+                            </thead>
+                            <tbody id="shots-to-save-table-body">
+                            </tbody>
+                        </table>
+                        <div id="shots-to-save  overflow-y-scroll"></div>
+                        <button class="w-full cursor-pointer bg-green-500 hover:bg-green-700 font-bold py-2 px-4 rounded"
+                                id="shots-save"
+                                type="submit">enregistrer ces tirs</button>
+                    </form>
                 </div>
-                    <h2>tirs à enregistrer</h2>
-                        <div id="shots-to-save max-h-40 overflow-y-scroll">
-                            
-                        </div>
-                        <button class="cursor-pointer bg-green-500 hover:bg-green-700 font-bold py-2 px-4 rounded" 
-                            id="shots-save" type="submit">enregistrer ces tirs</button>
-                    </div>
-            </form>
+                <hr>
+                <div class=" max-h-60 overflow-y-scroll">
+                    <h2 class="mb-4 text-xl text-center font-bold">récapitulatif des tirs déjà enregistrés</h2>
+                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="px-6 py-2 text-center">Identifiant du tir</th>
+                                <th scope="col" class="px-6 py-2 text-center">N° de flèche</th>
+                                <th scope="col" class="px-6 py-2 text-center">x</th>
+                                <th scope="col" class="px-6 py-2 text-center">y</th>
+                                <th scope="col" class="px-6 py-2 text-center">supprimer</th>
+                            </tr>
+                        </thead>
+                        <tbody class="saved-shots-container">
+                            {% for record in records %}
+                                <tr>
+                                    <th scope="row"
+                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center">
+                                        {{ record.pk }}
+                                    </th>
+                                    <td class="px-6 py-4 text-center">{{ record.arrow.id }}</td>
+                                    <td class="px-6 py-4 text-center">{{ record.pos_x }}</td>
+                                    <td class="px-6 py-4 text-center">{{ record.pos_y }}</td>
+                                    <td class="px-6 py-4 align-center">
+                                        <button class="delete-saved text-black mx-auto cursor-pointer bg-red-500 hover:bg-red-700 font-bold py-2 px-4 rounded">
+                                            supprimer
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="w-6/12 flex justify-center items-center" id="target-container">
                 <div id="target" class="z-10 bg-slate-50 w-[500px] h-[500px] relative">
-                    <img src=" {% static 'records/assets/target.svg' %}" alt="target">
+                    <img src="{% static 'records/assets/target.svg' %}"
+                         height="500"
+                         width="500"
+                         alt="target">
                     {% for record in records %}
-                        <div id="shot-dot-{{record.arrow.id}}-{{record.pos_x|floatformat:"0"}}-{{record.pos_y|floatformat:"0"}}" 
-                            class="z-20 w-1 h-1 absolute bg-green-500 rounded-full" 
-                            style="top:{{record.pos_y|floatformat:"0"}}px; left:{{record.pos_x|floatformat:"0"}}px;"></div>
+                        <div id="shot-dot-{{ record.arrow.id }}-{{ record.pos_x|floatformat:"0" }}-{{ record.pos_y|floatformat:"0" }}"
+                             class="z-20 w-1 h-1 absolute bg-green-500 rounded-full"
+                             style="top:{{ record.pos_y|floatformat:"0" }}px;
+                                    left:{{ record.pos_x|floatformat:"0" }}px"></div>
                     {% endfor %}
                 </div>
             </div>
-            <script src="{% static 'records/js/statsRecords/DeleteShot.js' %}" defer type="module"></script>
-            <script src="{% static 'records/js/statsRecords/PostNewRecords.js' %}" defer type="module"></script>
-            <script src="{% static 'records/js/statsRecords/TargetClick.js' %}" defer type="module"></script>
+            <script src="{% static 'records/js/statsRecords/DeleteShot.js' %}"
+                    defer
+                    type="module"></script>
+            <script src="{% static 'records/js/statsRecords/PostNewRecords.js' %}"
+                    defer
+                    type="module"></script>
+            <script src="{% static 'records/js/statsRecords/TargetClick.js' %}"
+                    defer
+                    type="module"></script>
+            <script src="{% static 'records/js/statsRecords/UpdateFormToggle.js' %}"
+                    defer
+                    type="module"></script>
         </div>
         <div>
-            <a class="text-center block cursor-pointer bg-violet-700 hover:bg-violet-900 font-bold py-2 px-4 rounded w-full" href="{% url 'stats_result' srs.pk%}">résultats de la session</a>
+            <a class="mt-4 py-4 text-center block cursor-pointer bg-violet-700 hover:bg-violet-900 font-bold py-2 px-4 rounded w-full"
+               href="{% url 'stats_result' srs.pk %}">Résultats de la session</a>
+        </div>
+        <button id="toggle-modify"
+                class="mt-4 py-4 cursor-pointer bg-orange-500 hover:bg-orange-700 font-bold py-2 px-4 rounded w-full">
+            Modifier les caractéristiques de la session
+        </button>
+        <div id="modify-form" class="hidden">
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ form.as_div }}
+                <button class="mt-4 py-4 cursor-pointer bg-green-500 hover:bg-green-700 font-bold py-2 px-4 rounded w-full"
+                        id="session-update"
+                        type="submit">modifier</button>
+            </form>
+        </div>
+        <div class="hidden">
+            <tr class="hidden bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th class="hidden px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"></th>
+            </tr>
         </div>
     </div>
-    {% include "records/arrow_modal.html"%}
+    {% include "records/arrow_modal.html" %}
 {% endblock content %}

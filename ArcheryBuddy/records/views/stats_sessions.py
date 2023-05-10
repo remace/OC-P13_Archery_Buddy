@@ -81,9 +81,8 @@ class DetailStatsSession(View):
         user = request.user
 
         srs = get_object_or_404(StatsRecordSession, user=user, pk=pk)
-        srs_dict = srs.__dict__
 
-        head_form = StatsRecordSessionForm(srs_dict, user=user)
+        head_form = StatsRecordSessionForm(srs, user=user)
 
         records = StatsRecord.objects.filter(stats_session=srs) or None
         available_arrows = srs.available_arrows.all()
@@ -186,6 +185,7 @@ class StatsRecordResults(View):
     @method_decorator(login_required)
     def get(self, request, stats_session_pk):
 
+        stats_session = StatsRecordSession.objects.get(pk=stats_session_pk)
         shots = StatsRecord.objects.filter(stats_session=stats_session_pk)
 
         pk_list = [id.get("arrow_id") for id in shots.values("arrow_id").distinct()]
@@ -208,5 +208,5 @@ class StatsRecordResults(View):
         quiver = calculate_quiver(barycentres)
         for arrow in quiver:
             continue
-        ctx = {"stats_session_id": stats_session_pk, "arrows": quiver}
+        ctx = {"stats_session": stats_session, "arrows": quiver}
         return render(request, "records/stats_session_result.html", context=ctx)

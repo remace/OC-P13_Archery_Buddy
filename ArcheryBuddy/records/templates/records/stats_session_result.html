@@ -1,44 +1,50 @@
-{% extends 'core/base.html' %}
-
+{% extends "core/base.html" %}
 {% load static %}
-
 {% block content %}
-        <div class="relative">
-            <h1 id='srs-title'>
-                #{{stats_session_id}} - Résultat de la Session de statistiques - {{srs.session_datetime|date:'d/m/Y G:i'}}
-            </h1>
-            <div class="flex">
-                <div class="arrows-container w-6/12">
-                    <div class="flex justify-between">
-                        <div>id</div>
-                        <div>moyenne horizontale</div>
-                        <div>moyenne verticale</div>
-                    </div>
+    <div class="relative">
+        <h1 id="srs-title" class="my-4 text-2xl text-center font-bold">
+            Résultat de la Session de statistiques #{{ stats_session.pk }}
+        </h1>
+        <h2 class="mb-4 text-xl text-center font-bold">{{ stats_session.session_datetime|date:'d/m/Y G:i' }}</h2>
+        <div class="flex">
+            <table class="w-1/2">
+                <thead>
+                    <tr>
+                        <th class="px-6 py-2">id</th>
+                        <th class="px-6 py-2">moyenne horizontale</th>
+                        <th class="px-6 py-2">moyenne verticale</th>
+                    </tr>
+                </thead>
+                <tbody class="arrows-container">
                     {% for arrow in arrows %}
-                        <div class="arrow-container flex justify-between hover:bg-violet-400">
-                            <div>{{arrow.arrow_id}}</div>
-                            <div>{{arrow.pos_x}}</div>
-                            <div>{{arrow.pos_y}}</div>
-                        </div>
+                        <tr class="arrow-container hover:bg-violet-400">
+                            <th scope="row" class="px-6 py-2 text-center">{{ arrow.arrow_id }}</th>
+                            <td class="px-6 py-2 text-center">{{ arrow.pos_x }}</td>
+                            <td class="px-6 py-2 text-center">{{ arrow.pos_y }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="w-6/12 flex justify-center items-center" id="target-container">
+                <div id="target" class="z-10 bg-slate-50 w-[500px] h-[500px] relative">
+                    <img width="500"
+                         height="500"
+                         src=" {% static 'records/assets/target.svg' %}"
+                         alt="target">
+                    {% for arrow in arrows %}
+                        <div id="shot-dot-{{ arrow.arrow_id }}-{{ arrow.pos_x|floatformat:"0" }}-{{ arrow.pos_y|floatformat:"0" }}"
+                             class="z-20 w-3 h-3 absolute bg-green-500 rounded-full"
+                             style="top:{{ arrow.pos_y|floatformat:"0" }}px;
+                                    left:{{ arrow.pos_x|floatformat:"0" }}px"></div>
                     {% endfor %}
                 </div>
-                <div class="w-6/12 flex justify-center items-center" id="target-container">
-                    <div id="target" class="z-10 bg-slate-50 w-[500px] h-[500px] relative">
-                        <img src=" {% static 'records/assets/target.svg' %}" alt="target">
-                        {% for arrow in arrows %}
-                            <div id="shot-dot-{{arrow.arrow_id}}-{{arrow.pos_x|floatformat:"0"}}-{{arrow.pos_y|floatformat:"0"}}" 
-                                class="z-20 w-3 h-3 absolute bg-green-500 rounded-full" 
-                                style="top:{{arrow.pos_y|floatformat:"0"}}px; left:{{arrow.pos_x|floatformat:"0"}}px;">
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
             </div>
-            <a class="text-center block cursor-pointer bg-violet-700 hover:bg-violet-900 font-bold py-2 px-4 rounded w-full" href={% url 'stats_session_detail' stats_session_id %}>Retour aux détails de la session</a> 
         </div>
+        <a class="text-center block cursor-pointer bg-violet-700 hover:bg-violet-900 font-bold py-2 px-4 mt-4 rounded w-full"
+           href="{% url 'stats_session_detail' stats_session.pk %}">Retour aux détails de la session</a>
     </div>
     <div class="hidden bg-violet-600"></div>
     <div class="hidden bg-green-500"></div>
     <script src="{% static 'records/js/statsRecords/HighlightShot.js' %}" defer type="module" />
-    {% include "records/arrow_modal.html"%}
+{% include "records/arrow_modal.html" %}
 {% endblock content %}
