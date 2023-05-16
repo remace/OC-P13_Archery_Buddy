@@ -8,7 +8,7 @@ export function AddDeleteClickListener(button) {
         e.preventDefault()
         e.target.toggleAttribute("disabled", false)
         let record_id = e.target.parentElement.parentElement.children[0].innerText
-        const URI = `http://127.0.0.1:8000/stats/103/record/${record_id}/delete/`
+        const URI = `/stats/103/record/${record_id}/delete/`
 
         let options = {
             method: "GET",
@@ -39,19 +39,6 @@ export function AddDeleteClickListener(button) {
 }
 
 export async function SaveShotsListener(e) {
-
-    /*
-   <tr>
-        <th scope="row" class="px-6 py-2 items-center justify-center">{{ record.pk }}</th>
-        <td class="px-6 py-2">{{ record.arrow.id }}</td>
-        <td class="px-6 py-2">{{ record.pos_x }}</td>
-        <td class="px-6 py-2">{{ record.pos_y }}</td>
-        <td class="px-6 py-2">
-            <button class="delete-saved cursor-pointer bg-red-500 hover:bg-red-700 font-bold py-2 px-4 rounded">supprimer</button>
-        </td>
-    </tr>
-    */
-
 
     e.preventDefault()
 
