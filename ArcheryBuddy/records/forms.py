@@ -12,7 +12,10 @@ class PracticeRecordSessionForm(forms.Form):
         choices=CONDITIONS_CHOICE,
         widget=forms.Select(
             attrs={
-                "class": "block w-full bg-gray-50 pl-4 my-4 text-field border border-gray-300 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white",
+                "class": "block w-full bg-gray-50 pl-4 my-4 text-field border "
+                "border-gray-300 sm:text-sm rounded-lg focus:ring-violet-500 "
+                "focus:border-violet-500 dark:bg-gray-600 dark:border-gray-500"
+                " dark:placeholder-gray-400 dark:text-white",
             }
         ),
     )
@@ -20,7 +23,10 @@ class PracticeRecordSessionForm(forms.Form):
         label="distance",
         widget=forms.NumberInput(
             attrs={
-                "class": "my-4 text-field border border-gray-300 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white",
+                "class": "my-4 text-field border border-gray-300 sm:text-sm "
+                "rounded-lg focus:ring-violet-500 focus:border-violet-500 "
+                "p-2.5 dark:bg-gray-600 dark:border-gray-500 "
+                "dark:placeholder-gray-400 dark:text-white",
             }
         ),
     )
@@ -28,7 +34,10 @@ class PracticeRecordSessionForm(forms.Form):
         label="commentaires",
         widget=forms.TextInput(
             attrs={
-                "class": "my-4 text-field border border-gray-300 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white",
+                "class": "my-4 text-field border border-gray-300 sm:text-sm "
+                "rounded-lg focus:ring-violet-500 focus:border-violet-500 "
+                "p-2.5 dark:bg-gray-600 dark:border-gray-500 "
+                "dark:placeholder-gray-400 dark:text-white",
             }
         ),
     )
@@ -56,15 +65,6 @@ class StatsRecordSessionForm(forms.Form):
             self.fields["distance"].widget.attrs["value"] = srs.distance
             self.fields["comment"].widget.attrs["value"] = srs.comment
 
-            arrows = Arrow.objects.filter(user=self.user, not_broken=True)
-            arrows2 = srs.available_arrows.values()
-            from pprint import pprint
-
-            # pprint(arrows)
-            pprint(arrows2)
-            # print(self.fields["available_arrows"].widget)
-            # print(self.fields["available_arrows"].widget.__dir__())
-
     class Meta:
         model = StatsRecordSession
         fields = ["conditions", "distance", "comment", "arrows"]
@@ -74,7 +74,10 @@ class StatsRecordSessionForm(forms.Form):
         choices=CONDITIONS_CHOICE,
         widget=forms.Select(
             attrs={
-                "class": "block w-full pl-4 my-4 text-field border border-gray-300 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white",
+                "class": "block w-full pl-4 my-4 text-field border "
+                "border-gray-300 sm:text-sm rounded-lg focus:ring-violet-500 "
+                "focus:border-violet-500 dark:bg-gray-600 dark:border-gray-500"
+                " dark:placeholder-gray-400 dark:text-white",
             }
         ),
     )
@@ -82,7 +85,11 @@ class StatsRecordSessionForm(forms.Form):
         label="distance",
         widget=forms.NumberInput(
             attrs={
-                "class": "block w-full my-4 text-field border border-gray-300 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white",
+                "class": "block w-full my-4 text-field border border-gray-300 "
+                "sm:text-sm rounded-lg focus:ring-violet-500 "
+                "focus:border-violet-500 p-2.5 dark:bg-gray-600 "
+                "dark:border-gray-500 dark:placeholder-gray-400 "
+                "dark:text-white",
             }
         ),
     )
@@ -90,7 +97,10 @@ class StatsRecordSessionForm(forms.Form):
         label="commentaires",
         widget=forms.TextInput(
             attrs={
-                "class": "block w-full my-4 text-field border border-gray-300 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white",
+                "class": "block w-full my-4 text-field border border-gray-300 "
+                "sm:text-sm rounded-lg focus:ring-violet-500 p-2.5 "
+                "focus:border-violet-500 dark:bg-gray-600 dark:text-white"
+                "dark:border-gray-500 dark:placeholder-gray-400 ",
             }
         ),
     )
@@ -98,7 +108,8 @@ class StatsRecordSessionForm(forms.Form):
     available_arrows = forms.ModelMultipleChoiceField(
         queryset=None,
         widget=forms.CheckboxSelectMultiple(
-            attrs={"class": "rounded focus:ring-violet-500 focus:border-violet-500"}
+            attrs={"class": "rounded focus:ring-violet-500 "
+                            "focus:border-violet-500"}
         ),
         label="flèches utilisées",
     )

@@ -18,9 +18,14 @@ class ListPracticeSessions(View):
     def get(self, request):
         ctx = {}
         user = request.user
-        practice_record_sessions = PracticeRecordSession.objects.filter(user=user).all()
+        practice_record_sessions = PracticeRecordSession \
+            .objects \
+            .filter(user=user) \
+            .all()
         ctx["practice_sessions"] = practice_record_sessions
-        return render(request, "records/list_practice_sessions.html", context=ctx)
+        return render(request,
+                      "records/list_practice_sessions.html",
+                      context=ctx)
 
 
 class CreatePracticeSession(FormView):
@@ -29,7 +34,9 @@ class CreatePracticeSession(FormView):
         form = PracticeRecordSessionForm()
         ctx = {}
         ctx["form"] = form
-        return render(request, "records/create_practice_session.html", context=ctx)
+        return render(request,
+                      "records/create_practice_session.html",
+                      context=ctx)
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
@@ -57,16 +64,16 @@ class DetailPracticeSession(View):
         ctx["prs"] = prs
         ctx["volley_range"] = range(1, prs.number_of_volleys + 1)
         ctx["shot_range"] = range(1, prs.max_arrows_in_volley + 1)
-        practice_records = PracticeRecord.objects.filter(practice_session=prs).all()
+        practice_records = PracticeRecord \
+            .objects \
+            .filter(practice_session=prs) \
+            .all()
         shots = {}
         for practice_record in practice_records:
             shot = {}
             shot["arrow_id"] = practice_record.arrow.id
             shot["score"] = practice_record.score
-            try:
-                temp = shots[practice_record.volley]
-
-            except KeyError as key_error:
+            if shots[practice_record.volley]:
                 shots[practice_record.volley] = []
 
             shots[practice_record.volley].append(shot)
@@ -79,7 +86,9 @@ class DetailPracticeSession(View):
             ordered_shots[volley[0]] = ordered_volley
 
         ctx["practice_records"] = ordered_shots
-        return render(request, "records/detail_practice_session.html", context=ctx)
+        return render(request,
+                      "records/detail_practice_session.html",
+                      context=ctx)
 
     @method_decorator(login_required)
     def post(self, request, prs_id):
@@ -107,7 +116,7 @@ class DetailPracticeSession(View):
                                 score=score,
                             )
 
-                        except ValidationError as exception:
+                        except ValidationError:
                             practice_record = PracticeRecord.objects.get(
                                 arrow=arrow,
                                 practice_session=prs,
@@ -117,7 +126,7 @@ class DetailPracticeSession(View):
                             practice_record.save()
 
                     except Arrow.DoesNotExist as exception:
-                        print(exception)
+                        raise exception
         return redirect("practice_detail", prs_id=prs.id)
 
 

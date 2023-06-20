@@ -1,11 +1,10 @@
 import os
 from django import setup
+from django.test import TestCase
+from accounts.models import User
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "DjangoConf.settings.testing")
 setup()
-
-from django.test import TestCase
-from accounts.models import User
 
 
 class UsersManagersTests(TestCase):
@@ -33,7 +32,9 @@ class UsersManagersTests(TestCase):
     def test_create_superuser(self):
         """test on createsuperuser ./manage.py command"""
         admin_user = User.objects.create_superuser(
-            pseudo="superuser_de_test", password="password_de_test", is_superuser=True
+            pseudo="superuser_de_test",
+            password="password_de_test",
+            is_superuser=True
         )
         self.assertEqual(admin_user.pseudo, "superuser_de_test")
         self.assertTrue(admin_user.is_active)

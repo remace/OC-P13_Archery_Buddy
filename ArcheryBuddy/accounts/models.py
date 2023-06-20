@@ -49,7 +49,10 @@ class User(AbstractBaseUser):
     first_name = models.CharField(max_length=32, blank=True, null=True)
     last_name = models.CharField(max_length=32, blank=True, null=True)
     email = models.EmailField(blank=True, null=True)
-    pseudo = models.CharField(unique=True, max_length=32, blank=True, null=True)
+    pseudo = models.CharField(unique=True,
+                              max_length=32,
+                              blank=True,
+                              null=True)
 
     # registration create and update fields
     created_at = models.DateTimeField(auto_now_add=True)
@@ -86,5 +89,5 @@ class User(AbstractBaseUser):
         return True
 
     class Meta:
-        verbose_name: "user"
-        verbose_name_plural: "users"
+        verbose_name = "user"
+        verbose_name_plural = "users"

@@ -4,7 +4,9 @@ from records.views import practice_sessions
 
 urlpatterns = [
     path(
-        "list/", practice_sessions.ListPracticeSessions.as_view(), name="practice_list"
+        "list/",
+        practice_sessions.ListPracticeSessions.as_view(),
+        name="practice_list"
     ),
     path(
         "create/",

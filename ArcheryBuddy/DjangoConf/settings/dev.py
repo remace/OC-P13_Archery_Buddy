@@ -16,9 +16,11 @@ DATABASES = {
     }
 }
 
+
 # django debug toolbar
 def show_toolbar(request):
     return True
+
 
 INSTALLED_APPS += ["debug_toolbar", "django_browser_reload"]
 

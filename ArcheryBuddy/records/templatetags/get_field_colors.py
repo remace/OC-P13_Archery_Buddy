@@ -22,9 +22,12 @@ def get_field_colors(context, volley, shot):
     }
 
     try:
-        score = str(context["practice_records"][int(volley)][int(shot) - 1]["score"])
-    except KeyError as e:
+        score = str(context["practice_records"]
+                           [int(volley)]
+                           [int(shot) - 1]
+                           ["score"])
+    except KeyError:
         score = ""
-    except IndexError as e:
+    except IndexError:
         score = ""
     return colors[score]

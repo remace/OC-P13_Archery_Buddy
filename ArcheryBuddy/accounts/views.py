@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect
 from accounts.models import User
 from accounts.forms import LoginForm, RegisterForm
 
+
 # Create your views here.
 def login_view(request):
     ctx = {}
@@ -44,7 +45,8 @@ def register_view(request):
         password = request.POST.get("password")
         password2 = request.POST.get("password2")
         if password != password2:
-            messages.error(request, "les deux mots de passe doivent être identiques")
+            messages.error(request,
+                           "les deux mots de passe doivent être identiques")
             redirect("register")
 
         user = User.objects.create(

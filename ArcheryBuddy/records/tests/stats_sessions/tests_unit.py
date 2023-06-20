@@ -1,10 +1,7 @@
 """unit tests for stats sessions"""
 import os
+
 from django import setup
-
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "DjangoConf.settings.testing")
-setup()
-
 from django.test import TestCase
 from django.db.utils import IntegrityError
 from django.db import transaction
@@ -20,7 +17,8 @@ from records.utils import (
     calculate_quiver,
 )
 
-from pprint import pprint
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "DjangoConf.settings.testing")
+setup()
 
 
 class StatsRecordSessionTests(TestCase):
@@ -32,7 +30,11 @@ class StatsRecordSessionTests(TestCase):
         )
 
         nock = Nock.objects.create(
-            user=self.user, brand="beiter", color="red", size="S", uses_nock_pin=True
+            user=self.user,
+            brand="beiter",
+            color="red",
+            size="S",
+            uses_nock_pin=True
         )
         feathers = Feathering.objects.create(
             user=self.user,
@@ -73,11 +75,13 @@ class StatsRecordSessionTests(TestCase):
             distance=18,
             comment="RAS",
         )
-        # self.srs.available_arrows.set([self.arrow1, self.arrow2, self.arrow3])
         self.datetime = self.srs.session_datetime
 
     def tearDown(self):
-        StatsRecordSession.objects.filter(session_datetime=self.datetime).delete()
+        StatsRecordSession\
+            .objects\
+            .filter(session_datetime=self.datetime)\
+            .delete()
         self.srs = None
         self.user = None
         self.datetime = None
@@ -87,7 +91,8 @@ class StatsRecordSessionTests(TestCase):
         datetime_as_string = self.datetime.strftime("%d/%m/%Y - %H:%M")
         self.assertEqual(
             f"{self.srs}",
-            f"statistiques: {datetime_as_string} - {self.srs.conditions} - {self.srs.distance}m",
+            f"statistiques: {datetime_as_string} - {self.srs.conditions}"
+            f" - {self.srs.distance}m",
         )
 
     def test_stats_record_session_creation(self):
@@ -100,13 +105,17 @@ class StatsRecordSessionTests(TestCase):
     def test_add_available_arrows(self):
 
         arrows = self.srs.available_arrows.all()
-        self.assertNotEqual(set(arrows), set([self.arrow1, self.arrow2, self.arrow3]))
+        self.assertNotEqual(
+            set(arrows),
+            set([self.arrow1, self.arrow2, self.arrow3]))
 
         self.srs.available_arrows.set([self.arrow1, self.arrow2, self.arrow3])
 
         arrows = self.srs.available_arrows.all()
 
-        self.assertEqual(set(arrows), set([self.arrow1, self.arrow2, self.arrow3]))
+        self.assertEqual(
+            set(arrows),
+            set([self.arrow1, self.arrow2, self.arrow3]))
 
     def test_stats_record_session_save_and_delete(self):
         """
@@ -150,7 +159,11 @@ class StatsRecordTest(TestCase):
         )
 
         nock = Nock.objects.create(
-            user=self.user, brand="beiter", color="red", size="S", uses_nock_pin=True
+            user=self.user,
+            brand="beiter",
+            color="red",
+            size="S",
+            uses_nock_pin=True
         )
         feathers = Feathering.objects.create(
             user=self.user,
@@ -218,7 +231,7 @@ class StatsRecordTest(TestCase):
         count0 = len(StatsRecord.objects.all())
         with self.assertRaises(IntegrityError):
             with transaction.atomic():
-                stats_record = StatsRecord.objects.create(
+                StatsRecord.objects.create(
                     arrow=self.arrow1, pos_y=0.0, stats_session=self.srs
                 )
         count1 = len(StatsRecord.objects.all())
@@ -252,13 +265,15 @@ class UtilsTest(TestCase):
         p4 = StatsRecord.objects.get(pk=807)
         point4 = {"arrow_id": p4.pk, "pos_x": p4.pos_x, "pos_y": p4.pos_y}
 
-        self.assertEqual(direction(point1, point2, point3), 0)  # vecteurs parallèles
+        self.assertEqual(direction(point1, point2, point3), 0)
         self.assertGreater(direction(point2, point1, point4), 0)
         self.assertGreater(0, direction(point1, point2, point4))
 
     def test_calculate_convex_hull(self):
         points = [
-            {"pos_x": record.pos_x, "pos_y": record.pos_y, "arrow_id": record.pk}
+            {"pos_x": record.pos_x,
+             "pos_y": record.pos_y,
+             "arrow_id": record.pk}
             for record in StatsRecord.objects.filter(pk__gte=920)
         ]
 
@@ -278,10 +293,12 @@ class UtilsTest(TestCase):
         )
 
     def test_ch(self):
+        records = StatsRecord.objects.filter(pk__gte=920).exclude(pk=921)
         points = [
-            {"pos_x": record.pos_x, "pos_y": record.pos_y, "arrow_id": record.pk - 919}
-            for record in StatsRecord.objects.filter(pk__gte=920).exclude(pk=921)
-        ]
+            {"pos_x": record.pos_x,
+             "pos_y": record.pos_y,
+             "arrow_id": record.pk - 919}
+            for record in records]
 
         true_convex_hull = [
             points[5],
@@ -307,8 +324,11 @@ class UtilsTest(TestCase):
 
     def test_calculate_quiver(self):
         points = [
-            {"pos_x": record.pos_x, "pos_y": record.pos_y, "arrow_id": record.pk - 919}
+            {"pos_x": record.pos_x,
+             "pos_y": record.pos_y,
+             "arrow_id": record.pk - 919}
             for record in StatsRecord.objects.filter(pk__gte=920)
         ]
-        quiver = calculate_quiver(points)
-        pass
+        calculate_quiver(points)
+        # quiver = calculate_quiver(points)
+        pass  # TODO assertEquals between Lists
