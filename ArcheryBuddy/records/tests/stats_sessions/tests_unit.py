@@ -329,6 +329,6 @@ class UtilsTest(TestCase):
              "arrow_id": record.pk - 919}
             for record in StatsRecord.objects.filter(pk__gte=920)
         ]
-        calculate_quiver(points)
-        # quiver = calculate_quiver(points)
-        pass  # TODO assertEquals between Lists
+        quiver = calculate_quiver(points)
+        ordered_quiver = [arrow.get("arrow_id") for arrow in quiver]
+        self.assertEqual(ordered_quiver, [10, 8, 9, 6, 3, 5, 4, 2, 1, 7])
