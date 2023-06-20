@@ -166,7 +166,6 @@ class CreateStatsRecord(View):
                 }
             ),
             safe=False,
-            context=ctx
         )
 
 
