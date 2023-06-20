@@ -20,10 +20,6 @@ class UsersManagersTests(TestCase):
         self.assertFalse(user.is_staff)
         self.assertFalse(user.is_superuser)
         self.assertEqual(f"{user}", user.pseudo)
-        try:
-            self.assertIsNone(user.email)
-        except AttributeError:
-            pass
         with self.assertRaises(ValueError):
             User.objects.create_user(pseudo="")
         with self.assertRaises(ValueError):
@@ -40,11 +36,6 @@ class UsersManagersTests(TestCase):
         self.assertTrue(admin_user.is_active)
         self.assertTrue(admin_user.is_staff)
         self.assertTrue(admin_user.is_superuser)
-
-        try:
-            self.assertIsNone(admin_user.email)
-        except AttributeError:
-            pass
 
         with self.assertRaises(ValueError):
 

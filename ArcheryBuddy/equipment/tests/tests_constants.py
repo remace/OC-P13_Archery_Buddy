@@ -83,17 +83,3 @@ COMPOUND = {
 COMPOUND_NOT_VALID = COMPOUND.copy()
 COMPOUND_NOT_VALID.pop("entraxe")
 
-
-if __name__ == "__main__":
-    import pprint
-
-    bows = {
-        "barebow": BAREBOW,
-        "barebow_not_valid": BAREBOW_NOT_VALID,
-        "olympic": OLYMPIC,
-        "olympic_not_valid": OLYMPIC_NOT_VALID,
-        "compound": COMPOUND,
-        "compound_not_valid": COMPOUND_NOT_VALID,
-    }
-
-    pprint.pprint(bows)

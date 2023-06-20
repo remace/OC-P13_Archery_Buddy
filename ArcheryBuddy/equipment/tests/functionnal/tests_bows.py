@@ -3,7 +3,7 @@ from django import setup
 from http import HTTPStatus
 
 from accounts.models import User
-from equipment.tests.constants import (
+from equipment.tests.tests_constants import (
     BAREBOW,
     BAREBOW_NOT_VALID,
     OLYMPIC,
