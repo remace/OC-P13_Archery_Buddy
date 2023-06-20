@@ -47,7 +47,6 @@ class CreateStatsSession(CreateView):
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
-        ctx = {}
         try:
             srs = StatsRecordSession.objects.create(
                 user=request.user,
@@ -69,7 +68,7 @@ class CreateStatsSession(CreateView):
         except IntegrityError:
             raise
 
-        return redirect("stats_session_list", context=ctx)
+        return redirect("stats_session_list")
 
 
 class DetailStatsSession(View):
