@@ -4,7 +4,9 @@ from records.views import stats_sessions
 
 urlpatterns = [
     path(
-        "list/", stats_sessions.ListStatsSessions.as_view(), name="stats_session_list"
+        "list/",
+        stats_sessions.ListStatsSessions.as_view(),
+        name="stats_session_list"
     ),
     path(
         "create/",

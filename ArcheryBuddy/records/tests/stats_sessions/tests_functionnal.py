@@ -1,23 +1,19 @@
 """functionnal tests for stats sessions"""
 import os
+
 from django import setup
-
-import pdb
-
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "DjangoConf.settings.testing")
-setup()
-
 from django.test import TestCase
 from django.test import Client
 from django.urls import reverse
-
 from django.db.utils import IntegrityError
 from django.db import transaction
 
-
-from records.models import StatsRecord, StatsRecordSession
+from records.models import StatsRecordSession
 from equipment.models.arrows import Arrow
 from accounts.models import User
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "DjangoConf.settings.testing")
+setup()
 
 
 class StatsRecordSessionViewsTest(TestCase):
@@ -37,9 +33,8 @@ class StatsRecordSessionViewsTest(TestCase):
         self.client.login(username="remi123456", password="123456789")
         response = self.client.get("/practice/list/")
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed("records/templates/records/list_stats_session.html")
-
-    # create
+        self.assertTemplateUsed("records/templates/records"
+                                "/list_stats_session.html")
 
     def test_user_not_logged_in_create_stats_session_get(self):
         response = self.client.get("/stats/create/")
@@ -50,7 +45,9 @@ class StatsRecordSessionViewsTest(TestCase):
         self.client.login(username="remi123456", password="123456789")
         response = self.client.get("/stats/create/")
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed("records/templates/records/create_stats_session.html")
+        self.assertTemplateUsed(
+            "records/templates" "/records/create_stats_session.html"
+        )
 
     def test_create_stats_session_post(self):
         self.client.login(username="remi123456", password="123456789")
@@ -61,7 +58,7 @@ class StatsRecordSessionViewsTest(TestCase):
             "available_arrows": ["6", "8", "9"],
         }
         count = len(StatsRecordSession.objects.all())
-        response = self.client.post("/stats/create/", payload)
+        self.client.post("/stats/create/", payload)
         after_count = len(StatsRecordSession.objects.all())
         self.assertEqual(after_count, count + 1)
 
@@ -89,12 +86,10 @@ class StatsRecordSessionViewsTest(TestCase):
     # delete
     def test_delete_stats_session(self):
         self.client.login(username="remi123456", password="123456789")
-        count0 = len(StatsRecordSession.objects.all())
         response = self.client.get("/stats/delete/34/")
-        count1 = len(StatsRecordSession.objects.all())
-
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed("records/templates/records/list_stats_session.html")
+        self.assertTemplateUsed("records/templates/records"
+                                "/list_stats_session.html")
 
     def test_delete_stats_session_bad_pk(self):
         self.client.login(username="remi123456", password="123456789")
@@ -107,7 +102,8 @@ class StatsRecordSessionViewsTest(TestCase):
 
         self.assertEqual(count1, count0)
         self.assertEqual(response.status_code, 404)
-        self.assertTemplateUsed("records/templates/records/list_stats_session.html")
+        self.assertTemplateUsed("records/templates/"
+                                "records/list_stats_session.html")
 
     # detail
     def test_detail_stats_session(self):
@@ -116,15 +112,18 @@ class StatsRecordSessionViewsTest(TestCase):
         response = self.client.get(reverse("stats_session_detail", args=(34,)))
 
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed("records/templates/records/detail_stats_session.html")
+        self.assertTemplateUsed(
+            "records/templates/" "records/detail_stats_session.html"
+        )
 
     def test_detail_stats_session_bad_pk(self):
         self.client.login(username="remi123456", password="123456789")
-        client = self.client.force_login(user=self.user)
+        self.client.force_login(user=self.user)
         response = self.client.get(reverse("stats_session_detail", args=(75,)))
 
         self.assertEqual(response.status_code, 404)
-        self.assertTemplateUsed("records/templates/records/list_stats_session.html")
+        self.assertTemplateUsed("records/templates/"
+                                "records/list_stats_session.html")
 
 
 class StatsRecordsViewsTest(TestCase):
@@ -148,7 +147,7 @@ class StatsRecordsViewsTest(TestCase):
 
     def test_create_stats_record(self):
 
-        client = self.client.force_login(user=self.user)
+        self.client.force_login(user=self.user)
 
         payload = {
             "srs_id": self.srs.id,
@@ -166,7 +165,9 @@ class StatsRecordsViewsTest(TestCase):
         record_id = 84  # arbitraire
         session_id = self.srs.pk
 
-        response = self.client.get(f"/stats/{session_id}/record/{record_id}/delete/")
+        response = self.client.get(
+            f"/stats/{session_id}/" f"record/{record_id}/delete/"
+        )
         self.assertEqual(response.status_code, 200)
 
 
@@ -181,6 +182,6 @@ class StatsRecordsResultViewsTest(TestCase):
     def test_get_stats_record_session_result(self):
         self.client.force_login(self.user)
         session_id = "1"
-        response = self.client.get("/stats/1/results/")
+        response = self.client.get(f"/stats/{session_id}/results/")
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed("stats_session_result.html")

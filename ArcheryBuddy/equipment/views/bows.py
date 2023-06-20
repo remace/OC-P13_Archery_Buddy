@@ -4,7 +4,14 @@ from django.shortcuts import render, redirect
 
 from django.db import IntegrityError
 
-from equipment.models.bows import *
+from equipment.models.bows import (
+    CompoundBow,
+    CompoundFactory,
+    BarebowFactory,
+    Barebow,
+    OlympicBow,
+    OlympicBowFactory,
+)
 
 
 @login_required()
@@ -23,7 +30,9 @@ def bows_list(request):
         "barebows": barebows,
         "compounds": compounds,
     }
-    return render(request, template_name="equipment/list_bows.html", context=ctx)
+    return render(request,
+                  template_name="equipment/list_bows.html",
+                  context=ctx)
 
 
 @login_required()
@@ -46,10 +55,14 @@ def create(request):
                     bf.create_bow(user=user, bow_attributes=bow_attributes)
                 except IntegrityError as integrity:
                     messages.error(
-                        request, f"Impossible de créer cet arc! erreur: {integrity}"
+                        request,
+                        f"Impossible de créer "
+                        f"cet arc! erreur: {integrity}"
                     )
                     return render(
-                        request, template_name="equipment/create_bows.html", context=ctx
+                        request,
+                        template_name="equipment/create_bows.html",
+                        context=ctx
                     )
 
             case "Olympic":
@@ -60,10 +73,14 @@ def create(request):
                     obf.create_bow(user=user, bow_attributes=bow_attributes)
                 except IntegrityError as integrity:
                     messages.error(
-                        request, f"Impossible de créer cet arc! erreur: {integrity}"
+                        request,
+                        f"Impossible de créer "
+                        f"cet arc! erreur: {integrity}"
                     )
                     return render(
-                        request, template_name="equipment/create_bows.html", context=ctx
+                        request,
+                        template_name="equipment/create_bows.html",
+                        context=ctx
                     )
 
             case "Compound":
@@ -74,10 +91,14 @@ def create(request):
                     cf.create_bow(user=user, bow_attributes=bow_attributes)
                 except IntegrityError as integrity:
                     messages.error(
-                        request, f"Impossible de créer cet arc! erreur: {integrity}"
+                        request,
+                        f"Impossible de créer "
+                        f"cet arc! erreur: {integrity}"
                     )
                     return render(
-                        request, template_name="equipment/create_bows.html", context=ctx
+                        request,
+                        template_name="equipment/create_bows.html",
+                        context=ctx
                     )
         return redirect("bows_list")
 
@@ -92,11 +113,13 @@ def detail(request, bow_type, bow_id):
             bow = Barebow.objects.get(id=bow_id)
         case "compound":
             bow = CompoundBow.objects.get(id=bow_id)
-        case other:
+        case _:
             bow = None
             messages.error(request, message="type d'arc inexistant")
     ctx = {"bow": bow, "bow_type": bow_type}
-    return render(request, template_name="equipment/detail_bow.html", context=ctx)
+    return render(request,
+                  template_name="equipment/detail_bow.html",
+                  context=ctx)
 
 
 @login_required()
@@ -108,10 +131,10 @@ def update(request, bow_type, bow_id):
                 bow = Barebow.objects.get(id=bow_id)
             case "olympic":
                 bow = OlympicBow.objects.get(id=bow_id)
-                barebow = Barebow.objects.get(id=bow.barebow_id)
+                Barebow.objects.get(id=bow.barebow_id)
             case "compound":
                 bow = CompoundBow.objects.get(id=bow_id)
-            case other:
+            case _:
                 messages.error(request, "type d'arc inexistant")
         ctx["bow"] = bow
         return render(request, "equipment/update_bow.html", context=ctx)
@@ -120,10 +143,10 @@ def update(request, bow_type, bow_id):
         match bow_type:
             case "barebow":
                 bow = Barebow.objects.get(id=bow_id)
-                error = False
+                # error = False
                 # general
-                bow_power = request.POST.get("power")
-                laterality = request.POST.get("laterality")
+                # bow_power = request.POST.get("power")
+                # laterality = request.POST.get("laterality")
 
                 # riser
                 riser_brand = request.POST.get("riser_brand")
@@ -141,7 +164,7 @@ def update(request, bow_type, bow_id):
 
                 except IntegrityError as integrity:
                     messages.error(request, f"Poignée: {integrity}")
-                    error = True
+                    # error = True
 
                 # limbs
                 limbs_brand = request.POST.get("limbs_brand")
@@ -157,7 +180,7 @@ def update(request, bow_type, bow_id):
 
                 except IntegrityError as integrity:
                     messages.error(request, f"Branches: {integrity}")
-                    error = True
+                    # error = True
 
                 # String
                 string_brand = request.POST.get("string_brand")
@@ -173,7 +196,7 @@ def update(request, bow_type, bow_id):
 
                 except IntegrityError as integrity:
                     messages.error(request, f"Corde: {integrity}")
-                    error = True
+                    # error = True
 
                 # Arrow Rest
                 rest_type = request.POST.get("rest_type")
@@ -186,7 +209,7 @@ def update(request, bow_type, bow_id):
                     rest.save()
                 except IntegrityError as integrity:
                     messages.error(request, f"Repose_flèche: {integrity}")
-                    error = True
+                    # error = True
 
                 # Berger
                 berger_brand = request.POST.get("berger_brand")
@@ -199,12 +222,11 @@ def update(request, bow_type, bow_id):
                     berger.brand = berger_brand
                     berger.color = berger_color
                     berger.spring = spring
-
                     berger.save()
 
                 except IntegrityError as integrity:
                     messages.error(request, f"Berger: {integrity}")
-                    error = True
+                    # error = True
 
                 string_turns = request.POST.get("string_turns")
                 nockset_offset = request.POST.get("nockset_offset")
@@ -262,7 +284,7 @@ def delete(request, bow_type, bow_id):
                 bow.arrow_rest.delete()
                 bow.stabilisation.delete()
                 bow.dampeners.delete()
-            case other:
+            case _:
                 messages.error(request, "type d'arc inexistant")
         bow.delete()
         messages.success(request, "arc supprimé avec succès")

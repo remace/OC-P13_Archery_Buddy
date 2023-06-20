@@ -1,9 +1,5 @@
 import os
 from django import setup
-
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "DjangoConf.settings.testing")
-setup()
-
 from http import HTTPStatus
 
 from accounts.models import User
@@ -11,6 +7,9 @@ from equipment.models.arrows import Arrow
 
 
 from django.test import TestCase
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "DjangoConf.settings.testing")
+setup()
 
 
 class AddArrowsViewTest(TestCase):
@@ -24,7 +23,6 @@ class AddArrowsViewTest(TestCase):
     def test_get(self):
         response = self.client.get("/arrows/create/")
         self.assertEqual(response.status_code, 200)
-        # self.assertContains(response, "<h1>Création de flèches</h1>", html=True)
 
     def test_post_success(self):
         count = len(Arrow.objects.all())
@@ -68,4 +66,3 @@ class AddArrowsViewTest(TestCase):
         count2 = len(Arrow.objects.all())
         self.assertEqual(count2 - count, 0)
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        # self.assertEqual(response["Location"], "/arrows/create/") /// KeyError: 'location'

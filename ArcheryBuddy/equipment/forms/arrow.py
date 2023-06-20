@@ -27,7 +27,11 @@ class ArrowForm(forms.Form):
         choices=LATERALITY_CHOICES,
         widget=forms.Select(
             attrs={
-                "class": "block w-full pl-4 my-4 text-field border border-gray-300 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                "class": "block w-full pl-4 my-4 rounded-lg "
+                "text-field border border-gray-300 "
+                "sm:text-sm focus:ring-violet-500 focus:border-violet-500 "
+                "dark:bg-gray-600 dark:border-gray-500 "
+                "dark:placeholder-gray-400 dark:text-white "
             },
         ),
     )
@@ -36,7 +40,11 @@ class ArrowForm(forms.Form):
         choices=FEATHERING_TYPE_CHOICES,
         widget=forms.Select(
             attrs={
-                "class": "block w-full pl-4 my-4 text-field border border-gray-300 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                "class": "block w-full pl-4 my-4 "
+                "text-field border border-gray-300 sm:text-sm rounded-lg "
+                "focus:ring-violet-500 focus:border-violet-500 "
+                "dark:bg-gray-600 dark:border-gray-500 "
+                "dark:placeholder-gray-400 dark:text-white"
             },
         ),
     )
@@ -45,7 +53,8 @@ class ArrowForm(forms.Form):
     feathering_cock_color = forms.CharField(label="couleur coq", max_length=32)
     feathering_size = forms.CharField(label="taille", max_length=32)
     feathering_angle = forms.IntegerField(label="angle")
-    feathering_to_nock_distance = forms.IntegerField(label="distance plumes-encoche")
+    feathering_to_nock_distance = forms.IntegerField(label="distance "
+                                                           "plumes-encoche")
 
     # tip
     tip_brand = forms.CharField(label="marque", max_length=32)
@@ -64,7 +73,11 @@ class ArrowForm(forms.Form):
         choices=TUBE_MATERIAL_CHOICES,
         widget=forms.Select(
             attrs={
-                "class": "block w-full pl-4 my-4 text-field border border-gray-300 sm:text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                "class": "block w-full pl-4 my-4 "
+                "text-field border border-gray-300 sm:text-sm rounded-lg "
+                "focus:ring-violet-500 focus:border-violet-500 "
+                "dark:bg-gray-600 dark:border-gray-500 "
+                "dark:placeholder-gray-400 dark:text-white"
             },
         ),
     )

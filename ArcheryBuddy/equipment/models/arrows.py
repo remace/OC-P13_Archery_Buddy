@@ -4,7 +4,9 @@ from django.db import models
 class Nock(models.Model):
 
     user = models.ForeignKey(
-        "accounts.User", related_name="alternative_nocks", on_delete=models.CASCADE
+        "accounts.User",
+        related_name="alternative_nocks",
+        on_delete=models.CASCADE
     )
     brand = models.CharField("encoche", max_length=60)
     color = models.CharField("couleur", max_length=60)
@@ -67,7 +69,9 @@ class Feathering(models.Model):
 
 class Tip(models.Model):
     user = models.ForeignKey(
-        "accounts.User", related_name="alternative_tips", on_delete=models.CASCADE
+        "accounts.User",
+        related_name="alternative_tips",
+        on_delete=models.CASCADE
     )
     brand = models.CharField("marque", max_length=60)
     profile = models.CharField("profil", max_length=60)
@@ -83,7 +87,9 @@ class Tip(models.Model):
 
 class Tube(models.Model):
     user = models.ForeignKey(
-        "accounts.User", related_name="alternative_tubes", on_delete=models.CASCADE
+        "accounts.User",
+        related_name="alternative_tubes",
+        on_delete=models.CASCADE
     )
     TUBE_MATERIAL_CHOICES = [
         ("CARBON", "carbone"),
@@ -103,7 +109,8 @@ class Tube(models.Model):
     tube_diameter = models.FloatField("diametre exterieur")
 
     def __str__(self):
-        return f"{self.brand} - {self.material} - {self.spine} - {self.tube_length}"
+        return (f"{self.brand} - {self.material} -"
+                f" {self.spine} - {self.tube_length}")
 
     class Meta:
         verbose_name = "Tube"
@@ -112,10 +119,13 @@ class Tube(models.Model):
 
 class Arrow(models.Model):
     user = models.ForeignKey(
-        "accounts.User", related_name="alternative_arrows", on_delete=models.CASCADE
+        "accounts.User",
+        related_name="alternative_arrows",
+        on_delete=models.CASCADE
     )
     nock = models.ForeignKey("equipment.Nock", on_delete=models.CASCADE)
-    feathering = models.ForeignKey("equipment.Feathering", on_delete=models.CASCADE)
+    feathering = models.ForeignKey("equipment.Feathering",
+                                   on_delete=models.CASCADE)
     tip = models.ForeignKey("equipment.Tip", on_delete=models.CASCADE)
     tube = models.ForeignKey("equipment.Tube", on_delete=models.CASCADE)
     not_broken = models.BooleanField("en état d'utilisation", default=True)
@@ -123,7 +133,8 @@ class Arrow(models.Model):
     def __str__(self):
         return (
             f"{self.id}: {self.tube.brand} - "
-            f"{self.feathering.cock_color}/{self.feathering.color} - {self.tube.tube_length}"
+            f"{self.feathering.cock_color}/{self.feathering.color}"
+            f" - {self.tube.tube_length}"
         )
 
     class Meta:

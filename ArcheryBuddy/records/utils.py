@@ -1,18 +1,16 @@
-from math import sqrt
 from statistics import mean
 from records.models import StatsRecord
 from shapely import minimum_bounding_radius, distance as shapely_distance
 from shapely.geometry import Polygon, Point
 
 
-from pprint import pprint
-
-
 def calculate_barycentre(points: list[StatsRecord]) -> list[float, float]:
 
     if isinstance(points[0], StatsRecord):
         points_as_dicts = [
-            {"arrow_id": point.arrow.pk, "pos_x": point.pos_x, "pos_y": point.pos_y}
+            {"arrow_id": point.arrow.pk,
+             "pos_x": point.pos_x,
+             "pos_y": point.pos_y}
             for point in points
         ]
     else:
@@ -56,7 +54,8 @@ def direction(point1, point2, point3):
 
 
 def calculate_convex_hull(points):
-    """returns the convex hull (ordered) of a list of points (not necessarly ordered)
+    """returns the convex hull (ordered)
+    of a list of points (not necessarly ordered)
     uses Jarvis's march algorithm
     """
     # on prend le point d'abcisse la plus basse
@@ -96,7 +95,8 @@ def calculate_convex_hull(points):
 
 
 def calculate_quiver(points):
-    """calculates the best quiver by excluding each round the worse grouping arrow:"""
+    """calculates the best quiver by
+    excluding each round the worse grouping arrow:"""
     result = []
     while points != []:
         if len(points) < 2:
@@ -109,9 +109,12 @@ def calculate_quiver(points):
 
         # s'il reste 3 points:
         elif len(points) == 3:
-            d0 = distance(points[2], points[0]) + distance(points[0], points[1])
-            d1 = distance(points[0], points[1]) + distance(points[2], points[1])
-            d2 = distance(points[2], points[1]) + distance(points[2], points[0])
+            d0 = distance(points[2], points[0])
+            + distance(points[0], points[1])
+            d1 = distance(points[0], points[1])
+            + distance(points[2], points[1])
+            d2 = distance(points[2], points[1])
+            + distance(points[2], points[0])
 
             if d0 > d1 and d0 > d2:
                 # le point 0 est le "moins groupé"
@@ -139,7 +142,8 @@ def calculate_quiver(points):
                 if len(hull) > 3:
                     radius = minimum_bounding_radius(
                         Polygon(
-                            [(point.get("pos_x"), point.get("pos_y")) for point in hull]
+                            [(point.get("pos_x"), point.get("pos_y"))
+                                for point in hull]
                         )
                     )
                 else:
@@ -155,7 +159,8 @@ def calculate_quiver(points):
                 circle_radiuses, key=lambda arrow: arrow.get("radius")
             ).get("arrow_id")
             point_with_lower_radius = list(
-                filter(lambda point: point.get("arrow_id") == min_radius_id, points)
+                filter(lambda point: point.get("arrow_id")
+                       == min_radius_id, points)
             )[0]
 
             # l'ajouter à la liste du resultat

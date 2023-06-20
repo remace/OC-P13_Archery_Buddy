@@ -1,9 +1,6 @@
-from django import setup
 import os
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "DjangoConf.settings.testing")
-setup()
-
+from django import setup
 from django.test import TestCase
 from django.core.exceptions import ValidationError
 
@@ -14,6 +11,9 @@ from records.models import (
 )
 from accounts.models import User
 from equipment.models.arrows import Arrow, Feathering, Tube, Nock, Tip
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "DjangoConf.settings.testing")
+setup()
 
 
 class PracticeRecordSessionTests(TestCase):
@@ -33,7 +33,11 @@ class PracticeRecordSessionTests(TestCase):
         self.datetime = self.prs.session_datetime
 
         nock = Nock.objects.create(
-            user=self.user, brand="beiter", color="red", size="S", uses_nock_pin=True
+            user=self.user,
+            brand="beiter",
+            color="red",
+            size="S",
+            uses_nock_pin=True
         )
         feathers = Feathering.objects.create(
             user=self.user,
@@ -69,7 +73,9 @@ class PracticeRecordSessionTests(TestCase):
         )
 
     def tearDown(self):
-        PracticeRecordSession.objects.filter(session_datetime=self.datetime).delete()
+        PracticeRecordSession.objects\
+            .filter(session_datetime=self.datetime)\
+            .delete()
         self.prs = None
         self.user = None
         self.datetime = None
@@ -79,7 +85,8 @@ class PracticeRecordSessionTests(TestCase):
         datetime_as_string = self.datetime.strftime("%d/%m/%Y - %H:%M")
         self.assertEqual(
             f"{self.prs}",
-            f"Entrainement: {datetime_as_string} - {self.prs.conditions} - {self.prs.distance}m",
+            f"Entrainement: {datetime_as_string} - "
+            f"{self.prs.conditions} - {self.prs.distance}m",
         )
 
     def test_practice_record_session_creation(self):
@@ -115,7 +122,8 @@ class PracticeRecordSessionTests(TestCase):
 
     def test_update_in_database(self):
         """test updating a field in database"""
-        prs = PracticeRecordSession.objects.filter(conditions="INT", distance=18)[0]
+        prs = PracticeRecordSession.objects\
+            .filter(conditions="INT", distance=18)[0]
         self.assertEqual(prs.distance, 18)
         prs.distance = 20
         prs_id = prs.id
@@ -163,7 +171,11 @@ class PracticeRecordTest(TestCase):
         )
 
         nock = Nock.objects.create(
-            user=self.user, brand="beiter", color="red", size="S", uses_nock_pin=True
+            user=self.user,
+            brand="beiter",
+            color="red",
+            size="S",
+            uses_nock_pin=True
         )
         feathers = Feathering.objects.create(
             user=self.user,
@@ -221,34 +233,49 @@ class PracticeRecordTest(TestCase):
     def test_create_practice_record_score_out_of_bounds(self):
         """test creating a practice record with score out of bounds (0,10)"""
         with self.assertRaises(
-            ValidationError, msg="score may be an integer value between 0 and 10"
+            ValidationError, msg="score may be an integer "
+            "value between 0 and 10"
         ):
             PracticeRecord.objects.create(
-                arrow=self.arrow1, score=-1, practice_session=self.prs, volley=1
+                arrow=self.arrow1,
+                score=-1,
+                practice_session=self.prs,
+                volley=1
             )
 
         with self.assertRaisesMessage(
             ValidationError, "score may be an integer value between 0 and 10"
         ):
             PracticeRecord.objects.create(
-                arrow=self.arrow1, score=11, practice_session=self.prs, volley=1
+                arrow=self.arrow1,
+                score=11,
+                practice_session=self.prs,
+                volley=1
             )
 
     def test_create_practice_record_volley_out_of_bounds(self):
-        """test creates a practice record with the volley identifier out if bounds"""
+        """test creates a practice record
+        with the volley identifier out if bounds"""
         with self.assertRaises(
             ValidationError,
-            msg="volley may be an integer value between 1 and session's volley number",
+            msg="volley may be an integer value between 1"
+            "and session's volley number",
         ):
             PracticeRecord.objects.create(
-                arrow=self.arrow1, score=10, practice_session=self.prs, volley=-1
+                arrow=self.arrow1,
+                score=10,
+                practice_session=self.prs,
+                volley=-1
             )
-            print("volée -1 faite")
 
         with self.assertRaises(
             ValidationError,
-            msg="volley may be an integer value between 1 and session's volley number",
+            msg="volley may be an integer value "
+            "between 1 and session's volley number",
         ):
             PracticeRecord.objects.create(
-                arrow=self.arrow1, score=10, practice_session=self.prs, volley=3
+                arrow=self.arrow1,
+                score=10,
+                practice_session=self.prs,
+                volley=3
             )

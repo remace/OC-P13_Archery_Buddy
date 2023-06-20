@@ -1,6 +1,5 @@
 from django.db import models
 from django.db import IntegrityError
-from accounts.models import User
 
 
 class Bow(models.Model):
@@ -113,9 +112,9 @@ class BergerButton(models.Model):
     )
     brand = models.CharField(max_length=30)
     color = models.CharField(max_length=30)
-    spring = models.CharField(
-        max_length=30
-    )  # should be on the bow model? one tuning per bow with a single Berger Button
+    spring = models.CharField(max_length=30)
+    # should be on the bow model?
+    # one tuning per bow with a single Berger Button
 
     def __str__(self):
         return f"{self.brand} - {self.color}"
@@ -191,13 +190,19 @@ class Barebow(Bow):
     riser = models.ForeignKey("equipment.Riser", on_delete=models.CASCADE)
     limbs = models.ForeignKey("equipment.Limbs", on_delete=models.CASCADE)
     string = models.ForeignKey(
-        "equipment.EquipmentString", verbose_name="corde", on_delete=models.CASCADE
+        "equipment.EquipmentString",
+        verbose_name="corde",
+        on_delete=models.CASCADE
     )
     arrow_rest = models.ForeignKey(
-        "equipment.ArrowRest", verbose_name="repose_flèche", on_delete=models.CASCADE
+        "equipment.ArrowRest",
+        verbose_name="repose_flèche",
+        on_delete=models.CASCADE
     )
     berger_button = models.ForeignKey(
-        "equipment.BergerButton", verbose_name="Berger", on_delete=models.CASCADE
+        "equipment.BergerButton",
+        verbose_name="Berger",
+        on_delete=models.CASCADE
     )
     # tuning parameters... maybe should be in an association table
     number_of_turns = models.IntegerField()
@@ -224,7 +229,8 @@ class OlympicBow(Bow):
     stabilisation = models.ForeignKey(
         "equipment.stabilisation", on_delete=models.CASCADE
     )
-    dampeners = models.ForeignKey("equipment.Dampeners", on_delete=models.CASCADE)
+    dampeners = models.ForeignKey("equipment.Dampeners",
+                                  on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.barebow.riser} - {self.barebow.limbs} - {self.power}"
@@ -274,7 +280,9 @@ class CompoundBow(Bow):
     draw_length = models.FloatField()  # allonge
 
     scope = models.ForeignKey(
-        "equipment.CompoundScope", verbose_name="scope", on_delete=models.CASCADE
+        "equipment.CompoundScope",
+        verbose_name="scope",
+        on_delete=models.CASCADE
     )
 
     arrow_rest = models.ForeignKey(
@@ -287,7 +295,8 @@ class CompoundBow(Bow):
         verbose_name="stabilisation",
         on_delete=models.CASCADE,
     )
-    dampeners = models.ForeignKey("equipment.Dampeners", on_delete=models.CASCADE)
+    dampeners = models.ForeignKey("equipment.Dampeners",
+                                  on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.bow_brand}"
@@ -321,7 +330,7 @@ class CompoundFactory:
             compound_scope.save()
 
         except IntegrityError as integrity:
-            raise IntegrityError
+            raise integrity
 
         # arrow rest
         arrow_rest_brand = bow_attributes.get("CompoundRestBrand")
@@ -332,7 +341,7 @@ class CompoundFactory:
             )
             arrow_rest.save()
         except IntegrityError as integrity:
-            raise IntegrityError
+            raise integrity
 
         # stabilisation
         stabilisation_brand = bow_attributes.get("stab_brand")
@@ -340,7 +349,7 @@ class CompoundFactory:
             stabilisation = Stabilisation(user=user, brand=stabilisation_brand)
             stabilisation.save()
         except IntegrityError as integrity:
-            raise IntegrityError
+            raise integrity
 
         # dampeners
         dampeners_front = bow_attributes.get("front_brand")
@@ -353,7 +362,7 @@ class CompoundFactory:
             )
             dampeners.save()
         except IntegrityError as integrity:
-            raise IntegrityError
+            raise integrity
 
         try:
             bow = CompoundBow(
@@ -378,7 +387,7 @@ class CompoundFactory:
             compound_scope.delete()
             stabilisation.delete()
             dampeners.delete()
-            raise IntegrityError
+            raise integrity
 
 
 class BarebowFactory:
@@ -404,7 +413,7 @@ class BarebowFactory:
             riser.save()
 
         except IntegrityError as integrity:
-            raise IntegrityError
+            raise integrity
 
         # limbs
         limbs_brand = bow_attributes.get("limbs_brand")
@@ -421,7 +430,7 @@ class BarebowFactory:
             limbs.save()
 
         except IntegrityError as integrity:
-            raise IntegrityError
+            raise integrity
 
         # String
         string_brand = bow_attributes.get("string_brand")
@@ -438,7 +447,7 @@ class BarebowFactory:
             bow_string.save()
 
         except IntegrityError as integrity:
-            raise IntegrityError
+            raise integrity
 
         # Arrow Rest
         rest_type = bow_attributes.get("rest_type")
@@ -448,7 +457,7 @@ class BarebowFactory:
             rest = ArrowRest(user=user, brand=rest_brand, rest_type=rest_type)
             rest.save()
         except IntegrityError as integrity:
-            raise IntegrityError
+            raise integrity
 
         # Berger
         berger_brand = bow_attributes.get("berger_brand")
@@ -465,7 +474,7 @@ class BarebowFactory:
             berger.save()
 
         except IntegrityError as integrity:
-            raise IntegrityError
+            raise integrity
 
         string_turns = bow_attributes.get("string_turns")
         nockset_offset = bow_attributes.get("nockset_offset")
@@ -497,7 +506,7 @@ class BarebowFactory:
             bow_string.delete()
             rest.delete()
             berger.delete()
-            raise IntegrityError
+            raise integrity
 
 
 class OlympicBowFactory:
@@ -523,7 +532,7 @@ class OlympicBowFactory:
             riser.save()
 
         except IntegrityError as integrity:
-            raise IntegrityError
+            raise integrity
 
         # limbs
         limbs_brand = bow_attributes.get("limbs_brand")
@@ -540,7 +549,7 @@ class OlympicBowFactory:
             limbs.save()
 
         except IntegrityError as integrity:
-            raise IntegrityError
+            raise integrity
 
         # String
         string_brand = bow_attributes.get("string_brand")
@@ -557,7 +566,7 @@ class OlympicBowFactory:
             bow_string.save()
 
         except IntegrityError as integrity:
-            raise IntegrityError
+            raise integrity
 
         # Arrow Rest
         rest_type = bow_attributes.get("rest_type")
@@ -567,7 +576,7 @@ class OlympicBowFactory:
             rest = ArrowRest(user=user, brand=rest_brand, rest_type=rest_type)
             rest.save()
         except IntegrityError as integrity:
-            raise IntegrityError
+            raise integrity
 
         # Berger
         berger_brand = bow_attributes.get("berger_brand")
@@ -584,7 +593,7 @@ class OlympicBowFactory:
             berger.save()
 
         except IntegrityError as integrity:
-            raise IntegrityError
+            raise integrity
 
         # scope
         scope_brand = bow_attributes.get("scope_brand")
@@ -592,7 +601,7 @@ class OlympicBowFactory:
             scope = Scope(user=user, brand=scope_brand)
             scope.save()
         except IntegrityError as integrity:
-            raise IntegrityError
+            raise integrity
 
         # clicker
         clicker_brand = bow_attributes.get("scope_brand")
@@ -600,7 +609,7 @@ class OlympicBowFactory:
             clicker = Clicker(user=user, brand=clicker_brand)
             clicker.save()
         except IntegrityError as integrity:
-            raise IntegrityError
+            raise integrity
 
         # stab
         stabilisation_brand = bow_attributes.get("stab_brand")
@@ -608,7 +617,7 @@ class OlympicBowFactory:
             stab = Stabilisation(user=user, brand=stabilisation_brand)
             stab.save()
         except IntegrityError as integrity:
-            raise IntegrityError
+            raise integrity
 
         # dampeners
         dampeners_rears = bow_attributes.get("rears_brand")
@@ -622,7 +631,7 @@ class OlympicBowFactory:
             dampeners.save()
 
         except IntegrityError as integrity:
-            raise IntegrityError
+            raise integrity
 
         string_turns = bow_attributes.get("string_turns")
         nockset_offset = bow_attributes.get("nockset_offset")
@@ -671,4 +680,4 @@ class OlympicBowFactory:
             stab.delete()
             clicker.delete()
             dampeners.delete()
-            raise IntegrityError
+            raise integrity

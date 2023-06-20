@@ -2,21 +2,19 @@
 import json
 
 from django.contrib.auth.decorators import login_required
-from django.core.exceptions import ValidationError
-from django.http import HttpResponse, JsonResponse
+from django.db import IntegrityError
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
 from django.urls import reverse
 from django.views import View
-from django.views.generic.edit import FormView, CreateView, DeleteView
+from django.views.generic.edit import CreateView, DeleteView
 
 from equipment.models.arrows import Arrow
 from records.models import StatsRecordSession, StatsRecord
 from records.forms import StatsRecordSessionForm
 from records.utils import calculate_barycentre, calculate_quiver
-
-import pdb
 
 
 class ListStatsSessions(View):
@@ -24,7 +22,10 @@ class ListStatsSessions(View):
     def get(self, request):
         ctx = {}
         user = request.user
-        stats_record_sessions = StatsRecordSession.objects.filter(user=user).all()
+        stats_record_sessions = StatsRecordSession \
+            .objects \
+            .filter(user=user) \
+            .all()
         ctx["stats_sessions"] = stats_record_sessions
         return render(request, "records/list_stats_sessions.html", context=ctx)
 
@@ -40,7 +41,9 @@ class CreateStatsSession(CreateView):
         user = request.user
         form = StatsRecordSessionForm(user=user)
         ctx = {"form": form}
-        return render(request, "records/create_stats_session.html", context=ctx)
+        return render(request,
+                      "records/create_stats_session.html",
+                      context=ctx)
 
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
@@ -63,10 +66,10 @@ class CreateStatsSession(CreateView):
             srs.available_arrows.set(arrows)
             srs.save()
 
-        except:
+        except IntegrityError:
             raise
 
-        return redirect("stats_session_list")
+        return redirect("stats_session_list", context=ctx)
 
 
 class DetailStatsSession(View):
@@ -93,7 +96,9 @@ class DetailStatsSession(View):
             "records": records,
             "available_arrows": available_arrows,
         }
-        return render(request, "records/detail_stats_session.html", context=ctx)
+        return render(request,
+                      "records/detail_stats_session.html",
+                      context=ctx)
 
     @method_decorator(login_required)
     def post(self, request, pk):
@@ -109,7 +114,8 @@ class DetailStatsSession(View):
         srs.conditions = request.POST.get("conditions")
         srs.distance = request.POST.get("distance")
         srs.comment = request.POST.get("comment")
-        available_arrow_ids = [int(a) for a in request.POST.getlist("available_arrows")]
+        available_arrow_ids = [int(a) for a
+                               in request.POST.getlist("available_arrows")]
 
         srs.available_arrows.clear()
 
@@ -162,6 +168,7 @@ class CreateStatsRecord(View):
                 }
             ),
             safe=False,
+            context=ctx
         )
 
 
@@ -188,7 +195,8 @@ class StatsRecordResults(View):
         stats_session = StatsRecordSession.objects.get(pk=stats_session_pk)
         shots = StatsRecord.objects.filter(stats_session=stats_session_pk)
 
-        pk_list = [id.get("arrow_id") for id in shots.values("arrow_id").distinct()]
+        pk_list = [id.get("arrow_id") for id
+                   in shots.values("arrow_id").distinct()]
 
         records = {}
         for id in pk_list:
@@ -209,4 +217,6 @@ class StatsRecordResults(View):
         for arrow in quiver:
             continue
         ctx = {"stats_session": stats_session, "arrows": quiver}
-        return render(request, "records/stats_session_result.html", context=ctx)
+        return render(request,
+                      "records/stats_session_result.html",
+                      context=ctx)

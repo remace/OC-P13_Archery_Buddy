@@ -1,5 +1,10 @@
 from django.contrib import admin
-from .models import *
+from .models import (
+    PracticeRecordSession,
+    PracticeRecord,
+    StatsRecordSession,
+    StatsRecord,
+)
 
 
 @admin.register(PracticeRecordSession)

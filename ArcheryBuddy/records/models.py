@@ -22,7 +22,8 @@ class RecordSession(models.Model):
 
 class PracticeRecordSession(RecordSession):
 
-    arrows = models.ManyToManyField("equipment.Arrow", through="PracticeRecord")
+    arrows = models.ManyToManyField("equipment.Arrow",
+                                    through="PracticeRecord")
     number_of_volleys = models.IntegerField("nombre de volées")
     max_arrows_in_volley = models.IntegerField(
         "nombre maximum de flèches par volée", default=3
@@ -43,7 +44,8 @@ class PracticeRecordSession(RecordSession):
     def __str__(self):
         datetime_as_string = self.session_datetime.strftime("%d/%m/%Y - %H:%M")
         return (
-            f"Entrainement: {datetime_as_string} - {self.conditions} - {self.distance}m"
+            f"Entrainement: {datetime_as_string} - "
+            f"{self.conditions} - {self.distance}m"
         )
 
     class Meta:
@@ -72,12 +74,14 @@ class PracticeRecord(models.Model):
 
         # score
         if self.score < 0 or self.score > 10:
-            raise ValidationError("score may be an integer value between 0 and 10")
+            raise ValidationError("score may be an integer "
+                                  "value between 0 and 10")
 
         # volley
         if self.volley > max_volley or self.volley < 1:
             raise ValidationError(
-                "volley may be an integer value between 1 and session's volley number"
+                "volley may be an integer value "
+                "between 1 and session's volley number"
             )
 
     def __str__(self):
@@ -97,12 +101,14 @@ class StatsRecordSession(RecordSession):
     def __str__(self):
         datetime_as_string = self.session_datetime.strftime("%d/%m/%Y - %H:%M")
         return (
-            f"statistiques: {datetime_as_string} - {self.conditions} - {self.distance}m"
+            f"statistiques: {datetime_as_string} - "
+            f"{self.conditions} - {self.distance}m"
         )
 
     class Meta:
         verbose_name = "Session d'enregistrement de statistiques de flèches"
-        verbose_name_plural = "Sessions d'enregistrement de statistiques de flèches"
+        verbose_name_plural = "Sessions d'enregistrement " \
+                              "de statistiques de flèches"
 
 
 class StatsRecord(models.Model):

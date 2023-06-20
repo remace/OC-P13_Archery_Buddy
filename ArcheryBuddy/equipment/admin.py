@@ -17,6 +17,7 @@ from .models.bows import (
     CompoundScope,
 )
 
+
 # Arrows
 @admin.register(Arrow)
 class ArrowAdmin(admin.ModelAdmin):

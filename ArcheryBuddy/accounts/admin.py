@@ -37,7 +37,11 @@ class UserAdmin(admin.ModelAdmin):
     add_fieldsets = (
         (
             None,
-            {"fields": ("first_name", "last_name", "email", "password1", "password2")},
+            {"fields": ("first_name",
+                        "last_name",
+                        "email",
+                        "password1",
+                        "password2")},
         ),
     )
     ordering = ("email",)

@@ -1,14 +1,13 @@
 import os
-from django import setup
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "DjangoConf.settings.testing")
-setup()
+from django import setup
+from django.db import IntegrityError
+from django.test import TransactionTestCase
 
 from accounts.models import User
 from equipment.models.bows import (
     CompoundScope,
     Dampeners,
-    Stabilisation,
     CompoundArrowRest,
     CompoundBow,
     CompoundFactory,
@@ -24,7 +23,6 @@ from equipment.models.bows import (
     Scope,
     Clicker,
     Stabilisation,
-    Dampeners,
 )
 from equipment.tests.constants import (
     COMPOUND,
@@ -35,8 +33,8 @@ from equipment.tests.constants import (
     OLYMPIC_NOT_VALID,
 )
 
-from django.db import IntegrityError
-from django.test import TransactionTestCase
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "DjangoConf.settings.testing")
+setup()
 
 
 class BowsTestCase(TransactionTestCase):
@@ -57,7 +55,8 @@ class BowsTestCase(TransactionTestCase):
         initial_bow_count = len(CompoundBow.objects.all())
         user = self.user
         bow_attributes = COMPOUND
-        bow = self.compound_factory.create_bow(user=user, bow_attributes=bow_attributes)
+        self.compound_factory.create_bow(user=user,
+                                         bow_attributes=bow_attributes)
 
         bow_count = len(CompoundBow.objects.all())
         self.assertEqual(bow_count, initial_bow_count + 1)
@@ -73,9 +72,8 @@ class BowsTestCase(TransactionTestCase):
         bow_attributes = COMPOUND_NOT_VALID
 
         with self.assertRaises(IntegrityError):
-            bow = self.compound_factory.create_bow(
-                user=user, bow_attributes=bow_attributes
-            )
+            self.compound_factory.create_bow(user=user,
+                                             bow_attributes=bow_attributes)
 
         bow_count = len(CompoundBow.objects.all())
         scope_count = len(CompoundScope.objects.all())
@@ -100,7 +98,8 @@ class BowsTestCase(TransactionTestCase):
         user = self.user
 
         bow_attributes = BAREBOW
-        bow = self.barebow_factory.create_bow(user=user, bow_attributes=bow_attributes)
+        self.barebow_factory.create_bow(user=user,
+                                        bow_attributes=bow_attributes)
 
         bow_count = len(Barebow.objects.all())
         riser_count = len(Riser.objects.all())
@@ -129,9 +128,8 @@ class BowsTestCase(TransactionTestCase):
         bow_attributes = BAREBOW_NOT_VALID
 
         with self.assertRaises(IntegrityError):
-            bow = self.barebow_factory.create_bow(
-                user=user, bow_attributes=bow_attributes
-            )
+            self.barebow_factory.create_bow(user=user,
+                                            bow_attributes=bow_attributes)
 
         bow_count = len(Barebow.objects.all())
         riser_count = len(Riser.objects.all())
@@ -165,7 +163,7 @@ class BowsTestCase(TransactionTestCase):
         bow_attributes = OLYMPIC_NOT_VALID
 
         with self.assertRaises(IntegrityError):
-            bow = self.olympic_bow_factory.create_bow(
+            self.olympic_bow_factory.create_bow(
                 user=user, bow_attributes=bow_attributes
             )
 
@@ -189,7 +187,7 @@ class BowsTestCase(TransactionTestCase):
         self.assertEqual(initial_scope_count, scope_count)
         self.assertEqual(clicker_count, initial_clicker_count)
         self.assertEqual(stabilisation_count, initial_stabilisation_count)
-        self.assertEqual(dampeners_coint, initial_dampeners_count)
+        self.assertEqual(dampeners_count, initial_dampeners_count)
         self.assertEqual(barebow_count, initial_barebow_count)
         self.assertEqual(bow_count, initial_bow_count)
 
@@ -209,9 +207,8 @@ class BowsTestCase(TransactionTestCase):
         user = self.user
 
         bow_attributes = OLYMPIC
-        bow = self.olympic_bow_factory.create_bow(
-            user=user, bow_attributes=bow_attributes
-        )
+        self.olympic_bow_factory.create_bow(user=user,
+                                            bow_attributes=bow_attributes)
 
         bow_count = len(OlympicBow.objects.all())
         barebow_count = len(Barebow.objects.all())
@@ -233,6 +230,6 @@ class BowsTestCase(TransactionTestCase):
         self.assertEqual(initial_scope_count, scope_count + 1)
         self.assertEqual(clicker_count, initial_clicker_count + 1)
         self.assertEqual(stabilisation_count, initial_stabilisation_count + 1)
-        self.assertEqual(dampeners_coint, initial_dampeners_count + 1)
+        self.assertEqual(dampeners_count, initial_dampeners_count + 1)
         self.assertEqual(barebow_count, initial_barebow_count + 1)
         self.assertEqual(bow_count, initial_bow_count + 1)
