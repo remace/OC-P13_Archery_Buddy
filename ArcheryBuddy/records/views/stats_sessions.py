@@ -135,8 +135,6 @@ class DeleteStatsSession(DeleteView):
 class CreateStatsRecord(View):
     @method_decorator(login_required)
     def post(self, request):
-        ctx = {}
-
         body = request.POST
         try:
             srs_id = body.get("srs_id")
