@@ -15,7 +15,7 @@ pour d'éventuelles évolutions futures, le déploiement se fera à chaque "mile
 
 ## Conception simple
 
-???
+je ne pense pas avoir au final une conception trop complexe. en revanche, pendant le développement j'aurais pu travailler avec des modèles plus simplifiés (ils contenaient trop de champs dès le début), quitte à les compléter plus tard.
 
 ## Tests unitaires/TDD
 ✅ présence de tests globalement surtout pour vérifier la non-régression générale de l'application, mais aussi comme une aide au développement sur la fonctionnalité "statistiques" (validation de l'algorithme utilisé)
@@ -40,4 +40,4 @@ la prochaine étape est d'automatiser aussi le déploiement, de manière à n'av
 ## Standard de code
 - ✅ utilisation du gestionnaire de dépendances et d'environnement virtuel poetry
 - ✅ outil d'inspection du code: Pylint, dont la configuration est dans un fichier pylintRC
-- ✅ black, avec les options par défaut, lancé automatiquement par l'IDE à chaque sauvegarde du code
+- ✅ black, avec les options par défaut, lancé automatiquement par l'IDE à chaque sauvegarde du code:wq
