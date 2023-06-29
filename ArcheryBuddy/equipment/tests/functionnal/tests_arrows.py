@@ -1,12 +1,14 @@
 import os
-from django import setup
 from http import HTTPStatus
+
+from django import setup
+from django.test.client import Client
+from django.test import TestCase
+from django.urls import reverse
 
 from accounts.models import User
 from equipment.models.arrows import Arrow
 
-
-from django.test import TestCase
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "DjangoConf.settings.testing")
 setup()
@@ -65,4 +67,64 @@ class AddArrowsViewTest(TestCase):
         response = self.client.post("/arrows/create/", data=data)
         count2 = len(Arrow.objects.all())
         self.assertEqual(count2 - count, 0)
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+
+
+class ListArrowTestCase(TestCase):
+
+    fixtures = ["records/fixtures/data.jsonl"]
+
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.get(pseudo="remi123456")
+
+    def test_get_nominal_case(self):
+        self.client.force_login(self.user)
+        response = self.client.get(reverse("arrows_list"))
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+
+    def test_get_user_not_logged_in(self):
+        response = self.client.get(reverse("arrows_list"))
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+
+
+class DetailArrowTestCase(TestCase):
+
+    fixtures = ["records/fixtures/data.jsonl"]
+
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.get(pseudo="remi123456")
+
+    def test_get_nominal_case(self):
+        self.client.force_login(self.user)
+        response = self.client.get(reverse("arrows_detail", args=[6,]))
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+
+
+class UpdateArrowTestCase(TestCase):
+
+    fixtures = ["records/fixtures/data.jsonl"]
+
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.get(pseudo="remi123456")
+
+    def test_get_nominal_case(self):
+        self.client.force_login(self.user)
+        response = self.client.get(reverse("arrows_update", args=[6,]))
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+
+
+class DeleteArrowTestCase(TestCase):
+
+    fixtures = ["records/fixtures/data.jsonl"]
+
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.get(pseudo="remi123456")
+
+    def test_get_nominal_case(self):
+        self.client.force_login(self.user)
+        response = self.client.get(reverse("arrows_delete", args=[6,]))
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
