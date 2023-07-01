@@ -8,16 +8,11 @@ jobs:
       - name: setup poetry
         uses: abatilo/actions-poetry@v2
         with:
-          poetry-version: 1.1.13
+          poetry-version: 1.5.1
       - uses: actions/setup-python@v4
         with:
           python-version: 3.10.10
           cache: 'poetry'
-      # - name: setup sqlite
-      #   uses: actions/setup-sqlite@v1
-      #   with:
-      #     sqlite-version: 3.40.0
-      #     sqlite-year: 2022
       - name: setup nodejs and npm
         uses: actions/setup-node@v3
         with:
@@ -35,15 +30,15 @@ jobs:
       - name: run tests
         run: |
           cd ArcheryBuddy
-          poetry run ./manage.py test --pattern="tests_*" equipment records
+          poetry run ./manage.py test --pattern="tests_*" accounts equipment records
       - name: generate coverage report
         run: |
           cd ArcheryBuddy
-          poetry run coverage run ./manage.py test accounts equipment records
+          poetry run coverage run ./manage.py test --pattern="tests_*" accounts equipment records
           poetry run coverage html
       - name: search for coverage report in runner
-        run: find . -name "htmlcov" # ./htmlcov
+        run: find . -name "htmlcov"
       - uses: actions/upload-artifact@v3
         with:
           name: coverage report
-          path: ./htmlcov/
+          path: ./ArcheryBuddy/htmlcov/
